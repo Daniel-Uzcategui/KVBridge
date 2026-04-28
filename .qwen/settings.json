@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Read(//home/daniel/Models/**)"
-    ]
-  },
-  "$version": 3
-}
