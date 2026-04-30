@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KV Cache Semantic Router Dashboard</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --glass-bg: rgba(30, 41, 59, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.4);
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.15), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.15), transparent 25%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 2rem;
+      text-align: center;
+      animation: fadeInDown 0.8s ease-out;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(to right, #38bdf8, #8b5cf6);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .glass-panel:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .metric {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .metric-label {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .metric-value {
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 4px;
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    .slots-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .slot-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slot-status-indicator {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--success);
+      transition: background-color 0.3s ease;
+    }
+
+    .slot-card.busy .slot-status-indicator {
+      background: var(--warning);
+    }
+
+    .slot-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .slot-title {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .slot-card.busy .badge {
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--warning);
+      border-color: rgba(245, 158, 11, 0.2);
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      word-break: break-all;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .pulse {
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .5; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>KV Cache Router</h1>
+      <p class="subtitle">Real-time Telemetry & Orchestration</p>
+    </header>
+
+    <div class="grid">
+      <div class="glass-panel metric">
+        <div class="metric-label">Max Tokens Observed</div>
+        <div class="metric-value" id="vram-val">0</div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="vram-bar" style="width: 0%; background: #8b5cf6; box-shadow: 0 0 10px rgba(139, 92, 246, 0.4);"></div>
+        </div>
+      </div>
+      
+      <div class="glass-panel metric">
+        <div class="metric-label">L1 RAMDisk Capacity</div>
+        <div class="metric-value" id="l1-val">-- GB / 2.5 GB</div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="l1-bar" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <div class="glass-panel metric">
+        <div class="metric-label">Router Queue</div>
+        <div class="metric-value" id="queue-val">0</div>
+        <p class="metric-label" style="font-size:0.75rem; margin-top:0.5rem; text-transform:none;" id="queue-sub">All requests handling smoothly.</p>
+      </div>
+    </div>
+
+    <div class="glass-panel" style="margin-bottom: 1.5rem;">
+      <h2 style="margin-bottom: 1rem; font-size: 1.25rem;">Active Hardware Slots (Llama.cpp)</h2>
+      <div class="slots-container" id="slots-container">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+
+    <div class="glass-panel">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h2 style="font-size: 1.25rem;">Llama.cpp Node Metrics</h2>
+        <span class="pulse" style="width: 8px; height: 8px; background: var(--success); border-radius: 50%; box-shadow: 0 0 8px var(--success);"></span>
+      </div>
+      <div class="grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 0;">
+        <div>
+          <div class="metric-label">Tokens Predicted</div>
+          <div class="metric-value" style="font-size:1.5rem" id="tokens-pred">--</div>
+        </div>
+        <div>
+          <div class="metric-label">Avg Generation (T/s)</div>
+          <div class="metric-value" style="font-size:1.5rem" id="tokens-eval">--</div>
+        </div>
+        <div>
+          <div class="metric-label">Avg Prompt (T/s)</div>
+          <div class="metric-value" style="font-size:1.5rem" id="reqs-proc">--</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function updateDashboard() {
+      try {
+        const res = await fetch('/api/stats');
+        const data = await res.json();
+        
+        // Update Metrics
+        document.getElementById('queue-val').innerText = data.queueLength;
+        if (data.queueLength > 0) {
+          document.getElementById('queue-sub').innerText = `Traffic spike! ${data.queueLength} requests waiting.`;
+          document.getElementById('queue-val').style.color = 'var(--warning)';
+        } else {
+          document.getElementById('queue-sub').innerText = 'All requests handling smoothly.';
+          document.getElementById('queue-val').style.color = 'var(--text)';
+        }
+
+        const maxCtx = 262144; // Assume max context of 262k
+        const maxTokens = data.llamaMetrics?.['llamacpp:n_tokens_max'] || 0;
+        const vPct = Math.min((maxTokens / maxCtx) * 100, 100).toFixed(1);
+        document.getElementById('vram-val').innerText = maxTokens;
+        document.getElementById('vram-bar').style.width = `${vPct}%`;
+
+        document.getElementById('tokens-pred').innerText = data.llamaMetrics?.['llamacpp:tokens_predicted_total'] || 0;
+        document.getElementById('tokens-eval').innerText = (data.llamaMetrics?.['llamacpp:predicted_tokens_seconds'] || 0).toFixed(1);
+        document.getElementById('reqs-proc').innerText = (data.llamaMetrics?.['llamacpp:prompt_tokens_seconds'] || 0).toFixed(1);
+
+        // RAMDisk L1
+        const l1Gb = (data.l1UsageBytes / (1024*1024*1024)).toFixed(2);
+        const l1Pct = Math.min((l1Gb / 2.5) * 100, 100);
+        document.getElementById('l1-val').innerText = `${l1Gb} GB / 2.5 GB`;
+        document.getElementById('l1-bar').style.width = `${l1Pct}%`;
+        
+        if (l1Pct > 90) {
+          document.getElementById('l1-bar').style.background = 'var(--danger)';
+          document.getElementById('l1-bar').style.boxShadow = '0 0 10px rgba(239, 68, 68, 0.4)';
+        } else {
+          document.getElementById('l1-bar').style.background = 'var(--accent)';
+          document.getElementById('l1-bar').style.boxShadow = '0 0 10px var(--accent-glow)';
+        }
+
+        // Render Slots
+        const slotsHtml = data.slots.map(slot => {
+          const isBusy = slot.activeReq !== null;
+          return `
+            <div class="slot-card ${isBusy ? 'busy' : ''}">
+              <div class="slot-status-indicator"></div>
+              <div class="slot-header">
+                <span class="slot-title">Slot ${slot.id}</span>
+                <span class="badge">${isBusy ? 'ACTIVE' : 'IDLE'}</span>
+              </div>
+              <div class="mono" style="margin-top: 0.5rem;">
+                <span style="color:var(--text)">Cache Hash:</span><br/>
+                ${slot.hash ? slot.hash.slice(0,24) + '...' : 'Empty'}
+              </div>
+              ${isBusy ? `<div class="mono" style="margin-top:0.5rem; color:var(--accent)">ReqID: ${slot.activeReq}</div>` : ''}
+            </div>
+          `;
+        }).join('');
+        document.getElementById('slots-container').innerHTML = slotsHtml;
+
+      } catch (e) {
+        console.error('Failed to fetch stats', e);
+      }
+    }
+
+    setInterval(updateDashboard, 1000);
+    updateDashboard();
+  </script>
+</body>
+</html>

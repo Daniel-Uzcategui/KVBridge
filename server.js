@@ -20,7 +20,7 @@ const fastify = require('fastify');
 const fastifyCors = require('@fastify/cors');
 const fastifyFormBody = require('@fastify/formbody');
 
-const { copyFile, rm, readdir, stat, mkdir, appendFile } = require('fs/promises');
+const { copyFile, rm, readdir, stat, mkdir, appendFile, readFile } = require('fs/promises');
 const { existsSync } = require('fs');
 const { join, extname } = require('path');
 
@@ -30,7 +30,7 @@ const L1_DIR = join('/home/daniel', 'Models', 'ramdisk_cache');  // RAMDisk — 
 const L2_DIR = join('/home/daniel', 'Models', 'slot_cache');      // SSD — persistent
 
 // Concurrency
-const MAX_CONCURRENT_SLOTS = 3;
+const MAX_CONCURRENT_SLOTS = 2;
 
 // Eviction thresholds (bytes)
 const L1_EVICT_THRESHOLD = 2_684_354_560;  // 2.5 GB — evict when exceeded
@@ -56,6 +56,7 @@ const C = {
   yellow: '\x1b[33m',
   red:    '\x1b[31m',
   cyan:   '\x1b[36m',
+  magenta:'\x1b[35m',
 };
 
 function log(tag, msg) {
@@ -154,31 +155,72 @@ const slotQueue = [];
 let cachedCacheDir = null;
 
 // Tracks the most recently loaded hash to avoid redundant restores in the same process lifetime
-let lastLoadedHash = null;
+// Now mapped by slot ID to avoid race conditions with MAX_CONCURRENT_SLOTS > 1
+const llamaSlotHashes = new Array(MAX_CONCURRENT_SLOTS).fill(null);
 
-function acquireSlot(reqId) {
+const availableSlots = Array.from({ length: MAX_CONCURRENT_SLOTS }, (_, i) => i);
+const activeSlots = new Map(); // reqId -> slotId
+
+function acquireSlot(reqId, signal) {
   return new Promise((resolve, reject) => {
-    if (currentSlots < MAX_CONCURRENT_SLOTS) {
-      currentSlots++;
-      log('SLOT', `${C.green}ACQUIRED${C.reset}  (${currentSlots}/${MAX_CONCURRENT_SLOTS})  ${reqId}`);
-      resolve();
+    if (signal?.aborted) {
+      const err = new Error('aborted');
+      err.name = 'AbortError';
+      return reject(err);
+    }
+
+    if (availableSlots.length > 0) {
+      const slotId = availableSlots.shift();
+      activeSlots.set(reqId, slotId);
+      log('SLOT', `${C.green}ACQUIRED${C.reset}  slot=${slotId}  ${reqId}`);
+      resolve(slotId);
     } else {
-      log('SLOT', `${C.yellow}QUEUED${C.reset}  queue=${slotQueue.length + 1}  (${currentSlots}/${MAX_CONCURRENT_SLOTS})  ${reqId}`);
-      slotQueue.push({ resolve, reject, reqId });
+      log('SLOT', `${C.yellow}QUEUED${C.reset}  queue=${slotQueue.length + 1}  ${reqId}`);
+      slotQueue.push({ resolve, reject, reqId, signal });
     }
   });
 }
 
 function releaseSlot(reqId) {
-  if (slotQueue.length > 0) {
-    const { resolve } = slotQueue.shift();
-    log('SLOT', `${C.green}PASSED${C.reset}  queue=${slotQueue.length}  (${currentSlots}/${MAX_CONCURRENT_SLOTS})  ${reqId}`);
-    resolve();
-  } else {
-    currentSlots--;
-    log('SLOT', `${C.green}RELEASED${C.reset}  (${currentSlots}/${MAX_CONCURRENT_SLOTS})  ${reqId}`);
+  // 1. Is it waiting in the queue?
+  const queueIndex = slotQueue.findIndex(item => item.reqId === reqId);
+  if (queueIndex !== -1) {
+    const [removed] = slotQueue.splice(queueIndex, 1);
+    const err = new Error('aborted');
+    err.name = 'AbortError';
+    removed.reject(err);
+    log('SLOT', `${C.yellow}REMOVED FROM QUEUE${C.reset}  ${reqId}`);
+    return;
+  }
+
+  // 2. Otherwise, it holds an active slot.
+  const slotId = activeSlots.get(reqId);
+  if (slotId !== undefined && slotId !== null) {
+    activeSlots.delete(reqId);
+    
+    // Try to pass the slot directly to the next non-aborted queued request
+    while (slotQueue.length > 0) {
+      const next = slotQueue.shift();
+      if (!next.signal?.aborted) {
+        activeSlots.set(next.reqId, slotId);
+        log('SLOT', `${C.green}PASSED${C.reset}  slot=${slotId}  ${reqId} -> ${next.reqId}`);
+        next.resolve(slotId);
+        return;
+      } else {
+        const err = new Error('aborted');
+        err.name = 'AbortError';
+        next.reject(err);
+      }
+    }
+    
+    // No valid queued requests, release the slot
+    availableSlots.push(slotId);
+    log('SLOT', `${C.green}RELEASED${C.reset}  slot=${slotId}  ${reqId}`);
   }
 }
+
+// Global deduplication map: hash -> Array of resolver functions
+const inFlightMisses = new Map();
 
 // ─── Active cache file tracking — prevents GC from deleting files in use ─
 
@@ -314,34 +356,19 @@ async function llamaPost(path, payload) {
  * @returns {{ filename: string, cacheDir: string }}
  *   cacheDir = where llama.cpp saved the file (its internal cache dir)
  */
-async function saveKVCache(hash, model) {
+async function saveKVCache(hash, model, slotId) {
   const filename = `${hash}.bin`;
 
   try {
     log('SAVE', `Starting  →  ${filename}`);
 
-    for (let s = 0; s < MAX_CONCURRENT_SLOTS; s++) {
-      try {
-        // Mandamos solo el 'filename' puro (sin ruta absoluta)
-        const res = await llamaPost(`/slots/${s}?action=save`, { filename, model });
+    const res = await llamaPost(`/slots/${slotId}?action=save`, { filename, model });
+    await res.text();
 
-        // Esperamos a que la promesa se resuelva por completo antes de continuar
-        await res.text();
-
-        log('SAVE', `${C.green}Saved${C.reset}  →  L1 RAMDisk (Slot ${s})`);
-
-        // Retornamos el cacheDir correcto
-        return { filename, cacheDir: L1_DIR };
-      } catch (err) {
-        if (s < MAX_CONCURRENT_SLOTS - 1) {
-          log('SAVE', `  Slot ${s} unavailable, trying next…`);
-          continue;
-        }
-        throw err;
-      }
-    }
+    log('SAVE', `${C.green}Saved${C.reset}  →  L1 RAMDisk (Slot ${slotId})`);
+    return { filename, cacheDir: L1_DIR };
   } catch (err) {
-    logErr(`Save failed for ${hash}.bin: ${err.message}`);
+    logErr(`Save failed for ${hash}.bin (Slot ${slotId}): ${err.message}`);
     return null;
   }
 }
@@ -354,24 +381,18 @@ async function saveKVCache(hash, model) {
  * @param {string} model - Model name
  * @param {string} cacheDir - Where llama.cpp expects the file (from save response)
  */
-async function restoreKVCache(hash, model, cacheDir) {
+async function restoreKVCache(hash, model, cacheDir, slotId) {
   const filename = `${hash}.bin`;
 
   log('RESTORE', `Loading  →  ${filename}  (from L1 RAMDisk)`);
 
-  for (let s = 0; s < MAX_CONCURRENT_SLOTS; s++) {
-    try {
-      // Mandamos solo el 'filename' puro
-      const res = await llamaPost(`/slots/${s}?action=restore`, { filename, model });
-      log('RESTORE', `${C.green}Success${C.reset}  →  ${filename}  (slot ${s}, ${res.status})`);
-      return true;
-    } catch (err) {
-      if (s < MAX_CONCURRENT_SLOTS - 1) {
-        log('RESTORE', `  Slot ${s} unavailable, trying next…`);
-        continue;
-      }
-      throw err;
-    }
+  try {
+    const res = await llamaPost(`/slots/${slotId}?action=restore`, { filename, model });
+    log('RESTORE', `${C.green}Success${C.reset}  →  ${filename}  (slot ${slotId}, ${res.status})`);
+    return true;
+  } catch (err) {
+    logErr(`Restore failed for ${hash}.bin (Slot ${slotId}): ${err.message}`);
+    throw err;
   }
 }
 
@@ -539,11 +560,76 @@ server.register(fastifyFormBody);
 
 // ─── 7. Route Handler ──────────────────────────────────────────────
 
+server.get('/dashboard', async (request, reply) => {
+  try {
+    const html = await readFile(join(__dirname, 'dashboard.html'), 'utf8');
+    reply.type('text/html').send(html);
+  } catch (e) {
+    reply.status(500).send('Dashboard UI not found');
+  }
+});
+
+server.get('/api/stats', async (request, reply) => {
+  let l1UsageBytes = 0;
+  try {
+    const files = await safeReaddir(L1_DIR);
+    for (const f of files) {
+      if (extname(f) === '.bin') {
+        const s = await safeStat(join(L1_DIR, f));
+        if (s) l1UsageBytes += s.size;
+      }
+    }
+  } catch (e) {}
+
+  let llamaMetrics = {};
+  let llamaPort = LLAMA_PORT;
+  try {
+    const { execSync } = require('child_process');
+    const out = execSync(`ps -ef | grep llama-server | grep -v grep | grep -v " ${LLAMA_PORT} "`).toString();
+    const match = out.match(/--port\s+(\d+)/);
+    if (match) llamaPort = match[1];
+  } catch(e) {}
+
+  try {
+    const mRes = await fetch(`http://${LLAMA_HOST}:${llamaPort}/metrics`);
+    if (mRes.ok) {
+      const mText = await mRes.text();
+      mText.split('\n').forEach(line => {
+        if (!line.startsWith('#') && line.includes(' ')) {
+          const [key, val] = line.split(' ');
+          const num = parseFloat(val);
+          if (!isNaN(num)) llamaMetrics[key] = num;
+        }
+      });
+    }
+  } catch(e) {}
+
+  const slotsInfo = [];
+  for (let i = 0; i < MAX_CONCURRENT_SLOTS; i++) {
+    let activeReq = null;
+    for (const [rId, sId] of activeSlots.entries()) {
+      if (sId === i) { activeReq = rId; break; }
+    }
+    slotsInfo.push({
+      id: i,
+      hash: llamaSlotHashes[i],
+      activeReq
+    });
+  }
+
+  reply.send({
+    queueLength: slotQueue.length,
+    l1UsageBytes,
+    slots: slotsInfo,
+    llamaMetrics
+  });
+});
+
 server.post('/v1/chat/completions', async (request, reply) => {
   const body = request.body;
   const reqId = (body?.metadata && body.metadata?.request_id)
     || body?.id
-    || '????';
+    || request.id;
 
   // Extract system prompt + RAG context
   const { systemPrompt, firstUserMessage, userMessages } = extractSystemPrompt(body);
@@ -556,31 +642,48 @@ server.post('/v1/chat/completions', async (request, reply) => {
   const abortController = new AbortController();
   const { signal } = abortController;
 
-  request.raw.on('close', () => {
-    log('DISCONNECT', `Client dropped  ${reqId}`);
-    abortController.abort();
-    releaseSlot(reqId);
+  let slotReleased = false;
+  let assignedSlotId = null;
+  let resolveInFlight = null;
+
+  const safeReleaseSlot = () => {
+    if (!slotReleased) {
+      slotReleased = true;
+      releaseSlot(reqId);
+      
+      if (resolveInFlight) resolveInFlight();
+    }
+  };
+
+  request.raw.on('aborted', () => {
+    if (!reply.raw.writableEnded) {
+      log('DISCONNECT', `Client dropped  ${reqId}`);
+      abortController.abort();
+      safeReleaseSlot();
+    }
   });
 
   // No system prompt → direct proxy (no caching)
   if (!hash) {
     log('PROXY', `No system prompt — forwarding directly (id=${reqId})`);
 
-    await acquireSlot(reqId);
     try {
+      assignedSlotId = await acquireSlot(reqId, signal);
       const llamaRes = await fetch(`${LLAMA_BASE}/v1/chat/completions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Host': `${LLAMA_HOST}:${LLAMA_PORT}`,
         },
-        body: JSON.stringify(body),
+        body: JSON.stringify({ ...body, id_slot: assignedSlotId }),
         signal,
       });
 
       await proxyStream(llamaRes, reply, signal);
+    } catch (err) {
+      if (err.name !== 'AbortError') throw err;
     } finally {
-      releaseSlot(reqId);
+      safeReleaseSlot();
     }
     return;
   }
@@ -588,6 +691,32 @@ server.post('/v1/chat/completions', async (request, reply) => {
   const filename = `${hash}.bin`;
   const l1Path = join(L1_DIR, filename);
   const l2Path = join(L2_DIR, filename);
+
+  // ──────────────────────────────────────────────────────────────
+  // DEDUPLICATION — Wait if someone else is creating this cache
+  // ──────────────────────────────────────────────────────────────
+  if (inFlightMisses.has(hash)) {
+    log('DEDUP', `Waiting for in-flight cache creation for ${hash.slice(0, 8)}`);
+    try {
+      await new Promise((resolve, reject) => {
+        const onAbort = () => {
+          const err = new Error('aborted');
+          err.name = 'AbortError';
+          reject(err);
+        };
+        if (signal.aborted) return onAbort();
+        signal.addEventListener('abort', onAbort);
+        
+        inFlightMisses.get(hash).push(() => {
+          signal.removeEventListener('abort', onAbort);
+          resolve();
+        });
+      });
+    } catch (err) {
+      if (err.name === 'AbortError') return;
+      throw err;
+    }
+  }
 
   const l1Exists = existsSync(l1Path);
   const l2Exists = existsSync(l2Path);
@@ -600,22 +729,22 @@ server.post('/v1/chat/completions', async (request, reply) => {
     try {
       logHit(hash);
 
-      await acquireSlot(reqId);
       try {
+        assignedSlotId = await acquireSlot(reqId, signal);
         try {
-          if (lastLoadedHash !== hash) {
-            await restoreKVCache(hash, model, cachedCacheDir || L1_DIR);
-            lastLoadedHash = hash;
-            log('INFO', `KV cache restored for ${hash.slice(0, 12)}...`);
+          if (llamaSlotHashes[assignedSlotId] !== hash) {
+            await restoreKVCache(hash, model, cachedCacheDir || L1_DIR, assignedSlotId);
+            llamaSlotHashes[assignedSlotId] = hash;
+            log('INFO', `KV cache restored for ${hash.slice(0, 12)} into slot ${assignedSlotId}`);
           } else {
-            log('INFO', `KV cache already in VRAM for ${hash.slice(0, 12)}... Skipping restore.`);
+            log('INFO', `KV cache already in VRAM slot ${assignedSlotId} for ${hash.slice(0, 12)}... Skipping restore.`);
           }
         } catch (err) {
           log('WARN', `Restore failed (${err.message}) — falling back to full request`);
         }
 
         // Proxy with only user messages (system prompt already in KV cache)
-        const proxyBody = { ...body, messages: userMessages };
+        const proxyBody = { ...body, messages: userMessages, id_slot: assignedSlotId };
         const llamaRes = await fetch(`${LLAMA_BASE}/v1/chat/completions`, {
           method: 'POST',
           headers: {
@@ -634,7 +763,7 @@ server.post('/v1/chat/completions', async (request, reply) => {
           'X-Cache-Status':    'HIT',
         }, signal);
       } finally {
-        releaseSlot(reqId);
+        safeReleaseSlot();
       }
     } finally {
       markCacheInactive(hash);
@@ -657,21 +786,21 @@ server.post('/v1/chat/completions', async (request, reply) => {
         logWarn(`L2→L1 copy failed (${err.message}) — falling back to full request`);
       }
 
-      await acquireSlot(reqId);
       try {
+        assignedSlotId = await acquireSlot(reqId, signal);
         try {
-          if (lastLoadedHash !== hash) {
-            await restoreKVCache(hash, model, cachedCacheDir || L1_DIR);
-            lastLoadedHash = hash;
-            log('INFO', `KV cache restored for ${hash.slice(0, 12)}...`);
+          if (llamaSlotHashes[assignedSlotId] !== hash) {
+            await restoreKVCache(hash, model, cachedCacheDir || L1_DIR, assignedSlotId);
+            llamaSlotHashes[assignedSlotId] = hash;
+            log('INFO', `KV cache restored for ${hash.slice(0, 12)} into slot ${assignedSlotId}`);
           } else {
-            log('INFO', `KV cache already in VRAM for ${hash.slice(0, 12)}... Skipping restore.`);
+            log('INFO', `KV cache already in VRAM slot ${assignedSlotId} for ${hash.slice(0, 12)}... Skipping restore.`);
           }
         } catch (err) {
           log('WARN', `Restore failed (${err.message}) — falling back to full request`);
         }
 
-        const proxyBody = { ...body, messages: userMessages };
+        const proxyBody = { ...body, messages: userMessages, id_slot: assignedSlotId };
         const llamaRes = await fetch(`${LLAMA_BASE}/v1/chat/completions`, {
           method: 'POST',
           headers: {
@@ -690,7 +819,7 @@ server.post('/v1/chat/completions', async (request, reply) => {
           'X-Cache-Status':    'HIT',
         }, signal);
       } finally {
-        releaseSlot(reqId);
+        safeReleaseSlot();
       }
     } finally {
       markCacheInactive(hash);
@@ -705,15 +834,23 @@ server.post('/v1/chat/completions', async (request, reply) => {
   try {
     logMiss(hash);
 
-    await acquireSlot(reqId);
+    // Lock deduplication
+    inFlightMisses.set(hash, []);
+    resolveInFlight = () => {
+      const waiters = inFlightMisses.get(hash) || [];
+      inFlightMisses.delete(hash);
+      waiters.forEach(r => r());
+    };
+
     try {
+      assignedSlotId = await acquireSlot(reqId, signal);
       const llamaRes = await fetch(`${LLAMA_BASE}/v1/chat/completions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Host': `${LLAMA_HOST}:${LLAMA_PORT}`,
         },
-        body: JSON.stringify(body),
+        body: JSON.stringify({ ...body, id_slot: assignedSlotId }),
         signal,
       });
 
@@ -755,47 +892,41 @@ server.post('/v1/chat/completions', async (request, reply) => {
           }
         };
 
-        // Save KV cache after stream is consumed, then persist to L2
-        (async () => {
-          try {
-            await pump();
-            const saveResult = await saveKVCache(hash, model);
-            if (saveResult) {
-              lastLoadedHash = hash;
-              // Store the cache directory for future restore operations
-              cachedCacheDir = saveResult.cacheDir;
-              // Copy from L1 (RAMDisk) to L2 (SSD) — fire-and-forget
-              const l2Path2 = join(L2_DIR, `${hash}.bin`);
-              try {
-                await copyFile(join(L1_DIR, `${hash}.bin`), l2Path2);
-                log('SAVE', `${C.green}Persisted${C.reset}  →  L2 SSD`);
-              } catch (err) {
-                logWarn(`L2 persist failed: ${err.message}`);
-              }
-            }
-          } catch (err) {
-            logWarn(`Save pipeline failed: ${err.message}`);
+        // We MUST await the pump and save to keep the Node route alive 
+        // and prevent the slot from being released prematurely.
+        try {
+          await pump();
+          const saveResult = await saveKVCache(hash, model, assignedSlotId);
+          if (saveResult) {
+            llamaSlotHashes[assignedSlotId] = hash;
+            cachedCacheDir = saveResult.cacheDir;
+            const l2Path2 = join(L2_DIR, `${hash}.bin`);
+            // Fire and forget the L2 copy, since it doesn't need the Llama slot
+            copyFile(join(L1_DIR, `${hash}.bin`), l2Path2).then(() => {
+              log('SAVE', `${C.green}Persisted${C.reset}  →  L2 SSD`);
+            }).catch(err => logWarn(`L2 persist failed: ${err.message}`));
           }
-        })();
+        } catch (err) {
+          logWarn(`Save pipeline failed: ${err.message}`);
+        }
       } else {
         reply.raw.end();
-        setImmediate(async () => {
-          try {
-            const saveResult = await saveKVCache(hash, model);
-            if (saveResult) {
-              lastLoadedHash = hash;
-              cachedCacheDir = saveResult.cacheDir;
-              const l2Path2 = join(L2_DIR, `${hash}.bin`);
-              await copyFile(join(L1_DIR, `${hash}.bin`), l2Path2);
+        try {
+          const saveResult = await saveKVCache(hash, model, assignedSlotId);
+          if (saveResult) {
+            llamaSlotHashes[assignedSlotId] = hash;
+            cachedCacheDir = saveResult.cacheDir;
+            const l2Path2 = join(L2_DIR, `${hash}.bin`);
+            copyFile(join(L1_DIR, `${hash}.bin`), l2Path2).then(() => {
               log('SAVE', `${C.green}Persisted${C.reset}  →  L2 SSD`);
-            }
-          } catch (err) {
-            logWarn(`Save pipeline failed: ${err.message}`);
+            }).catch(err => logWarn(`L2 persist failed: ${err.message}`));
           }
-        });
+        } catch (err) {
+          logWarn(`Save pipeline failed: ${err.message}`);
+        }
       }
     } finally {
-      releaseSlot(reqId);
+      safeReleaseSlot();
     }
   } finally {
     markCacheInactive(hash);
@@ -807,6 +938,11 @@ server.post('/v1/chat/completions', async (request, reply) => {
 // ─── 8. Error Handler ──────────────────────────────────────────────
 
 server.setErrorHandler((error, request, reply) => {
+  // IGNORE ABORT ERRORS
+  if (error.name === 'AbortError' || error.message.includes('aborted')) {
+    return; // Client disconnected, nothing to do.
+  }
+
   logErr(`${error.message}  [${request.id || 'no-id'}]`);
   if (!reply.sent) {
     reply.status(500).send({
@@ -842,19 +978,29 @@ const start = async () => {
   try {
     await server.listen({ port: 8080, host: '0.0.0.0' });
 
-    console.log(`
-${C.bold}${C.cyan}╔═══════════════════════════════════════════════════════════╗${C.reset}
-${C.bold}${C.cyan}║${C.reset}  ${C.bold}${C.green}KV Cache Semantic Router — Tiered Storage${C.reset}              ${C.bold}${C.cyan}║${C.reset}
-${C.bold}${C.cyan}║${C.reset}  Listening on  ${C.bold}http://0.0.0.0:8080${C.reset}                     ${C.bold}${C.cyan}║${C.reset}
-${C.bold}${C.cyan}║${C.reset}  Proxy target  ${C.bold}${LLAMA_BASE}${C.reset}                                    ${C.bold}${C.cyan}║${C.reset}
-${C.bold}${C.cyan}║${C.reset}  L1 (RAMDisk)  ${C.bold}${L1_DIR}${C.reset}  (3GB tmpfs)                       ${C.bold}${C.cyan}║${C.reset}
-${C.bold}${C.cyan}║${C.reset}  L2 (SSD)      ${C.bold}${L2_DIR}${C.reset}  (persistent)                       ${C.bold}${C.cyan}║${C.reset}
-${C.bold}${C.cyan}║${C.reset}  Max slots     ${C.bold}${MAX_CONCURRENT_SLOTS}${C.reset}                      ${C.bold}${C.cyan}║${C.reset}
-${C.bold}${C.cyan}║${C.reset}  Evict >       ${C.bold}${L1_EVICT_THRESHOLD / 1024 / 1024 / 1024.0}GB${C.reset}  down to ${C.bold}${L1_EVICT_TARGET / 1024 / 1024 / 1024.0}GB${C.reset}       ${C.bold}${C.cyan}║${C.reset}
-${C.bold}${C.cyan}║${C.reset}  GC interval   ${C.bold}5min${C.reset}  maxAge ${MAX_FILE_AGE_MS / 3600000}h${C.reset}          ${C.bold}${C.cyan}║${C.reset}
-${C.bold}${C.cyan}║${C.reset}  RAG threshold ${C.bold}${RAG_CONTENT_LENGTH_THRESHOLD} chars${C.reset}                    ${C.bold}${C.cyan}║${C.reset}
-${C.bold}${C.cyan}╚═══════════════════════════════════════════════════════════╝${C.reset}
-`);
+    const PORT = 8080;
+    const stripAnsi = (str) => str.replace(/\x1b\[[0-9;]*m/g, '');
+    const lines = [
+      `  ${C.bold}${C.green}KV Cache Semantic Router — Tiered Storage${C.reset}`,
+      `  Listening on  ${C.bold}http://0.0.0.0:${PORT}${C.reset}`,
+      `  Dashboard UI  ${C.bold}${C.magenta}http://127.0.0.1:${PORT}/dashboard${C.reset}`,
+      `  Proxy target  ${C.bold}${LLAMA_BASE}${C.reset}`,
+      `  L1 (RAMDisk)  ${C.bold}${L1_DIR}${C.reset} (tmpfs)`,
+      `  L2 (SSD)      ${C.bold}${L2_DIR}${C.reset} (persistent)`,
+      `  Max slots     ${C.bold}${MAX_CONCURRENT_SLOTS}${C.reset}`,
+      `  Evict >       ${C.bold}${(L1_EVICT_THRESHOLD / 1024 / 1024 / 1024).toFixed(1)}GB${C.reset} down to ${C.bold}${(L1_EVICT_TARGET / 1024 / 1024 / 1024).toFixed(1)}GB${C.reset}`,
+      `  GC interval   ${C.bold}${GARBAGE_COLLECT_INTERVAL_MS / 60000}min${C.reset} maxAge ${C.bold}${MAX_FILE_AGE_MS / 3600000}h${C.reset}`,
+      `  RAG threshold ${C.bold}${RAG_CONTENT_LENGTH_THRESHOLD} chars${C.reset}`
+    ];
+
+    const boxWidth = 68;
+    console.log(`\n${C.bold}${C.cyan}╔${'═'.repeat(boxWidth)}╗${C.reset}`);
+    for (const line of lines) {
+      const visibleLen = stripAnsi(line).length;
+      const padding = Math.max(0, boxWidth - visibleLen);
+      console.log(`${C.bold}${C.cyan}║${C.reset}${line}${' '.repeat(padding)}${C.bold}${C.cyan}║${C.reset}`);
+    }
+    console.log(`${C.bold}${C.cyan}╚${'═'.repeat(boxWidth)}╝${C.reset}\n`);
   } catch (err) {
     logErr(`Cannot start server: ${err.message}`);
     process.exit(1);
