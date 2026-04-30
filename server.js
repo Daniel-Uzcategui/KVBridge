@@ -87,22 +87,45 @@ function logErr(msg) {
 }
 
 // ─── Ghost Detector Logger ──────────────────────────────────────────
-async function logRequestToFile(reqId, systemPrompt, firstUserMessage) {
+// Serial log writer — prevents interleaving under concurrent load.
+// Each call enqueues a log entry; a single background drain serializes
+// writes to disk so no two appendFile calls overlap.
+
+const logQueue = [];
+let logDraining = false;
+
+async function flushLogQueue() {
+  if (logDraining || logQueue.length === 0) return;
+  logDraining = true;
+
   try {
-    const timestamp = new Date().toISOString();
-    let logContent = `\n========== [${timestamp}] REQ: ${reqId} ==========\n`;
-    logContent += `[SYSTEM PROMPT]\n${systemPrompt ? systemPrompt.substring(0, 800) + '...' : 'NO SYSTEM PROMPT'}\n`;
-    
-    if (firstUserMessage) {
-      logContent += `\n[FIRST USER MSG]\n${firstUserMessage.content ? firstUserMessage.content.substring(0, 500) + '...' : 'NONE'}\n`;
+    while (logQueue.length > 0) {
+      const entry = logQueue.shift();
+      await appendFile(join(__dirname, 'ghost_detector.txt'), entry, 'utf8');
     }
-    logContent += `======================================================\n`;
-    
-    // Escribe el log en el disco de forma asíncrona (no bloquea el Event Loop)
-    await appendFile(join(__dirname, 'ghost_detector.txt'), logContent, 'utf8');
-  } catch (err) {
-    logWarn(`No se pudo escribir el ghost log: ${err.message}`);
+  } finally {
+    logDraining = false;
   }
+}
+
+function enqueueLogEntry(logContent) {
+  logQueue.push(logContent);
+  flushLogQueue().catch(err => {
+    logWarn(`Log flush failed: ${err.message}`);
+  });
+}
+
+function logRequestToFile(reqId, systemPrompt, firstUserMessage) {
+  const timestamp = new Date().toISOString();
+  let logContent = `\n========== [${timestamp}] REQ: ${reqId} ==========\n`;
+  logContent += `[SYSTEM PROMPT]\n${systemPrompt ? systemPrompt.substring(0, 800) + '...' : 'NO SYSTEM PROMPT'}\n`;
+
+  if (firstUserMessage) {
+    logContent += `\n[FIRST USER MSG]\n${firstUserMessage.content ? firstUserMessage.content.substring(0, 500) + '...' : 'NONE'}\n`;
+  }
+  logContent += `======================================================\n`;
+
+  enqueueLogEntry(logContent);
 }
 // ─── fs/promises convenience wrappers ───────────────────────────────
 
@@ -157,6 +180,18 @@ function releaseSlot(reqId) {
   }
 }
 
+// ─── Active cache file tracking — prevents GC from deleting files in use ─
+
+const activeCacheFiles = new Set();  // Set of hashes currently being accessed
+
+function markCacheActive(hash) {
+  activeCacheFiles.add(hash);
+}
+
+function markCacheInactive(hash) {
+  activeCacheFiles.delete(hash);
+}
+
 // ─── 2. L1 Eviction Sweeper ─────────────────────────────────────────
 
 async function sweepL1Eviction() {
@@ -164,14 +199,17 @@ async function sweepL1Eviction() {
     const files = await safeReaddir(L1_DIR);
     const binFiles = files.filter(f => extname(f) === '.bin');
 
-    // Calculate total L1 size
+    // Calculate total L1 size — skip files currently in use
     let totalSize = 0;
     const fileInfo = [];
     for (const f of binFiles) {
+      const hash = f.replace(/\.bin$/, '');
+      if (activeCacheFiles.has(hash)) continue;
+
       const s = await safeStat(join(L1_DIR, f));
       if (s) {
         totalSize += s.size;
-        fileInfo.push({ name: f, size: s.size, mtimeMs: s.mtimeMs });
+        fileInfo.push({ name: f, size: s.size, mtimeMs: s.mtimeMs, hash });
       }
     }
 
@@ -188,7 +226,11 @@ async function sweepL1Eviction() {
     let freed = 0;
     for (const fi of fileInfo) {
       if (totalSize <= L1_EVICT_TARGET) break;
+      // Race guard: skip if file became active since we scanned
+      if (activeCacheFiles.has(fi.hash)) continue;
       const fpath = join(L1_DIR, fi.name);
+      // Existence double-check before delete (second race guard)
+      if (!existsSync(fpath)) continue;
       await rm(fpath);
       evicted++;
       freed += fi.size;
@@ -212,9 +254,16 @@ async function gcSweep() {
     let deleted = 0;
 
     for (const f of binFiles) {
+      const hash = f.replace(/\.bin$/, '');
+      // Skip files currently in use by a route handler
+      if (activeCacheFiles.has(hash)) continue;
+
       const s = await safeStat(join(L1_DIR, f));
       if (s && now - s.mtimeMs > MAX_FILE_AGE_MS) {
-        await rm(join(L1_DIR, f));
+        const fpath = join(L1_DIR, f);
+        // Existence double-check before delete (race guard)
+        if (!existsSync(fpath)) continue;
+        await rm(fpath);
         deleted++;
         log('GC', `  ${C.red}DELETED${C.reset}  ${f}  (age=${Math.round((now - s.mtimeMs) / 3600000)}h)`);
       }
@@ -328,7 +377,7 @@ async function restoreKVCache(hash, model, cacheDir) {
 
 // ─── 5. SSE Streaming Proxy ────────────────────────────────────────
 
-async function proxyStream(llamaRes, reply) {
+async function proxyStream(llamaRes, reply, signal) {
   reply.hijack();
 
   reply.raw.writeHead(llamaRes.status, {
@@ -341,21 +390,28 @@ async function proxyStream(llamaRes, reply) {
   const reader = llamaRes.body?.getReader();
   if (reader) {
     try {
-      while (true) {
+      while (!signal.aborted) {
         const { done, value } = await reader.read();
         if (done) break;
+        if (signal.aborted) break;
         reply.raw.write(value);
       }
-    } catch {} finally {
+    } catch (err) {
+      if (err.name !== 'AbortError') {
+        logErr(`Stream read error: ${err.message}`);
+      }
+    } finally {
       reader.releaseLock();
-      reply.raw.end();
+      if (!reply.raw.writableEnded) {
+        reply.raw.end();
+      }
     }
   } else {
     reply.raw.end();
   }
 }
 
-async function proxyStreamWithHeaders(llamaRes, reply, extraHeaders) {
+async function proxyStreamWithHeaders(llamaRes, reply, extraHeaders, signal) {
   reply.hijack();
 
   reply.raw.writeHead(llamaRes.status, extraHeaders);
@@ -363,14 +419,21 @@ async function proxyStreamWithHeaders(llamaRes, reply, extraHeaders) {
   const reader = llamaRes.body?.getReader();
   if (reader) {
     try {
-      while (true) {
+      while (!signal.aborted) {
         const { done, value } = await reader.read();
         if (done) break;
+        if (signal.aborted) break;
         reply.raw.write(value);
       }
-    } catch {} finally {
+    } catch (err) {
+      if (err.name !== 'AbortError') {
+        logErr(`Stream read error: ${err.message}`);
+      }
+    } finally {
       reader.releaseLock();
-      reply.raw.end();
+      if (!reply.raw.writableEnded) {
+        reply.raw.end();
+      }
     }
   } else {
     reply.raw.end();
@@ -408,12 +471,13 @@ function extractSystemPrompt(body) {
   return { systemPrompt, firstUserMessage, userMessages };
 }
 
-function computeCacheHash(systemPrompt, firstUserMessage) {
-  let hashInput = systemPrompt;
+function computeCacheHash(model, systemPrompt, firstUserMessage) {
+  const modelPrefix = model ? `${model}_` : '';
+  let hashInput = `${modelPrefix}${systemPrompt}`;
 
   if (firstUserMessage && typeof firstUserMessage.content === 'string') {
     if (firstUserMessage.content.length > RAG_CONTENT_LENGTH_THRESHOLD) {
-      hashInput = `${systemPrompt}\n\n${firstUserMessage.content}`;
+      hashInput = `${modelPrefix}${systemPrompt}\n\n${firstUserMessage.content}`;
     }
   }
 
@@ -485,8 +549,18 @@ server.post('/v1/chat/completions', async (request, reply) => {
   const { systemPrompt, firstUserMessage, userMessages } = extractSystemPrompt(body);
   logRequestToFile(reqId, systemPrompt, firstUserMessage);
 
-  const hash = systemPrompt ? computeCacheHash(systemPrompt, firstUserMessage) : null;
   const model = body?.model || null;
+  const hash = systemPrompt ? computeCacheHash(model, systemPrompt, firstUserMessage) : null;
+
+  // ─── AbortController + disconnect handler (Fix #1: Zombie Slots) ─
+  const abortController = new AbortController();
+  const { signal } = abortController;
+
+  request.raw.on('close', () => {
+    log('DISCONNECT', `Client dropped  ${reqId}`);
+    abortController.abort();
+    releaseSlot(reqId);
+  });
 
   // No system prompt → direct proxy (no caching)
   if (!hash) {
@@ -501,9 +575,10 @@ server.post('/v1/chat/completions', async (request, reply) => {
           'Host': `${LLAMA_HOST}:${LLAMA_PORT}`,
         },
         body: JSON.stringify(body),
+        signal,
       });
 
-      await proxyStream(llamaRes, reply);
+      await proxyStream(llamaRes, reply, signal);
     } finally {
       releaseSlot(reqId);
     }
@@ -521,42 +596,48 @@ server.post('/v1/chat/completions', async (request, reply) => {
   // CACHE HIT — L1 warm hit: restore immediately from RAMDisk
   // ──────────────────────────────────────────────────────────────
   if (l1Exists) {
-    logHit(hash);
-
-    await acquireSlot(reqId);
+    markCacheActive(hash);
     try {
+      logHit(hash);
+
+      await acquireSlot(reqId);
       try {
-        if (lastLoadedHash !== hash) {
-          await restoreKVCache(hash, model, cachedCacheDir || L1_DIR);
-          lastLoadedHash = hash;
-          log('INFO', `KV cache restored for ${hash.slice(0, 12)}...`);
-        } else {
-          log('INFO', `KV cache already in VRAM for ${hash.slice(0, 12)}... Skipping restore.`);
+        try {
+          if (lastLoadedHash !== hash) {
+            await restoreKVCache(hash, model, cachedCacheDir || L1_DIR);
+            lastLoadedHash = hash;
+            log('INFO', `KV cache restored for ${hash.slice(0, 12)}...`);
+          } else {
+            log('INFO', `KV cache already in VRAM for ${hash.slice(0, 12)}... Skipping restore.`);
+          }
+        } catch (err) {
+          log('WARN', `Restore failed (${err.message}) — falling back to full request`);
         }
-      } catch (err) {
-        log('WARN', `Restore failed (${err.message}) — falling back to full request`);
+
+        // Proxy with only user messages (system prompt already in KV cache)
+        const proxyBody = { ...body, messages: userMessages };
+        const llamaRes = await fetch(`${LLAMA_BASE}/v1/chat/completions`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Host': `${LLAMA_HOST}:${LLAMA_PORT}`,
+          },
+          body: JSON.stringify(proxyBody),
+          signal,
+        });
+
+        await proxyStreamWithHeaders(llamaRes, reply, {
+          'Content-Type':      'text/event-stream',
+          'Cache-Control':     'no-cache',
+          'Connection':        'keep-alive',
+          'X-Accel-Buffering': 'no',
+          'X-Cache-Status':    'HIT',
+        }, signal);
+      } finally {
+        releaseSlot(reqId);
       }
-
-      // Proxy with only user messages (system prompt already in KV cache)
-      const proxyBody = { ...body, messages: userMessages };
-      const llamaRes = await fetch(`${LLAMA_BASE}/v1/chat/completions`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Host': `${LLAMA_HOST}:${LLAMA_PORT}`,
-        },
-        body: JSON.stringify(proxyBody),
-      });
-
-      await proxyStreamWithHeaders(llamaRes, reply, {
-        'Content-Type':      'text/event-stream',
-        'Cache-Control':     'no-cache',
-        'Connection':        'keep-alive',
-        'X-Accel-Buffering': 'no',
-        'X-Cache-Status':    'HIT',
-      });
     } finally {
-      releaseSlot(reqId);
+      markCacheInactive(hash);
     }
     return;
   }
@@ -565,48 +646,54 @@ server.post('/v1/chat/completions', async (request, reply) => {
   // COLD HIT — L2→L1 copy, then restore from RAMDisk
   // ──────────────────────────────────────────────────────────────
   if (l2Exists) {
-    logColdHit(hash);
-
-    // Copy from L2 (SSD) to L1 (RAMDisk) — awaited so file is ready
+    markCacheActive(hash);
     try {
-      await copyFileL2ToL1(hash);
-    } catch (err) {
-      logWarn(`L2→L1 copy failed (${err.message}) — falling back to full request`);
-    }
+      logColdHit(hash);
 
-    await acquireSlot(reqId);
-    try {
+      // Copy from L2 (SSD) to L1 (RAMDisk) — awaited so file is ready
       try {
-        if (lastLoadedHash !== hash) {
-          await restoreKVCache(hash, model, cachedCacheDir || L1_DIR);
-          lastLoadedHash = hash;
-          log('INFO', `KV cache restored for ${hash.slice(0, 12)}...`);
-        } else {
-          log('INFO', `KV cache already in VRAM for ${hash.slice(0, 12)}... Skipping restore.`);
-        }
+        await copyFileL2ToL1(hash);
       } catch (err) {
-        log('WARN', `Restore failed (${err.message}) — falling back to full request`);
+        logWarn(`L2→L1 copy failed (${err.message}) — falling back to full request`);
       }
 
-      const proxyBody = { ...body, messages: userMessages };
-      const llamaRes = await fetch(`${LLAMA_BASE}/v1/chat/completions`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Host': `${LLAMA_HOST}:${LLAMA_PORT}`,
-        },
-        body: JSON.stringify(proxyBody),
-      });
+      await acquireSlot(reqId);
+      try {
+        try {
+          if (lastLoadedHash !== hash) {
+            await restoreKVCache(hash, model, cachedCacheDir || L1_DIR);
+            lastLoadedHash = hash;
+            log('INFO', `KV cache restored for ${hash.slice(0, 12)}...`);
+          } else {
+            log('INFO', `KV cache already in VRAM for ${hash.slice(0, 12)}... Skipping restore.`);
+          }
+        } catch (err) {
+          log('WARN', `Restore failed (${err.message}) — falling back to full request`);
+        }
 
-      await proxyStreamWithHeaders(llamaRes, reply, {
-        'Content-Type':      'text/event-stream',
-        'Cache-Control':     'no-cache',
-        'Connection':        'keep-alive',
-        'X-Accel-Buffering': 'no',
-        'X-Cache-Status':    'HIT',
-      });
+        const proxyBody = { ...body, messages: userMessages };
+        const llamaRes = await fetch(`${LLAMA_BASE}/v1/chat/completions`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Host': `${LLAMA_HOST}:${LLAMA_PORT}`,
+          },
+          body: JSON.stringify(proxyBody),
+          signal,
+        });
+
+        await proxyStreamWithHeaders(llamaRes, reply, {
+          'Content-Type':      'text/event-stream',
+          'Cache-Control':     'no-cache',
+          'Connection':        'keep-alive',
+          'X-Accel-Buffering': 'no',
+          'X-Cache-Status':    'HIT',
+        }, signal);
+      } finally {
+        releaseSlot(reqId);
+      }
     } finally {
-      releaseSlot(reqId);
+      markCacheInactive(hash);
     }
     return;
   }
@@ -614,91 +701,104 @@ server.post('/v1/chat/completions', async (request, reply) => {
   // ──────────────────────────────────────────────────────────────
   // CACHE MISS — proxy full request, save to L1, persist to L2
   // ──────────────────────────────────────────────────────────────
-  logMiss(hash);
-
-  await acquireSlot(reqId);
+  markCacheActive(hash);
   try {
-    const llamaRes = await fetch(`${LLAMA_BASE}/v1/chat/completions`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Host': `${LLAMA_HOST}:${LLAMA_PORT}`,
-      },
-      body: JSON.stringify(body),
-    });
+    logMiss(hash);
 
-    if (!llamaRes.ok) {
-      const errText = await llamaRes.text().catch(() => '');
-      logErr(`llama.cpp returned ${llamaRes.status}: ${errText.slice(0, 500)}`);
-      throw new Error(`llama.cpp returned ${llamaRes.status}: ${errText.slice(0, 300)}`);
-    }
+    await acquireSlot(reqId);
+    try {
+      const llamaRes = await fetch(`${LLAMA_BASE}/v1/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Host': `${LLAMA_HOST}:${LLAMA_PORT}`,
+        },
+        body: JSON.stringify(body),
+        signal,
+      });
 
-    reply.hijack();
-    reply.raw.writeHead(llamaRes.status, {
-      'Content-Type':      'text/event-stream',
-      'Cache-Control':     'no-cache',
-      'Connection':        'keep-alive',
-      'X-Accel-Buffering': 'no',
-      'X-Cache-Status':    'MISS',
-    });
+      if (!llamaRes.ok) {
+        const errText = await llamaRes.text().catch(() => '');
+        logErr(`llama.cpp returned ${llamaRes.status}: ${errText.slice(0, 500)}`);
+        throw new Error(`llama.cpp returned ${llamaRes.status}: ${errText.slice(0, 300)}`);
+      }
 
-    const reader = llamaRes.body?.getReader();
+      reply.hijack();
+      reply.raw.writeHead(llamaRes.status, {
+        'Content-Type':      'text/event-stream',
+        'Cache-Control':     'no-cache',
+        'Connection':        'keep-alive',
+        'X-Accel-Buffering': 'no',
+        'X-Cache-Status':    'MISS',
+      });
 
-    if (reader) {
-      const pump = async () => {
-        try {
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            reply.raw.write(value);
-          }
-        } catch {} finally {
-          reader.releaseLock();
-          reply.raw.end();
-        }
-      };
+      const reader = llamaRes.body?.getReader();
 
-      // Save KV cache after stream is consumed, then persist to L2
-      (async () => {
-        try {
-          await pump();
-          const saveResult = await saveKVCache(hash, model);
-          if (saveResult) {
-            lastLoadedHash = hash;
-            // Store the cache directory for future restore operations
-            cachedCacheDir = saveResult.cacheDir;
-            // Copy from L1 (RAMDisk) to L2 (SSD) — fire-and-forget
-            const l2Path2 = join(L2_DIR, `${hash}.bin`);
-            try {
-              await copyFile(join(L1_DIR, `${hash}.bin`), l2Path2);
-              log('SAVE', `${C.green}Persisted${C.reset}  →  L2 SSD`);
-            } catch (err) {
-              logWarn(`L2 persist failed: ${err.message}`);
+      if (reader) {
+        const pump = async () => {
+          try {
+            while (!signal.aborted) {
+              const { done, value } = await reader.read();
+              if (done) break;
+              if (signal.aborted) break;
+              reply.raw.write(value);
+            }
+          } catch (err) {
+            if (err.name !== 'AbortError') {
+              logErr(`Stream read error: ${err.message}`);
+            }
+          } finally {
+            reader.releaseLock();
+            if (!reply.raw.writableEnded) {
+              reply.raw.end();
             }
           }
-        } catch (err) {
-          logWarn(`Save pipeline failed: ${err.message}`);
-        }
-      })();
-    } else {
-      reply.raw.end();
-      setImmediate(async () => {
-        try {
-          const saveResult = await saveKVCache(hash, model);
-          if (saveResult) {
-            lastLoadedHash = hash;
-            cachedCacheDir = saveResult.cacheDir;
-            const l2Path2 = join(L2_DIR, `${hash}.bin`);
-            await copyFile(join(L1_DIR, `${hash}.bin`), l2Path2);
-            log('SAVE', `${C.green}Persisted${C.reset}  →  L2 SSD`);
+        };
+
+        // Save KV cache after stream is consumed, then persist to L2
+        (async () => {
+          try {
+            await pump();
+            const saveResult = await saveKVCache(hash, model);
+            if (saveResult) {
+              lastLoadedHash = hash;
+              // Store the cache directory for future restore operations
+              cachedCacheDir = saveResult.cacheDir;
+              // Copy from L1 (RAMDisk) to L2 (SSD) — fire-and-forget
+              const l2Path2 = join(L2_DIR, `${hash}.bin`);
+              try {
+                await copyFile(join(L1_DIR, `${hash}.bin`), l2Path2);
+                log('SAVE', `${C.green}Persisted${C.reset}  →  L2 SSD`);
+              } catch (err) {
+                logWarn(`L2 persist failed: ${err.message}`);
+              }
+            }
+          } catch (err) {
+            logWarn(`Save pipeline failed: ${err.message}`);
           }
-        } catch (err) {
-          logWarn(`Save pipeline failed: ${err.message}`);
-        }
-      });
+        })();
+      } else {
+        reply.raw.end();
+        setImmediate(async () => {
+          try {
+            const saveResult = await saveKVCache(hash, model);
+            if (saveResult) {
+              lastLoadedHash = hash;
+              cachedCacheDir = saveResult.cacheDir;
+              const l2Path2 = join(L2_DIR, `${hash}.bin`);
+              await copyFile(join(L1_DIR, `${hash}.bin`), l2Path2);
+              log('SAVE', `${C.green}Persisted${C.reset}  →  L2 SSD`);
+            }
+          } catch (err) {
+            logWarn(`Save pipeline failed: ${err.message}`);
+          }
+        });
+      }
+    } finally {
+      releaseSlot(reqId);
     }
   } finally {
-    releaseSlot(reqId);
+    markCacheInactive(hash);
   }
 
   return;
