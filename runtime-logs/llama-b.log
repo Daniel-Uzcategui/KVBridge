@@ -1,0 +1,1803 @@
+
+=== 2026-05-06T00:21:56.101Z START llama-b trigger=bootstrap ===
+🚀 Iniciando llama-server...
+ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+  Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+  Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+
+system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+
+init: using 27 threads for HTTP server
+srv   load_models: Loaded 0 cached model presets
+srv   load_models: Loaded 1 custom model presets from ./models.ini
+srv   load_models: Available models (1) (*: custom preset)
+srv   load_models:   * qwen
+main: starting router server, no model will be loaded in this process
+start: binding port with default address family
+start: couldn't bind HTTP server socket, hostname: 0.0.0.0, port: 11435
+srv    operator(): operator(): cleaning up before exit...
+main: exiting due to HTTP server error
+🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
+✅ ¡Modelos pre-cargados y listos para OpenClaw!
+
+=== 2026-05-06T00:21:59.215Z EXIT llama-b code=0 signal=none ===
+
+=== 2026-05-06T00:23:38.443Z START llama-b trigger=healthcheck ===
+🚀 Iniciando llama-server...
+ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+  Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+  Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+
+system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+
+init: using 27 threads for HTTP server
+srv   load_models: Loaded 0 cached model presets
+srv   load_models: Loaded 1 custom model presets from ./models.ini
+srv   load_models: Available models (1) (*: custom preset)
+srv   load_models:   * qwen
+main: starting router server, no model will be loaded in this process
+start: binding port with default address family
+main: router server is listening on http://0.0.0.0:11435
+main: NOTE: router mode is experimental
+main:       it is not recommended to use this mode in untrusted environments
+🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
+srv          load: spawning server instance with name=qwen on port 56055
+srv          load: spawning server instance with args:
+srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   --host
+srv          load:   127.0.0.1
+srv          load:   --jinja
+srv          load:   --metrics
+srv          load:   --min-p
+srv          load:   0.0
+srv          load:   --no-mmap
+srv          load:   --port
+srv          load:   56055
+srv          load:   --slot-save-path
+srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   --temperature
+srv          load:   0.6
+srv          load:   --top-k
+srv          load:   20
+srv          load:   --top-p
+srv          load:   0.95
+srv          load:   --alias
+srv          load:   qwen
+srv          load:   --batch-size
+srv          load:   2048
+srv          load:   --ctx-size
+srv          load:   262144
+srv          load:   --cache-type-k
+srv          load:   turbo4
+srv          load:   --cache-type-v
+srv          load:   turbo4
+srv          load:   --flash-attn
+srv          load:   1
+srv          load:   --model
+srv          load:   Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf
+srv          load:   --parallel
+srv          load:   1
+srv          load:   --split-mode
+srv          load:   layer
+srv          load:   --ubatch-size
+srv          load:   2048
+srv  log_server_r: done request: POST /models/load 127.0.0.1 200
+✅ ¡Modelos pre-cargados y listos para OpenClaw!
+[56055] ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+[56055]   Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+[56055]   Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+[56055] system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+[56055] 
+[56055] system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+[56055] 
+[56055] init: using 27 threads for HTTP server
+[56055] start: binding port with default address family
+[56055] main: loading model
+[56055] srv    load_model: loading model 'Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf'
+[56055] common_init_result: fitting params to device memory, for bugs during this step try to reproduce them with -fit off, or provide --verbose logs if the bug only occurs with -fit on
+[56055] llama_params_fit_impl: projected memory use with initial parameters [MiB]:
+[56055] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti):  11165 total,  19819 used,  -8962 free vs. target of   1024
+[56055] llama_params_fit_impl:   - CUDA1 (NVIDIA GeForce GTX 1080 Ti):  11165 total,  16136 used,  -5274 free vs. target of   1024
+[56055] llama_params_fit_impl: projected to use 35956 MiB of device memory vs. 21718 MiB of free device memory
+[56055] llama_params_fit_impl: cannot meet free memory targets on all devices, need to use 16285 MiB less in total
+[56055] llama_params_fit_impl: context size set by user to 262144 -> no change
+[56055] llama_params_fit_impl: with only dense weights in device memory there is a total surplus of 11597 MiB
+[56055] llama_params_fit_impl: filling dense-only layers back-to-front:
+[56055] llama_params_fit_impl:   - CUDA1 (NVIDIA GeForce GTX 1080 Ti): 41 layers,   6497 MiB used,   4363 MiB free
+[56055] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti):  0 layers,    499 MiB used,  10357 MiB free
+[56055] llama_params_fit_impl: converting dense-only layers to full layers and filling them front-to-back with overflow to next device/system memory:
+
+=== 2026-05-06T00:23:49.705Z START llama-b trigger=bootstrap ===
+🚀 Iniciando llama-server...
+ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+  Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+  Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+
+system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+
+init: using 27 threads for HTTP server
+srv   load_models: Loaded 0 cached model presets
+srv   load_models: Loaded 1 custom model presets from ./models.ini
+srv   load_models: Available models (1) (*: custom preset)
+srv   load_models:   * qwen
+main: starting router server, no model will be loaded in this process
+start: binding port with default address family
+start: couldn't bind HTTP server socket, hostname: 0.0.0.0, port: 11435
+srv    operator(): operator(): cleaning up before exit...
+main: exiting due to HTTP server error
+[56055] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti): 15 layers ( 0 overflowing),   9826 MiB used,   1031 MiB free
+🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
+srv  log_server_r: done request: POST /models/load 127.0.0.1 400
+✅ ¡Modelos pre-cargados y listos para OpenClaw!
+
+=== 2026-05-06T00:23:52.722Z EXIT llama-b code=0 signal=none ===
+[56055] llama_params_fit_impl:   - CUDA1 (NVIDIA GeForce GTX 1080 Ti): 26 layers ( 9 overflowing),   9764 MiB used,   1096 MiB free
+[56055] llama_params_fit: successfully fit params to free device memory
+[56055] llama_params_fit: fitting params to free memory took 15.84 seconds
+[56055] llama_model_load_from_file_impl: using device CUDA0 (NVIDIA GeForce GTX 1080 Ti) (0000:09:00.0) - 8715 MiB free
+[56055] llama_model_load_from_file_impl: using device CUDA1 (NVIDIA GeForce GTX 1080 Ti) (0000:0a:00.0) - 10891 MiB free
+[56055] llama_model_loader: loaded meta data with 51 key-value pairs and 733 tensors from Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf (version GGUF V3 (latest))
+[56055] llama_model_loader: Dumping metadata keys/values. Note: KV overrides do not apply in this output.
+[56055] llama_model_loader: - kv   0:                       general.architecture str              = qwen35moe
+[56055] llama_model_loader: - kv   1:                               general.type str              = model
+[56055] llama_model_loader: - kv   2:                               general.name str              = Safetensors
+[56055] llama_model_loader: - kv   3:                         general.size_label str              = 256x2.6B
+[56055] llama_model_loader: - kv   4:                            general.license str              = apache-2.0
+[56055] llama_model_loader: - kv   5:                   general.base_model.count u32              = 1
+[56055] llama_model_loader: - kv   6:                  general.base_model.0.name str              = Qwen3.6 35B A3B
+[56055] llama_model_loader: - kv   7:          general.base_model.0.organization str              = Qwen
+[56055] llama_model_loader: - kv   8:              general.base_model.0.repo_url str              = https://huggingface.co/Qwen/Qwen3.6-3...
+[56055] llama_model_loader: - kv   9:                      general.dataset.count u32              = 1
+[56055] llama_model_loader: - kv  10:                     general.dataset.0.name str              = Reasoning Distill Opus 4 7 Max Sft
+[56055] llama_model_loader: - kv  11:             general.dataset.0.organization str              = Lordx64
+[56055] llama_model_loader: - kv  12:                 general.dataset.0.repo_url str              = https://huggingface.co/lordx64/reason...
+[56055] llama_model_loader: - kv  13:                               general.tags arr[str,11]      = ["text-generation", "reasoning", "dis...
+[56055] llama_model_loader: - kv  14:                          general.languages arr[str,1]       = ["en"]
+[56055] llama_model_loader: - kv  15:                      qwen35moe.block_count u32              = 40
+[56055] llama_model_loader: - kv  16:                   qwen35moe.context_length u32              = 262144
+[56055] llama_model_loader: - kv  17:                 qwen35moe.embedding_length u32              = 2048
+[56055] llama_model_loader: - kv  18:             qwen35moe.attention.head_count u32              = 16
+[56055] llama_model_loader: - kv  19:          qwen35moe.attention.head_count_kv u32              = 2
+[56055] llama_model_loader: - kv  20:          qwen35moe.rope.dimension_sections arr[i32,4]       = [11, 11, 10, 0]
+[56055] llama_model_loader: - kv  21:                   qwen35moe.rope.freq_base f32              = 10000000.000000
+[56055] llama_model_loader: - kv  22: qwen35moe.attention.layer_norm_rms_epsilon f32              = 0.000001
+[56055] llama_model_loader: - kv  23:                     qwen35moe.expert_count u32              = 256
+[56055] llama_model_loader: - kv  24:                qwen35moe.expert_used_count u32              = 8
+[56055] llama_model_loader: - kv  25:             qwen35moe.attention.key_length u32              = 256
+[56055] llama_model_loader: - kv  26:           qwen35moe.attention.value_length u32              = 256
+[56055] llama_model_loader: - kv  27:       qwen35moe.expert_feed_forward_length u32              = 512
+[56055] llama_model_loader: - kv  28: qwen35moe.expert_shared_feed_forward_length u32              = 512
+[56055] llama_model_loader: - kv  29:                  qwen35moe.ssm.conv_kernel u32              = 4
+[56055] llama_model_loader: - kv  30:                   qwen35moe.ssm.state_size u32              = 128
+[56055] llama_model_loader: - kv  31:                  qwen35moe.ssm.group_count u32              = 16
+[56055] llama_model_loader: - kv  32:               qwen35moe.ssm.time_step_rank u32              = 32
+[56055] llama_model_loader: - kv  33:                   qwen35moe.ssm.inner_size u32              = 4096
+[56055] llama_model_loader: - kv  34:          qwen35moe.full_attention_interval u32              = 4
+[56055] llama_model_loader: - kv  35:             qwen35moe.rope.dimension_count u32              = 64
+[56055] llama_model_loader: - kv  36:                       tokenizer.ggml.model str              = gpt2
+[56055] llama_model_loader: - kv  37:                         tokenizer.ggml.pre str              = qwen35
+[56055] llama_model_loader: - kv  38:                      tokenizer.ggml.tokens arr[str,248320]  = ["!", "\"", "#", "$", "%", "&", "'", ...
+[56055] llama_model_loader: - kv  39:                  tokenizer.ggml.token_type arr[i32,248320]  = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+[56055] llama_model_loader: - kv  40:                      tokenizer.ggml.merges arr[str,247587]  = ["Ġ Ġ", "ĠĠ ĠĠ", "i n", "Ġ t",...
+[56055] llama_model_loader: - kv  41:                tokenizer.ggml.eos_token_id u32              = 248046
+[56055] llama_model_loader: - kv  42:            tokenizer.ggml.padding_token_id u32              = 248055
+[56055] llama_model_loader: - kv  43:                tokenizer.ggml.bos_token_id u32              = 248044
+[56055] llama_model_loader: - kv  44:                    tokenizer.chat_template str              = {%- set image_count = namespace(value...
+[56055] llama_model_loader: - kv  45:               general.quantization_version u32              = 2
+[56055] llama_model_loader: - kv  46:                          general.file_type u32              = 15
+[56055] llama_model_loader: - kv  47:                      quantize.imatrix.file str              = /home/ubuntu/work/apex/qwen36_opus47_...
+[56055] llama_model_loader: - kv  48:                   quantize.imatrix.dataset str              = /home/mudler/autoresearch-quant/calib...
+[56055] llama_model_loader: - kv  49:             quantize.imatrix.entries_count u32              = 510
+[56055] llama_model_loader: - kv  50:              quantize.imatrix.chunks_count u32              = 2820
+[56055] llama_model_loader: - type  f32:  301 tensors
+[56055] llama_model_loader: - type q3_K:   90 tensors
+[56055] llama_model_loader: - type q4_K:  191 tensors
+[56055] llama_model_loader: - type q6_K:  151 tensors
+[56055] print_info: file format = GGUF V3 (latest)
+[56055] print_info: file type   = Q4_K - Medium
+[56055] print_info: file size   = 16.10 GiB (3.99 BPW) 
+[56055] load: 0 unused tokens
+[56055] load: printing all EOG tokens:
+[56055] load:   - 248044 ('<|endoftext|>')
+[56055] load:   - 248046 ('<|im_end|>')
+[56055] load:   - 248063 ('<|fim_pad|>')
+[56055] load:   - 248064 ('<|repo_name|>')
+[56055] load:   - 248065 ('<|file_sep|>')
+[56055] load: special tokens cache size = 33
+[56055] load: token to piece cache size = 1.7581 MB
+[56055] print_info: arch                  = qwen35moe
+[56055] print_info: vocab_only            = 0
+[56055] print_info: no_alloc              = 0
+[56055] print_info: n_ctx_train           = 262144
+[56055] print_info: n_embd                = 2048
+[56055] print_info: n_embd_inp            = 2048
+[56055] print_info: n_layer               = 40
+[56055] print_info: n_head                = 16
+[56055] print_info: n_head_kv             = 2
+[56055] print_info: n_rot                 = 64
+[56055] print_info: n_swa                 = 0
+[56055] print_info: is_swa_any            = 0
+[56055] print_info: n_embd_head_k         = 256
+[56055] print_info: n_embd_head_v         = 256
+[56055] print_info: n_gqa                 = 8
+[56055] print_info: n_embd_k_gqa          = 512
+[56055] print_info: n_embd_v_gqa          = 512
+[56055] print_info: f_norm_eps            = 0.0e+00
+[56055] print_info: f_norm_rms_eps        = 1.0e-06
+[56055] print_info: f_clamp_kqv           = 0.0e+00
+[56055] print_info: f_max_alibi_bias      = 0.0e+00
+[56055] print_info: f_logit_scale         = 0.0e+00
+[56055] print_info: f_attn_scale          = 0.0e+00
+[56055] print_info: n_ff                  = 0
+[56055] print_info: n_expert              = 256
+[56055] print_info: n_expert_used         = 8
+[56055] print_info: n_expert_groups       = 0
+[56055] print_info: n_group_used          = 0
+[56055] print_info: causal attn           = 1
+[56055] print_info: pooling type          = -1
+[56055] print_info: rope type             = 40
+[56055] print_info: rope scaling          = linear
+[56055] print_info: freq_base_train       = 10000000.0
+[56055] print_info: freq_scale_train      = 1
+[56055] print_info: n_ctx_orig_yarn       = 262144
+[56055] print_info: rope_yarn_log_mul     = 0.0000
+[56055] print_info: rope_finetuned        = unknown
+[56055] print_info: mrope sections        = [11, 11, 10, 0]
+[56055] print_info: ssm_d_conv            = 4
+[56055] print_info: ssm_d_inner           = 4096
+[56055] print_info: ssm_d_state           = 128
+[56055] print_info: ssm_dt_rank           = 32
+[56055] print_info: ssm_n_group           = 16
+[56055] print_info: ssm_dt_b_c_rms        = 0
+[56055] print_info: model type            = 35B.A3B
+[56055] print_info: model params          = 34.66 B
+[56055] print_info: general.name          = Safetensors
+[56055] print_info: vocab type            = BPE
+[56055] print_info: n_vocab               = 248320
+[56055] print_info: n_merges              = 247587
+[56055] print_info: BOS token             = 248044 '<|endoftext|>'
+[56055] print_info: EOS token             = 248046 '<|im_end|>'
+[56055] print_info: EOT token             = 248046 '<|im_end|>'
+[56055] print_info: PAD token             = 248055 '<|vision_pad|>'
+[56055] print_info: LF token              = 198 'Ċ'
+[56055] print_info: FIM PRE token         = 248060 '<|fim_prefix|>'
+[56055] print_info: FIM SUF token         = 248062 '<|fim_suffix|>'
+[56055] print_info: FIM MID token         = 248061 '<|fim_middle|>'
+[56055] print_info: FIM PAD token         = 248063 '<|fim_pad|>'
+[56055] print_info: FIM REP token         = 248064 '<|repo_name|>'
+[56055] print_info: FIM SEP token         = 248065 '<|file_sep|>'
+[56055] print_info: EOG token             = 248044 '<|endoftext|>'
+[56055] print_info: EOG token             = 248046 '<|im_end|>'
+[56055] print_info: EOG token             = 248063 '<|fim_pad|>'
+[56055] print_info: EOG token             = 248064 '<|repo_name|>'
+[56055] print_info: EOG token             = 248065 '<|file_sep|>'
+[56055] print_info: max token length      = 256
+[56055] load_tensors: loading model tensors, this can take a while... (mmap = false, direct_io = false)
+[56055] load_tensors: offloading output layer to GPU
+[56055] load_tensors: offloading 39 repeating layers to GPU
+[56055] load_tensors: offloaded 41/41 layers to GPU
+[56055] load_tensors:          CPU model buffer size =   272.81 MiB
+[56055] load_tensors:        CUDA0 model buffer size =  6144.76 MiB
+[56055] load_tensors:        CUDA1 model buffer size =  6803.10 MiB
+[56055] load_tensors:    CUDA_Host model buffer size =  3260.82 MiB
+
+=== 2026-05-06T00:24:08.164Z START llama-b trigger=healthcheck ===
+🚀 Iniciando llama-server...
+ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+  Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+  Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+
+system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+
+init: using 27 threads for HTTP server
+srv   load_models: Loaded 0 cached model presets
+srv   load_models: Loaded 1 custom model presets from ./models.ini
+srv   load_models: Available models (1) (*: custom preset)
+srv   load_models:   * qwen
+main: starting router server, no model will be loaded in this process
+start: binding port with default address family
+main: router server is listening on http://0.0.0.0:11435
+main: NOTE: router mode is experimental
+main:       it is not recommended to use this mode in untrusted environments
+🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
+srv          load: spawning server instance with name=qwen on port 35005
+srv          load: spawning server instance with args:
+srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   --host
+srv          load:   127.0.0.1
+srv          load:   --jinja
+srv          load:   --metrics
+srv          load:   --min-p
+srv          load:   0.0
+srv          load:   --no-mmap
+srv          load:   --port
+srv          load:   35005
+srv          load:   --slot-save-path
+srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   --temperature
+srv          load:   0.6
+srv          load:   --top-k
+srv          load:   20
+srv          load:   --top-p
+srv          load:   0.95
+srv          load:   --alias
+srv          load:   qwen
+srv          load:   --batch-size
+srv          load:   2048
+srv          load:   --ctx-size
+srv          load:   262144
+srv          load:   --cache-type-k
+srv          load:   turbo4
+srv          load:   --cache-type-v
+srv          load:   turbo4
+srv          load:   --flash-attn
+srv          load:   1
+srv          load:   --model
+srv          load:   Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf
+srv          load:   --parallel
+srv          load:   1
+srv          load:   --split-mode
+srv          load:   layer
+srv          load:   --ubatch-size
+srv          load:   2048
+srv  log_server_r: done request: POST /models/load 127.0.0.1 200
+✅ ¡Modelos pre-cargados y listos para OpenClaw!
+[35005] ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+[35005]   Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+[35005]   Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+[35005] system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+[35005] 
+[35005] system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+[35005] 
+[35005] init: using 27 threads for HTTP server
+[35005] start: binding port with default address family
+[35005] main: loading model
+[35005] srv    load_model: loading model 'Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf'
+[35005] common_init_result: fitting params to device memory, for bugs during this step try to reproduce them with -fit off, or provide --verbose logs if the bug only occurs with -fit on
+[35005] llama_params_fit_impl: projected memory use with initial parameters [MiB]:
+[35005] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti):  11165 total,  19235 used, -10552 free vs. target of   1024
+[35005] llama_params_fit_impl:   - CUDA1 (NVIDIA GeForce GTX 1080 Ti):  11165 total,  17232 used,  -6373 free vs. target of   1024
+[35005] llama_params_fit_impl: projected to use 36468 MiB of device memory vs. 19542 MiB of free device memory
+[35005] llama_params_fit_impl: cannot meet free memory targets on all devices, need to use 18973 MiB less in total
+[35005] llama_params_fit_impl: context size set by user to 262144 -> no change
+[35005] llama_params_fit_impl: with only dense weights in device memory there is a total surplus of 8316 MiB
+[35005] llama_params_fit_impl: filling dense-only layers back-to-front:
+[35005] llama_params_fit_impl:   - CUDA1 (NVIDIA GeForce GTX 1080 Ti): 41 layers,   6497 MiB used,   4361 MiB free
+[35005] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti):  0 layers,    499 MiB used,   8183 MiB free
+[35005] llama_params_fit_impl: converting dense-only layers to full layers and filling them front-to-back with overflow to next device/system memory:
+[35005] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti): 10 layers ( 1 overflowing),   7579 MiB used,   1104 MiB free
+[35005] llama_params_fit_impl:   - CUDA1 (NVIDIA GeForce GTX 1080 Ti): 31 layers (15 overflowing),   9824 MiB used,   1035 MiB free
+[35005] llama_params_fit: successfully fit params to free device memory
+[35005] llama_params_fit: fitting params to free memory took 11.56 seconds
+[35005] llama_model_load_from_file_impl: using device CUDA0 (NVIDIA GeForce GTX 1080 Ti) (0000:09:00.0) - 8715 MiB free
+[35005] llama_model_load_from_file_impl: using device CUDA1 (NVIDIA GeForce GTX 1080 Ti) (0000:0a:00.0) - 10891 MiB free
+[35005] llama_model_loader: loaded meta data with 51 key-value pairs and 733 tensors from Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf (version GGUF V3 (latest))
+[35005] llama_model_loader: Dumping metadata keys/values. Note: KV overrides do not apply in this output.
+[35005] llama_model_loader: - kv   0:                       general.architecture str              = qwen35moe
+[35005] llama_model_loader: - kv   1:                               general.type str              = model
+[35005] llama_model_loader: - kv   2:                               general.name str              = Safetensors
+[35005] llama_model_loader: - kv   3:                         general.size_label str              = 256x2.6B
+[35005] llama_model_loader: - kv   4:                            general.license str              = apache-2.0
+[35005] llama_model_loader: - kv   5:                   general.base_model.count u32              = 1
+[35005] llama_model_loader: - kv   6:                  general.base_model.0.name str              = Qwen3.6 35B A3B
+[35005] llama_model_loader: - kv   7:          general.base_model.0.organization str              = Qwen
+[35005] llama_model_loader: - kv   8:              general.base_model.0.repo_url str              = https://huggingface.co/Qwen/Qwen3.6-3...
+[35005] llama_model_loader: - kv   9:                      general.dataset.count u32              = 1
+[35005] llama_model_loader: - kv  10:                     general.dataset.0.name str              = Reasoning Distill Opus 4 7 Max Sft
+[35005] llama_model_loader: - kv  11:             general.dataset.0.organization str              = Lordx64
+[35005] llama_model_loader: - kv  12:                 general.dataset.0.repo_url str              = https://huggingface.co/lordx64/reason...
+[35005] llama_model_loader: - kv  13:                               general.tags arr[str,11]      = ["text-generation", "reasoning", "dis...
+[35005] llama_model_loader: - kv  14:                          general.languages arr[str,1]       = ["en"]
+[35005] llama_model_loader: - kv  15:                      qwen35moe.block_count u32              = 40
+[35005] llama_model_loader: - kv  16:                   qwen35moe.context_length u32              = 262144
+[35005] llama_model_loader: - kv  17:                 qwen35moe.embedding_length u32              = 2048
+[35005] llama_model_loader: - kv  18:             qwen35moe.attention.head_count u32              = 16
+[35005] llama_model_loader: - kv  19:          qwen35moe.attention.head_count_kv u32              = 2
+[35005] llama_model_loader: - kv  20:          qwen35moe.rope.dimension_sections arr[i32,4]       = [11, 11, 10, 0]
+[35005] llama_model_loader: - kv  21:                   qwen35moe.rope.freq_base f32              = 10000000.000000
+[35005] llama_model_loader: - kv  22: qwen35moe.attention.layer_norm_rms_epsilon f32              = 0.000001
+[35005] llama_model_loader: - kv  23:                     qwen35moe.expert_count u32              = 256
+[35005] llama_model_loader: - kv  24:                qwen35moe.expert_used_count u32              = 8
+[35005] llama_model_loader: - kv  25:             qwen35moe.attention.key_length u32              = 256
+[35005] llama_model_loader: - kv  26:           qwen35moe.attention.value_length u32              = 256
+[35005] llama_model_loader: - kv  27:       qwen35moe.expert_feed_forward_length u32              = 512
+[35005] llama_model_loader: - kv  28: qwen35moe.expert_shared_feed_forward_length u32              = 512
+[35005] llama_model_loader: - kv  29:                  qwen35moe.ssm.conv_kernel u32              = 4
+[35005] llama_model_loader: - kv  30:                   qwen35moe.ssm.state_size u32              = 128
+[35005] llama_model_loader: - kv  31:                  qwen35moe.ssm.group_count u32              = 16
+[35005] llama_model_loader: - kv  32:               qwen35moe.ssm.time_step_rank u32              = 32
+[35005] llama_model_loader: - kv  33:                   qwen35moe.ssm.inner_size u32              = 4096
+[35005] llama_model_loader: - kv  34:          qwen35moe.full_attention_interval u32              = 4
+[35005] llama_model_loader: - kv  35:             qwen35moe.rope.dimension_count u32              = 64
+[35005] llama_model_loader: - kv  36:                       tokenizer.ggml.model str              = gpt2
+[35005] llama_model_loader: - kv  37:                         tokenizer.ggml.pre str              = qwen35
+[35005] llama_model_loader: - kv  38:                      tokenizer.ggml.tokens arr[str,248320]  = ["!", "\"", "#", "$", "%", "&", "'", ...
+[35005] llama_model_loader: - kv  39:                  tokenizer.ggml.token_type arr[i32,248320]  = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+[35005] llama_model_loader: - kv  40:                      tokenizer.ggml.merges arr[str,247587]  = ["Ġ Ġ", "ĠĠ ĠĠ", "i n", "Ġ t",...
+[35005] llama_model_loader: - kv  41:                tokenizer.ggml.eos_token_id u32              = 248046
+[35005] llama_model_loader: - kv  42:            tokenizer.ggml.padding_token_id u32              = 248055
+[35005] llama_model_loader: - kv  43:                tokenizer.ggml.bos_token_id u32              = 248044
+[35005] llama_model_loader: - kv  44:                    tokenizer.chat_template str              = {%- set image_count = namespace(value...
+[35005] llama_model_loader: - kv  45:               general.quantization_version u32              = 2
+[35005] llama_model_loader: - kv  46:                          general.file_type u32              = 15
+[35005] llama_model_loader: - kv  47:                      quantize.imatrix.file str              = /home/ubuntu/work/apex/qwen36_opus47_...
+[35005] llama_model_loader: - kv  48:                   quantize.imatrix.dataset str              = /home/mudler/autoresearch-quant/calib...
+[35005] llama_model_loader: - kv  49:             quantize.imatrix.entries_count u32              = 510
+[35005] llama_model_loader: - kv  50:              quantize.imatrix.chunks_count u32              = 2820
+[35005] llama_model_loader: - type  f32:  301 tensors
+[35005] llama_model_loader: - type q3_K:   90 tensors
+[35005] llama_model_loader: - type q4_K:  191 tensors
+[35005] llama_model_loader: - type q6_K:  151 tensors
+[35005] print_info: file format = GGUF V3 (latest)
+[35005] print_info: file type   = Q4_K - Medium
+[35005] print_info: file size   = 16.10 GiB (3.99 BPW) 
+[35005] load: 0 unused tokens
+[35005] load: printing all EOG tokens:
+[35005] load:   - 248044 ('<|endoftext|>')
+[35005] load:   - 248046 ('<|im_end|>')
+[35005] load:   - 248063 ('<|fim_pad|>')
+[35005] load:   - 248064 ('<|repo_name|>')
+[35005] load:   - 248065 ('<|file_sep|>')
+[35005] load: special tokens cache size = 33
+[35005] load: token to piece cache size = 1.7581 MB
+[35005] print_info: arch                  = qwen35moe
+[35005] print_info: vocab_only            = 0
+[35005] print_info: no_alloc              = 0
+[35005] print_info: n_ctx_train           = 262144
+[35005] print_info: n_embd                = 2048
+[35005] print_info: n_embd_inp            = 2048
+[35005] print_info: n_layer               = 40
+[35005] print_info: n_head                = 16
+[35005] print_info: n_head_kv             = 2
+[35005] print_info: n_rot                 = 64
+[35005] print_info: n_swa                 = 0
+[35005] print_info: is_swa_any            = 0
+[35005] print_info: n_embd_head_k         = 256
+[35005] print_info: n_embd_head_v         = 256
+[35005] print_info: n_gqa                 = 8
+[35005] print_info: n_embd_k_gqa          = 512
+[35005] print_info: n_embd_v_gqa          = 512
+[35005] print_info: f_norm_eps            = 0.0e+00
+[35005] print_info: f_norm_rms_eps        = 1.0e-06
+[35005] print_info: f_clamp_kqv           = 0.0e+00
+[35005] print_info: f_max_alibi_bias      = 0.0e+00
+[35005] print_info: f_logit_scale         = 0.0e+00
+[35005] print_info: f_attn_scale          = 0.0e+00
+[35005] print_info: n_ff                  = 0
+[35005] print_info: n_expert              = 256
+[35005] print_info: n_expert_used         = 8
+[35005] print_info: n_expert_groups       = 0
+[35005] print_info: n_group_used          = 0
+[35005] print_info: causal attn           = 1
+[35005] print_info: pooling type          = -1
+[35005] print_info: rope type             = 40
+[35005] print_info: rope scaling          = linear
+[35005] print_info: freq_base_train       = 10000000.0
+[35005] print_info: freq_scale_train      = 1
+[35005] print_info: n_ctx_orig_yarn       = 262144
+[35005] print_info: rope_yarn_log_mul     = 0.0000
+[35005] print_info: rope_finetuned        = unknown
+[35005] print_info: mrope sections        = [11, 11, 10, 0]
+[35005] print_info: ssm_d_conv            = 4
+[35005] print_info: ssm_d_inner           = 4096
+[35005] print_info: ssm_d_state           = 128
+[35005] print_info: ssm_dt_rank           = 32
+[35005] print_info: ssm_n_group           = 16
+[35005] print_info: ssm_dt_b_c_rms        = 0
+[35005] print_info: model type            = 35B.A3B
+[35005] print_info: model params          = 34.66 B
+[35005] print_info: general.name          = Safetensors
+[35005] print_info: vocab type            = BPE
+[35005] print_info: n_vocab               = 248320
+[35005] print_info: n_merges              = 247587
+[35005] print_info: BOS token             = 248044 '<|endoftext|>'
+[35005] print_info: EOS token             = 248046 '<|im_end|>'
+[35005] print_info: EOT token             = 248046 '<|im_end|>'
+[35005] print_info: PAD token             = 248055 '<|vision_pad|>'
+[35005] print_info: LF token              = 198 'Ċ'
+[35005] print_info: FIM PRE token         = 248060 '<|fim_prefix|>'
+[35005] print_info: FIM SUF token         = 248062 '<|fim_suffix|>'
+[35005] print_info: FIM MID token         = 248061 '<|fim_middle|>'
+[35005] print_info: FIM PAD token         = 248063 '<|fim_pad|>'
+[35005] print_info: FIM REP token         = 248064 '<|repo_name|>'
+[35005] print_info: FIM SEP token         = 248065 '<|file_sep|>'
+[35005] print_info: EOG token             = 248044 '<|endoftext|>'
+[35005] print_info: EOG token             = 248046 '<|im_end|>'
+[35005] print_info: EOG token             = 248063 '<|fim_pad|>'
+[35005] print_info: EOG token             = 248064 '<|repo_name|>'
+[35005] print_info: EOG token             = 248065 '<|file_sep|>'
+[35005] print_info: max token length      = 256
+[35005] load_tensors: loading model tensors, this can take a while... (mmap = false, direct_io = false)
+[35005] load_tensors: offloading output layer to GPU
+[35005] load_tensors: offloading 39 repeating layers to GPU
+[35005] load_tensors: offloaded 41/41 layers to GPU
+[35005] load_tensors:          CPU model buffer size =   272.81 MiB
+[35005] load_tensors:        CUDA0 model buffer size =  4042.21 MiB
+[35005] load_tensors:        CUDA1 model buffer size =  6702.00 MiB
+[35005] load_tensors:    CUDA_Host model buffer size =  5464.47 MiB
+
+=== 2026-05-06T00:24:37.400Z START llama-b trigger=healthcheck ===
+🚀 Iniciando llama-server...
+ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+  Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+  Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+
+system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+
+init: using 27 threads for HTTP server
+srv   load_models: Loaded 0 cached model presets
+srv   load_models: Loaded 1 custom model presets from ./models.ini
+srv   load_models: Available models (1) (*: custom preset)
+srv   load_models:   * qwen
+main: starting router server, no model will be loaded in this process
+start: binding port with default address family
+main: router server is listening on http://0.0.0.0:11435
+main: NOTE: router mode is experimental
+main:       it is not recommended to use this mode in untrusted environments
+🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
+srv          load: spawning server instance with name=qwen on port 54005
+srv          load: spawning server instance with args:
+srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   --host
+srv          load:   127.0.0.1
+srv          load:   --jinja
+srv          load:   --metrics
+srv          load:   --min-p
+srv          load:   0.0
+srv          load:   --no-mmap
+srv          load:   --port
+srv          load:   54005
+srv          load:   --slot-save-path
+srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   --temperature
+srv          load:   0.6
+srv          load:   --top-k
+srv          load:   20
+srv          load:   --top-p
+srv          load:   0.95
+srv          load:   --alias
+srv          load:   qwen
+srv          load:   --batch-size
+srv          load:   2048
+srv          load:   --ctx-size
+srv          load:   262144
+srv          load:   --cache-type-k
+srv          load:   turbo4
+srv          load:   --cache-type-v
+srv          load:   turbo4
+srv          load:   --flash-attn
+srv          load:   1
+srv          load:   --model
+srv          load:   Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf
+srv          load:   --parallel
+srv          load:   1
+srv          load:   --split-mode
+srv          load:   layer
+srv          load:   --ubatch-size
+srv          load:   2048
+srv  log_server_r: done request: POST /models/load 127.0.0.1 200
+✅ ¡Modelos pre-cargados y listos para OpenClaw!
+[54005] ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+[54005]   Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+[54005]   Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+[54005] system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+[54005] 
+[54005] system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+[54005] 
+[54005] init: using 27 threads for HTTP server
+[54005] start: binding port with default address family
+[54005] main: loading model
+[54005] srv    load_model: loading model 'Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf'
+[54005] common_init_result: fitting params to device memory, for bugs during this step try to reproduce them with -fit off, or provide --verbose logs if the bug only occurs with -fit on
+[54005] llama_params_fit_impl: projected memory use with initial parameters [MiB]:
+[54005] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti):  11165 total,  18167 used, -11612 free vs. target of   1024
+[54005] llama_params_fit_impl:   - CUDA1 (NVIDIA GeForce GTX 1080 Ti):  11165 total,  18316 used,  -7467 free vs. target of   1024
+[54005] llama_params_fit_impl: projected to use 36484 MiB of device memory vs. 17404 MiB of free device memory
+[54005] llama_params_fit_impl: cannot meet free memory targets on all devices, need to use 21127 MiB less in total
+[54005] llama_params_fit_impl: context size set by user to 262144 -> no change
+srv    operator(): operator(): cleaning up before exit...
+srv    unload_all: stopping model instance name=qwen
+srv    operator(): stopping model instance name=qwen
+srv    operator(): instance name=qwen exited with status 1
+
+=== 2026-05-06T00:24:42.102Z EXIT llama-b code=0 signal=none ===
+
+=== 2026-05-06T00:24:51.437Z START llama-b trigger=healthcheck ===
+🚀 Iniciando llama-server...
+ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+  Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+  Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+
+system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+
+init: using 27 threads for HTTP server
+srv   load_models: Loaded 0 cached model presets
+srv   load_models: Loaded 1 custom model presets from ./models.ini
+srv   load_models: Available models (1) (*: custom preset)
+srv   load_models:   * qwen
+main: starting router server, no model will be loaded in this process
+start: binding port with default address family
+main: router server is listening on http://0.0.0.0:11435
+main: NOTE: router mode is experimental
+main:       it is not recommended to use this mode in untrusted environments
+🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
+srv          load: spawning server instance with name=qwen on port 38431
+srv          load: spawning server instance with args:
+srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   --host
+srv          load:   127.0.0.1
+srv          load:   --jinja
+srv          load:   --metrics
+srv          load:   --min-p
+srv          load:   0.0
+srv          load:   --no-mmap
+srv          load:   --port
+srv          load:   38431
+srv          load:   --slot-save-path
+srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   --temperature
+srv          load:   0.6
+srv          load:   --top-k
+srv          load:   20
+srv          load:   --top-p
+srv          load:   0.95
+srv          load:   --alias
+srv          load:   qwen
+srv          load:   --batch-size
+srv          load:   2048
+srv          load:   --ctx-size
+srv          load:   262144
+srv          load:   --cache-type-k
+srv          load:   turbo4
+srv          load:   --cache-type-v
+srv          load:   turbo4
+srv          load:   --flash-attn
+srv          load:   1
+srv          load:   --model
+srv          load:   Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf
+srv          load:   --parallel
+srv          load:   1
+srv          load:   --split-mode
+srv          load:   layer
+srv          load:   --ubatch-size
+srv          load:   2048
+srv  log_server_r: done request: POST /models/load 127.0.0.1 200
+✅ ¡Modelos pre-cargados y listos para OpenClaw!
+[38431] ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+[38431]   Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+[38431]   Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+[38431] system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+[38431] 
+[38431] system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+[38431] 
+[38431] init: using 27 threads for HTTP server
+[38431] start: binding port with default address family
+[38431] main: loading model
+[38431] srv    load_model: loading model 'Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf'
+[38431] common_init_result: fitting params to device memory, for bugs during this step try to reproduce them with -fit off, or provide --verbose logs if the bug only occurs with -fit on
+[38431] llama_params_fit_impl: projected memory use with initial parameters [MiB]:
+[38431] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti):  11165 total,  19819 used,  -8826 free vs. target of   1024
+[38431] llama_params_fit_impl:   - CUDA1 (NVIDIA GeForce GTX 1080 Ti):  11165 total,  16136 used,  -5138 free vs. target of   1024
+[38431] llama_params_fit_impl: projected to use 35956 MiB of device memory vs. 21990 MiB of free device memory
+[38431] llama_params_fit_impl: cannot meet free memory targets on all devices, need to use 16013 MiB less in total
+[38431] llama_params_fit_impl: context size set by user to 262144 -> no change
+[38431] llama_params_fit_impl: with only dense weights in device memory there is a total surplus of 11869 MiB
+[38431] llama_params_fit_impl: filling dense-only layers back-to-front:
+[38431] llama_params_fit_impl:   - CUDA1 (NVIDIA GeForce GTX 1080 Ti): 41 layers,   6497 MiB used,   4499 MiB free
+[38431] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti):  0 layers,    499 MiB used,  10493 MiB free
+[38431] llama_params_fit_impl: converting dense-only layers to full layers and filling them front-to-back with overflow to next device/system memory:
+[38431] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti): 15 layers ( 0 overflowing),   9826 MiB used,   1167 MiB free
+srv    operator(): operator(): cleaning up before exit...
+srv    unload_all: stopping model instance name=qwen
+srv    operator(): stopping model instance name=qwen
+srv    operator(): instance name=qwen exited with status 1
+
+=== 2026-05-06T00:25:07.631Z EXIT llama-b code=0 signal=none ===
+
+=== 2026-05-06T00:25:11.440Z START llama-b trigger=healthcheck ===
+🚀 Iniciando llama-server...
+ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+  Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+  Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+
+system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+
+init: using 27 threads for HTTP server
+srv   load_models: Loaded 0 cached model presets
+srv   load_models: Loaded 1 custom model presets from ./models.ini
+srv   load_models: Available models (1) (*: custom preset)
+srv   load_models:   * qwen
+main: starting router server, no model will be loaded in this process
+start: binding port with default address family
+main: router server is listening on http://0.0.0.0:11435
+main: NOTE: router mode is experimental
+main:       it is not recommended to use this mode in untrusted environments
+🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
+srv          load: spawning server instance with name=qwen on port 47335
+srv          load: spawning server instance with args:
+srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   --host
+srv          load:   127.0.0.1
+srv          load:   --jinja
+srv          load:   --metrics
+srv          load:   --min-p
+srv          load:   0.0
+srv          load:   --no-mmap
+srv          load:   --port
+srv          load:   47335
+srv          load:   --slot-save-path
+srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   --temperature
+srv          load:   0.6
+srv          load:   --top-k
+srv          load:   20
+srv          load:   --top-p
+srv          load:   0.95
+srv          load:   --alias
+srv          load:   qwen
+srv          load:   --batch-size
+srv          load:   2048
+srv          load:   --ctx-size
+srv          load:   262144
+srv          load:   --cache-type-k
+srv          load:   turbo4
+srv          load:   --cache-type-v
+srv          load:   turbo4
+srv          load:   --flash-attn
+srv          load:   1
+srv          load:   --model
+srv          load:   Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf
+srv          load:   --parallel
+srv          load:   1
+srv          load:   --split-mode
+srv          load:   layer
+srv          load:   --ubatch-size
+srv          load:   2048
+srv  log_server_r: done request: POST /models/load 127.0.0.1 200
+✅ ¡Modelos pre-cargados y listos para OpenClaw!
+[47335] ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+[47335]   Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+[47335]   Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+[47335] system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+[47335] 
+[47335] system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+[47335] 
+[47335] init: using 27 threads for HTTP server
+[47335] start: binding port with default address family
+[47335] main: loading model
+[47335] srv    load_model: loading model 'Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf'
+[47335] common_init_result: fitting params to device memory, for bugs during this step try to reproduce them with -fit off, or provide --verbose logs if the bug only occurs with -fit on
+[47335] llama_params_fit_impl: projected memory use with initial parameters [MiB]:
+[47335] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti):  11165 total,  19819 used,  -8826 free vs. target of   1024
+[47335] llama_params_fit_impl:   - CUDA1 (NVIDIA GeForce GTX 1080 Ti):  11165 total,  16136 used,  -5138 free vs. target of   1024
+[47335] llama_params_fit_impl: projected to use 35956 MiB of device memory vs. 21990 MiB of free device memory
+[47335] llama_params_fit_impl: cannot meet free memory targets on all devices, need to use 16013 MiB less in total
+[47335] llama_params_fit_impl: context size set by user to 262144 -> no change
+[47335] llama_params_fit_impl: with only dense weights in device memory there is a total surplus of 11869 MiB
+[47335] llama_params_fit_impl: filling dense-only layers back-to-front:
+[47335] llama_params_fit_impl:   - CUDA1 (NVIDIA GeForce GTX 1080 Ti): 41 layers,   6497 MiB used,   4499 MiB free
+[47335] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti):  0 layers,    499 MiB used,  10493 MiB free
+[47335] llama_params_fit_impl: converting dense-only layers to full layers and filling them front-to-back with overflow to next device/system memory:
+[47335] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti): 15 layers ( 0 overflowing),   9826 MiB used,   1167 MiB free
+[47335] llama_params_fit_impl:   - CUDA1 (NVIDIA GeForce GTX 1080 Ti): 26 layers ( 8 overflowing),   9871 MiB used,   1126 MiB free
+[47335] llama_params_fit: successfully fit params to free device memory
+[47335] llama_params_fit: fitting params to free memory took 15.81 seconds
+[47335] llama_model_load_from_file_impl: using device CUDA0 (NVIDIA GeForce GTX 1080 Ti) (0000:09:00.0) - 11027 MiB free
+[47335] llama_model_load_from_file_impl: using device CUDA1 (NVIDIA GeForce GTX 1080 Ti) (0000:0a:00.0) - 11027 MiB free
+[47335] llama_model_loader: loaded meta data with 51 key-value pairs and 733 tensors from Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf (version GGUF V3 (latest))
+[47335] llama_model_loader: Dumping metadata keys/values. Note: KV overrides do not apply in this output.
+[47335] llama_model_loader: - kv   0:                       general.architecture str              = qwen35moe
+[47335] llama_model_loader: - kv   1:                               general.type str              = model
+[47335] llama_model_loader: - kv   2:                               general.name str              = Safetensors
+[47335] llama_model_loader: - kv   3:                         general.size_label str              = 256x2.6B
+[47335] llama_model_loader: - kv   4:                            general.license str              = apache-2.0
+[47335] llama_model_loader: - kv   5:                   general.base_model.count u32              = 1
+[47335] llama_model_loader: - kv   6:                  general.base_model.0.name str              = Qwen3.6 35B A3B
+[47335] llama_model_loader: - kv   7:          general.base_model.0.organization str              = Qwen
+[47335] llama_model_loader: - kv   8:              general.base_model.0.repo_url str              = https://huggingface.co/Qwen/Qwen3.6-3...
+[47335] llama_model_loader: - kv   9:                      general.dataset.count u32              = 1
+[47335] llama_model_loader: - kv  10:                     general.dataset.0.name str              = Reasoning Distill Opus 4 7 Max Sft
+[47335] llama_model_loader: - kv  11:             general.dataset.0.organization str              = Lordx64
+[47335] llama_model_loader: - kv  12:                 general.dataset.0.repo_url str              = https://huggingface.co/lordx64/reason...
+[47335] llama_model_loader: - kv  13:                               general.tags arr[str,11]      = ["text-generation", "reasoning", "dis...
+[47335] llama_model_loader: - kv  14:                          general.languages arr[str,1]       = ["en"]
+[47335] llama_model_loader: - kv  15:                      qwen35moe.block_count u32              = 40
+[47335] llama_model_loader: - kv  16:                   qwen35moe.context_length u32              = 262144
+[47335] llama_model_loader: - kv  17:                 qwen35moe.embedding_length u32              = 2048
+[47335] llama_model_loader: - kv  18:             qwen35moe.attention.head_count u32              = 16
+[47335] llama_model_loader: - kv  19:          qwen35moe.attention.head_count_kv u32              = 2
+[47335] llama_model_loader: - kv  20:          qwen35moe.rope.dimension_sections arr[i32,4]       = [11, 11, 10, 0]
+[47335] llama_model_loader: - kv  21:                   qwen35moe.rope.freq_base f32              = 10000000.000000
+[47335] llama_model_loader: - kv  22: qwen35moe.attention.layer_norm_rms_epsilon f32              = 0.000001
+[47335] llama_model_loader: - kv  23:                     qwen35moe.expert_count u32              = 256
+[47335] llama_model_loader: - kv  24:                qwen35moe.expert_used_count u32              = 8
+[47335] llama_model_loader: - kv  25:             qwen35moe.attention.key_length u32              = 256
+[47335] llama_model_loader: - kv  26:           qwen35moe.attention.value_length u32              = 256
+[47335] llama_model_loader: - kv  27:       qwen35moe.expert_feed_forward_length u32              = 512
+[47335] llama_model_loader: - kv  28: qwen35moe.expert_shared_feed_forward_length u32              = 512
+[47335] llama_model_loader: - kv  29:                  qwen35moe.ssm.conv_kernel u32              = 4
+[47335] llama_model_loader: - kv  30:                   qwen35moe.ssm.state_size u32              = 128
+[47335] llama_model_loader: - kv  31:                  qwen35moe.ssm.group_count u32              = 16
+[47335] llama_model_loader: - kv  32:               qwen35moe.ssm.time_step_rank u32              = 32
+[47335] llama_model_loader: - kv  33:                   qwen35moe.ssm.inner_size u32              = 4096
+[47335] llama_model_loader: - kv  34:          qwen35moe.full_attention_interval u32              = 4
+[47335] llama_model_loader: - kv  35:             qwen35moe.rope.dimension_count u32              = 64
+[47335] llama_model_loader: - kv  36:                       tokenizer.ggml.model str              = gpt2
+[47335] llama_model_loader: - kv  37:                         tokenizer.ggml.pre str              = qwen35
+[47335] llama_model_loader: - kv  38:                      tokenizer.ggml.tokens arr[str,248320]  = ["!", "\"", "#", "$", "%", "&", "'", ...
+[47335] llama_model_loader: - kv  39:                  tokenizer.ggml.token_type arr[i32,248320]  = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+[47335] llama_model_loader: - kv  40:                      tokenizer.ggml.merges arr[str,247587]  = ["Ġ Ġ", "ĠĠ ĠĠ", "i n", "Ġ t",...
+[47335] llama_model_loader: - kv  41:                tokenizer.ggml.eos_token_id u32              = 248046
+[47335] llama_model_loader: - kv  42:            tokenizer.ggml.padding_token_id u32              = 248055
+[47335] llama_model_loader: - kv  43:                tokenizer.ggml.bos_token_id u32              = 248044
+[47335] llama_model_loader: - kv  44:                    tokenizer.chat_template str              = {%- set image_count = namespace(value...
+[47335] llama_model_loader: - kv  45:               general.quantization_version u32              = 2
+[47335] llama_model_loader: - kv  46:                          general.file_type u32              = 15
+[47335] llama_model_loader: - kv  47:                      quantize.imatrix.file str              = /home/ubuntu/work/apex/qwen36_opus47_...
+[47335] llama_model_loader: - kv  48:                   quantize.imatrix.dataset str              = /home/mudler/autoresearch-quant/calib...
+[47335] llama_model_loader: - kv  49:             quantize.imatrix.entries_count u32              = 510
+[47335] llama_model_loader: - kv  50:              quantize.imatrix.chunks_count u32              = 2820
+[47335] llama_model_loader: - type  f32:  301 tensors
+[47335] llama_model_loader: - type q3_K:   90 tensors
+[47335] llama_model_loader: - type q4_K:  191 tensors
+[47335] llama_model_loader: - type q6_K:  151 tensors
+[47335] print_info: file format = GGUF V3 (latest)
+[47335] print_info: file type   = Q4_K - Medium
+[47335] print_info: file size   = 16.10 GiB (3.99 BPW) 
+[47335] load: 0 unused tokens
+[47335] load: printing all EOG tokens:
+[47335] load:   - 248044 ('<|endoftext|>')
+[47335] load:   - 248046 ('<|im_end|>')
+[47335] load:   - 248063 ('<|fim_pad|>')
+[47335] load:   - 248064 ('<|repo_name|>')
+[47335] load:   - 248065 ('<|file_sep|>')
+[47335] load: special tokens cache size = 33
+[47335] load: token to piece cache size = 1.7581 MB
+[47335] print_info: arch                  = qwen35moe
+[47335] print_info: vocab_only            = 0
+[47335] print_info: no_alloc              = 0
+[47335] print_info: n_ctx_train           = 262144
+[47335] print_info: n_embd                = 2048
+[47335] print_info: n_embd_inp            = 2048
+[47335] print_info: n_layer               = 40
+[47335] print_info: n_head                = 16
+[47335] print_info: n_head_kv             = 2
+[47335] print_info: n_rot                 = 64
+[47335] print_info: n_swa                 = 0
+[47335] print_info: is_swa_any            = 0
+[47335] print_info: n_embd_head_k         = 256
+[47335] print_info: n_embd_head_v         = 256
+[47335] print_info: n_gqa                 = 8
+[47335] print_info: n_embd_k_gqa          = 512
+[47335] print_info: n_embd_v_gqa          = 512
+[47335] print_info: f_norm_eps            = 0.0e+00
+[47335] print_info: f_norm_rms_eps        = 1.0e-06
+[47335] print_info: f_clamp_kqv           = 0.0e+00
+[47335] print_info: f_max_alibi_bias      = 0.0e+00
+[47335] print_info: f_logit_scale         = 0.0e+00
+[47335] print_info: f_attn_scale          = 0.0e+00
+[47335] print_info: n_ff                  = 0
+[47335] print_info: n_expert              = 256
+[47335] print_info: n_expert_used         = 8
+[47335] print_info: n_expert_groups       = 0
+[47335] print_info: n_group_used          = 0
+[47335] print_info: causal attn           = 1
+[47335] print_info: pooling type          = -1
+[47335] print_info: rope type             = 40
+[47335] print_info: rope scaling          = linear
+[47335] print_info: freq_base_train       = 10000000.0
+[47335] print_info: freq_scale_train      = 1
+[47335] print_info: n_ctx_orig_yarn       = 262144
+[47335] print_info: rope_yarn_log_mul     = 0.0000
+[47335] print_info: rope_finetuned        = unknown
+[47335] print_info: mrope sections        = [11, 11, 10, 0]
+[47335] print_info: ssm_d_conv            = 4
+[47335] print_info: ssm_d_inner           = 4096
+[47335] print_info: ssm_d_state           = 128
+[47335] print_info: ssm_dt_rank           = 32
+[47335] print_info: ssm_n_group           = 16
+[47335] print_info: ssm_dt_b_c_rms        = 0
+[47335] print_info: model type            = 35B.A3B
+[47335] print_info: model params          = 34.66 B
+[47335] print_info: general.name          = Safetensors
+[47335] print_info: vocab type            = BPE
+[47335] print_info: n_vocab               = 248320
+[47335] print_info: n_merges              = 247587
+[47335] print_info: BOS token             = 248044 '<|endoftext|>'
+[47335] print_info: EOS token             = 248046 '<|im_end|>'
+[47335] print_info: EOT token             = 248046 '<|im_end|>'
+[47335] print_info: PAD token             = 248055 '<|vision_pad|>'
+[47335] print_info: LF token              = 198 'Ċ'
+[47335] print_info: FIM PRE token         = 248060 '<|fim_prefix|>'
+[47335] print_info: FIM SUF token         = 248062 '<|fim_suffix|>'
+[47335] print_info: FIM MID token         = 248061 '<|fim_middle|>'
+[47335] print_info: FIM PAD token         = 248063 '<|fim_pad|>'
+[47335] print_info: FIM REP token         = 248064 '<|repo_name|>'
+[47335] print_info: FIM SEP token         = 248065 '<|file_sep|>'
+[47335] print_info: EOG token             = 248044 '<|endoftext|>'
+[47335] print_info: EOG token             = 248046 '<|im_end|>'
+[47335] print_info: EOG token             = 248063 '<|fim_pad|>'
+[47335] print_info: EOG token             = 248064 '<|repo_name|>'
+[47335] print_info: EOG token             = 248065 '<|file_sep|>'
+[47335] print_info: max token length      = 256
+[47335] load_tensors: loading model tensors, this can take a while... (mmap = false, direct_io = false)
+[47335] load_tensors: offloading output layer to GPU
+[47335] load_tensors: offloading 39 repeating layers to GPU
+[47335] load_tensors: offloaded 41/41 layers to GPU
+[47335] load_tensors:          CPU model buffer size =   272.81 MiB
+[47335] load_tensors:        CUDA0 model buffer size =  6144.76 MiB
+[47335] load_tensors:        CUDA1 model buffer size =  6909.45 MiB
+[47335] load_tensors:    CUDA_Host model buffer size =  3154.47 MiB
+
+=== 2026-05-06T00:25:49.933Z START llama-b trigger=healthcheck ===
+🚀 Iniciando llama-server...
+ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+  Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+  Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+
+system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+
+init: using 27 threads for HTTP server
+srv   load_models: Loaded 0 cached model presets
+srv   load_models: Loaded 1 custom model presets from ./models.ini
+srv   load_models: Available models (1) (*: custom preset)
+srv   load_models:   * qwen
+main: starting router server, no model will be loaded in this process
+start: binding port with default address family
+main: router server is listening on http://0.0.0.0:11435
+main: NOTE: router mode is experimental
+main:       it is not recommended to use this mode in untrusted environments
+🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
+srv          load: spawning server instance with name=qwen on port 54399
+srv          load: spawning server instance with args:
+srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   --host
+srv          load:   127.0.0.1
+srv          load:   --jinja
+srv          load:   --metrics
+srv          load:   --min-p
+srv          load:   0.0
+srv          load:   --no-mmap
+srv          load:   --port
+srv          load:   54399
+srv          load:   --slot-save-path
+srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   --temperature
+srv          load:   0.6
+srv          load:   --top-k
+srv          load:   20
+srv          load:   --top-p
+srv          load:   0.95
+srv          load:   --alias
+srv          load:   qwen
+srv          load:   --batch-size
+srv          load:   2048
+srv          load:   --ctx-size
+srv          load:   262144
+srv          load:   --cache-type-k
+srv          load:   turbo4
+srv          load:   --cache-type-v
+srv          load:   turbo4
+srv          load:   --flash-attn
+srv          load:   1
+srv          load:   --model
+srv          load:   Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf
+srv          load:   --parallel
+srv          load:   1
+srv          load:   --split-mode
+srv          load:   layer
+srv          load:   --ubatch-size
+srv          load:   2048
+srv  log_server_r: done request: POST /models/load 127.0.0.1 200
+✅ ¡Modelos pre-cargados y listos para OpenClaw!
+[54399] ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+[54399]   Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+[54399]   Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+[54399] system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+[54399] 
+[54399] system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+[54399] 
+[54399] init: using 27 threads for HTTP server
+[54399] start: binding port with default address family
+[54399] main: loading model
+[54399] srv    load_model: loading model 'Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf'
+[54399] common_init_result: fitting params to device memory, for bugs during this step try to reproduce them with -fit off, or provide --verbose logs if the bug only occurs with -fit on
+[54399] llama_params_fit_impl: projected memory use with initial parameters [MiB]:
+[54399] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti):  11165 total,  19819 used,  -8962 free vs. target of   1024
+[54399] llama_params_fit_impl:   - CUDA1 (NVIDIA GeForce GTX 1080 Ti):  11165 total,  16136 used,  -5274 free vs. target of   1024
+[54399] llama_params_fit_impl: projected to use 35956 MiB of device memory vs. 21718 MiB of free device memory
+[54399] llama_params_fit_impl: cannot meet free memory targets on all devices, need to use 16285 MiB less in total
+[54399] llama_params_fit_impl: context size set by user to 262144 -> no change
+[54399] llama_params_fit_impl: with only dense weights in device memory there is a total surplus of 11597 MiB
+[54399] llama_params_fit_impl: filling dense-only layers back-to-front:
+[54399] llama_params_fit_impl:   - CUDA1 (NVIDIA GeForce GTX 1080 Ti): 41 layers,   6497 MiB used,   4363 MiB free
+[54399] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti):  0 layers,    499 MiB used,  10357 MiB free
+[54399] llama_params_fit_impl: converting dense-only layers to full layers and filling them front-to-back with overflow to next device/system memory:
+/home/daniel/Models/start_server2.sh: line 34:  6146 Killed                  llama-server --models-preset ./models.ini --port 11435 --host 0.0.0.0 --ctx-size 262144 -b 2048 -ub 2048 -sm layer --cache-type-k turbo4 --cache-type-v turbo4 -fa 1 -np 1 --metrics --no-mmap --slot-save-path /home/daniel/Models/ramdisk_cache
+
+=== 2026-05-06T00:25:58.817Z EXIT llama-b code=0 signal=none ===
+
+=== 2026-05-06T00:26:03.961Z START llama-b trigger=healthcheck ===
+🚀 Iniciando llama-server...
+ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+  Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+  Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+
+system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+
+init: using 27 threads for HTTP server
+srv   load_models: Loaded 0 cached model presets
+srv   load_models: Loaded 1 custom model presets from ./models.ini
+srv   load_models: Available models (1) (*: custom preset)
+srv   load_models:   * qwen
+main: starting router server, no model will be loaded in this process
+start: binding port with default address family
+main: router server is listening on http://0.0.0.0:11435
+main: NOTE: router mode is experimental
+main:       it is not recommended to use this mode in untrusted environments
+🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
+srv          load: spawning server instance with name=qwen on port 54369
+srv          load: spawning server instance with args:
+srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   --host
+srv          load:   127.0.0.1
+srv          load:   --jinja
+srv          load:   --metrics
+srv          load:   --min-p
+srv          load:   0.0
+srv          load:   --no-mmap
+srv          load:   --port
+srv          load:   54369
+srv          load:   --slot-save-path
+srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   --temperature
+srv          load:   0.6
+srv          load:   --top-k
+srv          load:   20
+srv          load:   --top-p
+srv          load:   0.95
+srv          load:   --alias
+srv          load:   qwen
+srv          load:   --batch-size
+srv          load:   2048
+srv          load:   --ctx-size
+srv          load:   262144
+srv          load:   --cache-type-k
+srv          load:   turbo4
+srv          load:   --cache-type-v
+srv          load:   turbo4
+srv          load:   --flash-attn
+srv          load:   1
+srv          load:   --model
+srv          load:   Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf
+srv          load:   --parallel
+srv          load:   1
+srv          load:   --split-mode
+srv          load:   layer
+srv          load:   --ubatch-size
+srv          load:   2048
+srv  log_server_r: done request: POST /models/load 127.0.0.1 200
+✅ ¡Modelos pre-cargados y listos para OpenClaw!
+[54369] ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+[54369]   Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+[54369]   Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+[54369] system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+[54369] 
+[54369] system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+[54369] 
+[54369] init: using 27 threads for HTTP server
+[54369] start: binding port with default address family
+[54369] main: loading model
+[54369] srv    load_model: loading model 'Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf'
+[54369] common_init_result: fitting params to device memory, for bugs during this step try to reproduce them with -fit off, or provide --verbose logs if the bug only occurs with -fit on
+[54369] llama_params_fit_impl: projected memory use with initial parameters [MiB]:
+[54369] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti):  11165 total,  19819 used,  -9098 free vs. target of   1024
+[54369] llama_params_fit_impl:   - CUDA1 (NVIDIA GeForce GTX 1080 Ti):  11165 total,  16136 used,  -5410 free vs. target of   1024
+[54369] llama_params_fit_impl: projected to use 35956 MiB of device memory vs. 21446 MiB of free device memory
+[54369] llama_params_fit_impl: cannot meet free memory targets on all devices, need to use 16557 MiB less in total
+[54369] llama_params_fit_impl: context size set by user to 262144 -> no change
+[54369] llama_params_fit_impl: with only dense weights in device memory there is a total surplus of 11325 MiB
+[54369] llama_params_fit_impl: filling dense-only layers back-to-front:
+[54369] llama_params_fit_impl:   - CUDA1 (NVIDIA GeForce GTX 1080 Ti): 41 layers,   6497 MiB used,   4227 MiB free
+[54369] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti):  0 layers,    499 MiB used,  10221 MiB free
+[54369] llama_params_fit_impl: converting dense-only layers to full layers and filling them front-to-back with overflow to next device/system memory:
+[54369] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti): 15 layers ( 1 overflowing),   9602 MiB used,   1118 MiB free
+[54369] llama_params_fit_impl:   - CUDA1 (NVIDIA GeForce GTX 1080 Ti): 26 layers (10 overflowing),   9658 MiB used,   1066 MiB free
+[54369] llama_params_fit: successfully fit params to free device memory
+[54369] llama_params_fit: fitting params to free memory took 13.89 seconds
+[54369] llama_model_load_from_file_impl: using device CUDA0 (NVIDIA GeForce GTX 1080 Ti) (0000:09:00.0) - 2427 MiB free
+[54369] llama_model_load_from_file_impl: using device CUDA1 (NVIDIA GeForce GTX 1080 Ti) (0000:0a:00.0) - 3945 MiB free
+[54369] llama_model_loader: loaded meta data with 51 key-value pairs and 733 tensors from Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf (version GGUF V3 (latest))
+[54369] llama_model_loader: Dumping metadata keys/values. Note: KV overrides do not apply in this output.
+[54369] llama_model_loader: - kv   0:                       general.architecture str              = qwen35moe
+[54369] llama_model_loader: - kv   1:                               general.type str              = model
+[54369] llama_model_loader: - kv   2:                               general.name str              = Safetensors
+[54369] llama_model_loader: - kv   3:                         general.size_label str              = 256x2.6B
+[54369] llama_model_loader: - kv   4:                            general.license str              = apache-2.0
+[54369] llama_model_loader: - kv   5:                   general.base_model.count u32              = 1
+[54369] llama_model_loader: - kv   6:                  general.base_model.0.name str              = Qwen3.6 35B A3B
+[54369] llama_model_loader: - kv   7:          general.base_model.0.organization str              = Qwen
+[54369] llama_model_loader: - kv   8:              general.base_model.0.repo_url str              = https://huggingface.co/Qwen/Qwen3.6-3...
+[54369] llama_model_loader: - kv   9:                      general.dataset.count u32              = 1
+[54369] llama_model_loader: - kv  10:                     general.dataset.0.name str              = Reasoning Distill Opus 4 7 Max Sft
+[54369] llama_model_loader: - kv  11:             general.dataset.0.organization str              = Lordx64
+[54369] llama_model_loader: - kv  12:                 general.dataset.0.repo_url str              = https://huggingface.co/lordx64/reason...
+[54369] llama_model_loader: - kv  13:                               general.tags arr[str,11]      = ["text-generation", "reasoning", "dis...
+[54369] llama_model_loader: - kv  14:                          general.languages arr[str,1]       = ["en"]
+[54369] llama_model_loader: - kv  15:                      qwen35moe.block_count u32              = 40
+[54369] llama_model_loader: - kv  16:                   qwen35moe.context_length u32              = 262144
+[54369] llama_model_loader: - kv  17:                 qwen35moe.embedding_length u32              = 2048
+[54369] llama_model_loader: - kv  18:             qwen35moe.attention.head_count u32              = 16
+[54369] llama_model_loader: - kv  19:          qwen35moe.attention.head_count_kv u32              = 2
+[54369] llama_model_loader: - kv  20:          qwen35moe.rope.dimension_sections arr[i32,4]       = [11, 11, 10, 0]
+[54369] llama_model_loader: - kv  21:                   qwen35moe.rope.freq_base f32              = 10000000.000000
+[54369] llama_model_loader: - kv  22: qwen35moe.attention.layer_norm_rms_epsilon f32              = 0.000001
+[54369] llama_model_loader: - kv  23:                     qwen35moe.expert_count u32              = 256
+[54369] llama_model_loader: - kv  24:                qwen35moe.expert_used_count u32              = 8
+[54369] llama_model_loader: - kv  25:             qwen35moe.attention.key_length u32              = 256
+[54369] llama_model_loader: - kv  26:           qwen35moe.attention.value_length u32              = 256
+[54369] llama_model_loader: - kv  27:       qwen35moe.expert_feed_forward_length u32              = 512
+[54369] llama_model_loader: - kv  28: qwen35moe.expert_shared_feed_forward_length u32              = 512
+[54369] llama_model_loader: - kv  29:                  qwen35moe.ssm.conv_kernel u32              = 4
+[54369] llama_model_loader: - kv  30:                   qwen35moe.ssm.state_size u32              = 128
+[54369] llama_model_loader: - kv  31:                  qwen35moe.ssm.group_count u32              = 16
+[54369] llama_model_loader: - kv  32:               qwen35moe.ssm.time_step_rank u32              = 32
+[54369] llama_model_loader: - kv  33:                   qwen35moe.ssm.inner_size u32              = 4096
+[54369] llama_model_loader: - kv  34:          qwen35moe.full_attention_interval u32              = 4
+[54369] llama_model_loader: - kv  35:             qwen35moe.rope.dimension_count u32              = 64
+[54369] llama_model_loader: - kv  36:                       tokenizer.ggml.model str              = gpt2
+[54369] llama_model_loader: - kv  37:                         tokenizer.ggml.pre str              = qwen35
+[54369] llama_model_loader: - kv  38:                      tokenizer.ggml.tokens arr[str,248320]  = ["!", "\"", "#", "$", "%", "&", "'", ...
+[54369] llama_model_loader: - kv  39:                  tokenizer.ggml.token_type arr[i32,248320]  = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+[54369] llama_model_loader: - kv  40:                      tokenizer.ggml.merges arr[str,247587]  = ["Ġ Ġ", "ĠĠ ĠĠ", "i n", "Ġ t",...
+[54369] llama_model_loader: - kv  41:                tokenizer.ggml.eos_token_id u32              = 248046
+[54369] llama_model_loader: - kv  42:            tokenizer.ggml.padding_token_id u32              = 248055
+[54369] llama_model_loader: - kv  43:                tokenizer.ggml.bos_token_id u32              = 248044
+[54369] llama_model_loader: - kv  44:                    tokenizer.chat_template str              = {%- set image_count = namespace(value...
+[54369] llama_model_loader: - kv  45:               general.quantization_version u32              = 2
+[54369] llama_model_loader: - kv  46:                          general.file_type u32              = 15
+[54369] llama_model_loader: - kv  47:                      quantize.imatrix.file str              = /home/ubuntu/work/apex/qwen36_opus47_...
+[54369] llama_model_loader: - kv  48:                   quantize.imatrix.dataset str              = /home/mudler/autoresearch-quant/calib...
+[54369] llama_model_loader: - kv  49:             quantize.imatrix.entries_count u32              = 510
+[54369] llama_model_loader: - kv  50:              quantize.imatrix.chunks_count u32              = 2820
+[54369] llama_model_loader: - type  f32:  301 tensors
+[54369] llama_model_loader: - type q3_K:   90 tensors
+[54369] llama_model_loader: - type q4_K:  191 tensors
+[54369] llama_model_loader: - type q6_K:  151 tensors
+[54369] print_info: file format = GGUF V3 (latest)
+[54369] print_info: file type   = Q4_K - Medium
+[54369] print_info: file size   = 16.10 GiB (3.99 BPW) 
+[54369] load: 0 unused tokens
+[54369] load: printing all EOG tokens:
+[54369] load:   - 248044 ('<|endoftext|>')
+[54369] load:   - 248046 ('<|im_end|>')
+[54369] load:   - 248063 ('<|fim_pad|>')
+[54369] load:   - 248064 ('<|repo_name|>')
+[54369] load:   - 248065 ('<|file_sep|>')
+[54369] load: special tokens cache size = 33
+[54369] load: token to piece cache size = 1.7581 MB
+[54369] print_info: arch                  = qwen35moe
+[54369] print_info: vocab_only            = 0
+[54369] print_info: no_alloc              = 0
+[54369] print_info: n_ctx_train           = 262144
+[54369] print_info: n_embd                = 2048
+[54369] print_info: n_embd_inp            = 2048
+[54369] print_info: n_layer               = 40
+[54369] print_info: n_head                = 16
+[54369] print_info: n_head_kv             = 2
+[54369] print_info: n_rot                 = 64
+[54369] print_info: n_swa                 = 0
+[54369] print_info: is_swa_any            = 0
+[54369] print_info: n_embd_head_k         = 256
+[54369] print_info: n_embd_head_v         = 256
+[54369] print_info: n_gqa                 = 8
+[54369] print_info: n_embd_k_gqa          = 512
+[54369] print_info: n_embd_v_gqa          = 512
+[54369] print_info: f_norm_eps            = 0.0e+00
+[54369] print_info: f_norm_rms_eps        = 1.0e-06
+[54369] print_info: f_clamp_kqv           = 0.0e+00
+[54369] print_info: f_max_alibi_bias      = 0.0e+00
+[54369] print_info: f_logit_scale         = 0.0e+00
+[54369] print_info: f_attn_scale          = 0.0e+00
+[54369] print_info: n_ff                  = 0
+[54369] print_info: n_expert              = 256
+[54369] print_info: n_expert_used         = 8
+[54369] print_info: n_expert_groups       = 0
+[54369] print_info: n_group_used          = 0
+[54369] print_info: causal attn           = 1
+[54369] print_info: pooling type          = -1
+[54369] print_info: rope type             = 40
+[54369] print_info: rope scaling          = linear
+[54369] print_info: freq_base_train       = 10000000.0
+[54369] print_info: freq_scale_train      = 1
+[54369] print_info: n_ctx_orig_yarn       = 262144
+[54369] print_info: rope_yarn_log_mul     = 0.0000
+[54369] print_info: rope_finetuned        = unknown
+[54369] print_info: mrope sections        = [11, 11, 10, 0]
+[54369] print_info: ssm_d_conv            = 4
+[54369] print_info: ssm_d_inner           = 4096
+[54369] print_info: ssm_d_state           = 128
+[54369] print_info: ssm_dt_rank           = 32
+[54369] print_info: ssm_n_group           = 16
+[54369] print_info: ssm_dt_b_c_rms        = 0
+[54369] print_info: model type            = 35B.A3B
+[54369] print_info: model params          = 34.66 B
+[54369] print_info: general.name          = Safetensors
+[54369] print_info: vocab type            = BPE
+[54369] print_info: n_vocab               = 248320
+[54369] print_info: n_merges              = 247587
+[54369] print_info: BOS token             = 248044 '<|endoftext|>'
+[54369] print_info: EOS token             = 248046 '<|im_end|>'
+[54369] print_info: EOT token             = 248046 '<|im_end|>'
+[54369] print_info: PAD token             = 248055 '<|vision_pad|>'
+[54369] print_info: LF token              = 198 'Ċ'
+[54369] print_info: FIM PRE token         = 248060 '<|fim_prefix|>'
+[54369] print_info: FIM SUF token         = 248062 '<|fim_suffix|>'
+[54369] print_info: FIM MID token         = 248061 '<|fim_middle|>'
+[54369] print_info: FIM PAD token         = 248063 '<|fim_pad|>'
+[54369] print_info: FIM REP token         = 248064 '<|repo_name|>'
+[54369] print_info: FIM SEP token         = 248065 '<|file_sep|>'
+[54369] print_info: EOG token             = 248044 '<|endoftext|>'
+[54369] print_info: EOG token             = 248046 '<|im_end|>'
+[54369] print_info: EOG token             = 248063 '<|fim_pad|>'
+[54369] print_info: EOG token             = 248064 '<|repo_name|>'
+[54369] print_info: EOG token             = 248065 '<|file_sep|>'
+[54369] print_info: max token length      = 256
+[54369] load_tensors: loading model tensors, this can take a while... (mmap = false, direct_io = false)
+[54369] ggml_backend_cuda_buffer_type_alloc_buffer: allocating 5921.12 MiB on device 0: cudaMalloc failed: out of memory
+[54369] alloc_tensor_range: failed to allocate CUDA0 buffer of size 6208740352
+[54369] llama_model_load: error loading model: unable to allocate CUDA0 buffer
+[54369] llama_model_load_from_file_impl: failed to load model
+[54369] common_init_from_params: failed to load model 'Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf'
+[54369] srv    load_model: failed to load model, 'Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf'
+[54369] srv    operator(): operator(): cleaning up before exit...
+[54369] main: exiting due to model loading error
+
+=== 2026-05-06T00:27:03.331Z START llama-b trigger=healthcheck ===
+🚀 Iniciando llama-server...
+ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+  Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+  Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+
+system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+
+init: using 27 threads for HTTP server
+srv   load_models: Loaded 0 cached model presets
+srv   load_models: Loaded 1 custom model presets from ./models.ini
+srv   load_models: Available models (1) (*: custom preset)
+srv   load_models:   * qwen
+main: starting router server, no model will be loaded in this process
+start: binding port with default address family
+main: router server is listening on http://0.0.0.0:11435
+main: NOTE: router mode is experimental
+main:       it is not recommended to use this mode in untrusted environments
+🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
+srv          load: spawning server instance with name=qwen on port 36289
+srv          load: spawning server instance with args:
+srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   --host
+srv          load:   127.0.0.1
+srv          load:   --jinja
+srv          load:   --metrics
+srv          load:   --min-p
+srv          load:   0.0
+srv          load:   --no-mmap
+srv          load:   --port
+srv          load:   36289
+srv          load:   --slot-save-path
+srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   --temperature
+srv          load:   0.6
+srv          load:   --top-k
+srv          load:   20
+srv          load:   --top-p
+srv          load:   0.95
+srv          load:   --alias
+srv          load:   qwen
+srv          load:   --batch-size
+srv          load:   2048
+srv          load:   --ctx-size
+srv          load:   262144
+srv          load:   --cache-type-k
+srv          load:   turbo4
+srv          load:   --cache-type-v
+srv          load:   turbo4
+srv          load:   --flash-attn
+srv          load:   1
+srv          load:   --model
+srv          load:   Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf
+srv          load:   --parallel
+srv          load:   1
+srv          load:   --split-mode
+srv          load:   layer
+srv          load:   --ubatch-size
+srv          load:   2048
+srv  log_server_r: done request: POST /models/load 127.0.0.1 200
+✅ ¡Modelos pre-cargados y listos para OpenClaw!
+[36289] ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+[36289]   Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+[36289]   Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+[36289] system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+[36289] 
+[36289] system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+[36289] 
+[36289] init: using 27 threads for HTTP server
+[36289] start: binding port with default address family
+[36289] main: loading model
+[36289] srv    load_model: loading model 'Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf'
+[36289] common_init_result: fitting params to device memory, for bugs during this step try to reproduce them with -fit off, or provide --verbose logs if the bug only occurs with -fit on
+[36289] llama_params_fit_impl: projected memory use with initial parameters [MiB]:
+[36289] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti):  11165 total,  19819 used,  -8826 free vs. target of   1024
+[36289] llama_params_fit_impl:   - CUDA1 (NVIDIA GeForce GTX 1080 Ti):  11165 total,  16136 used,  -5138 free vs. target of   1024
+[36289] llama_params_fit_impl: projected to use 35956 MiB of device memory vs. 21990 MiB of free device memory
+[36289] llama_params_fit_impl: cannot meet free memory targets on all devices, need to use 16013 MiB less in total
+[36289] llama_params_fit_impl: context size set by user to 262144 -> no change
+[36289] llama_params_fit_impl: with only dense weights in device memory there is a total surplus of 11869 MiB
+[36289] llama_params_fit_impl: filling dense-only layers back-to-front:
+[36289] llama_params_fit_impl:   - CUDA1 (NVIDIA GeForce GTX 1080 Ti): 41 layers,   6497 MiB used,   4499 MiB free
+[36289] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti):  0 layers,    499 MiB used,  10493 MiB free
+[36289] llama_params_fit_impl: converting dense-only layers to full layers and filling them front-to-back with overflow to next device/system memory:
+[36289] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti): 15 layers ( 0 overflowing),   9826 MiB used,   1167 MiB free
+[36289] llama_params_fit_impl:   - CUDA1 (NVIDIA GeForce GTX 1080 Ti): 26 layers ( 8 overflowing),   9871 MiB used,   1126 MiB free
+[36289] llama_params_fit: successfully fit params to free device memory
+[36289] llama_params_fit: fitting params to free memory took 15.69 seconds
+[36289] llama_model_load_from_file_impl: using device CUDA0 (NVIDIA GeForce GTX 1080 Ti) (0000:09:00.0) - 11027 MiB free
+[36289] llama_model_load_from_file_impl: using device CUDA1 (NVIDIA GeForce GTX 1080 Ti) (0000:0a:00.0) - 11027 MiB free
+[36289] llama_model_loader: loaded meta data with 51 key-value pairs and 733 tensors from Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf (version GGUF V3 (latest))
+[36289] llama_model_loader: Dumping metadata keys/values. Note: KV overrides do not apply in this output.
+[36289] llama_model_loader: - kv   0:                       general.architecture str              = qwen35moe
+[36289] llama_model_loader: - kv   1:                               general.type str              = model
+[36289] llama_model_loader: - kv   2:                               general.name str              = Safetensors
+[36289] llama_model_loader: - kv   3:                         general.size_label str              = 256x2.6B
+[36289] llama_model_loader: - kv   4:                            general.license str              = apache-2.0
+[36289] llama_model_loader: - kv   5:                   general.base_model.count u32              = 1
+[36289] llama_model_loader: - kv   6:                  general.base_model.0.name str              = Qwen3.6 35B A3B
+[36289] llama_model_loader: - kv   7:          general.base_model.0.organization str              = Qwen
+[36289] llama_model_loader: - kv   8:              general.base_model.0.repo_url str              = https://huggingface.co/Qwen/Qwen3.6-3...
+[36289] llama_model_loader: - kv   9:                      general.dataset.count u32              = 1
+[36289] llama_model_loader: - kv  10:                     general.dataset.0.name str              = Reasoning Distill Opus 4 7 Max Sft
+[36289] llama_model_loader: - kv  11:             general.dataset.0.organization str              = Lordx64
+[36289] llama_model_loader: - kv  12:                 general.dataset.0.repo_url str              = https://huggingface.co/lordx64/reason...
+[36289] llama_model_loader: - kv  13:                               general.tags arr[str,11]      = ["text-generation", "reasoning", "dis...
+[36289] llama_model_loader: - kv  14:                          general.languages arr[str,1]       = ["en"]
+[36289] llama_model_loader: - kv  15:                      qwen35moe.block_count u32              = 40
+[36289] llama_model_loader: - kv  16:                   qwen35moe.context_length u32              = 262144
+[36289] llama_model_loader: - kv  17:                 qwen35moe.embedding_length u32              = 2048
+[36289] llama_model_loader: - kv  18:             qwen35moe.attention.head_count u32              = 16
+[36289] llama_model_loader: - kv  19:          qwen35moe.attention.head_count_kv u32              = 2
+[36289] llama_model_loader: - kv  20:          qwen35moe.rope.dimension_sections arr[i32,4]       = [11, 11, 10, 0]
+[36289] llama_model_loader: - kv  21:                   qwen35moe.rope.freq_base f32              = 10000000.000000
+[36289] llama_model_loader: - kv  22: qwen35moe.attention.layer_norm_rms_epsilon f32              = 0.000001
+[36289] llama_model_loader: - kv  23:                     qwen35moe.expert_count u32              = 256
+[36289] llama_model_loader: - kv  24:                qwen35moe.expert_used_count u32              = 8
+[36289] llama_model_loader: - kv  25:             qwen35moe.attention.key_length u32              = 256
+[36289] llama_model_loader: - kv  26:           qwen35moe.attention.value_length u32              = 256
+[36289] llama_model_loader: - kv  27:       qwen35moe.expert_feed_forward_length u32              = 512
+[36289] llama_model_loader: - kv  28: qwen35moe.expert_shared_feed_forward_length u32              = 512
+[36289] llama_model_loader: - kv  29:                  qwen35moe.ssm.conv_kernel u32              = 4
+[36289] llama_model_loader: - kv  30:                   qwen35moe.ssm.state_size u32              = 128
+[36289] llama_model_loader: - kv  31:                  qwen35moe.ssm.group_count u32              = 16
+[36289] llama_model_loader: - kv  32:               qwen35moe.ssm.time_step_rank u32              = 32
+[36289] llama_model_loader: - kv  33:                   qwen35moe.ssm.inner_size u32              = 4096
+[36289] llama_model_loader: - kv  34:          qwen35moe.full_attention_interval u32              = 4
+[36289] llama_model_loader: - kv  35:             qwen35moe.rope.dimension_count u32              = 64
+[36289] llama_model_loader: - kv  36:                       tokenizer.ggml.model str              = gpt2
+[36289] llama_model_loader: - kv  37:                         tokenizer.ggml.pre str              = qwen35
+[36289] llama_model_loader: - kv  38:                      tokenizer.ggml.tokens arr[str,248320]  = ["!", "\"", "#", "$", "%", "&", "'", ...
+[36289] llama_model_loader: - kv  39:                  tokenizer.ggml.token_type arr[i32,248320]  = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+[36289] llama_model_loader: - kv  40:                      tokenizer.ggml.merges arr[str,247587]  = ["Ġ Ġ", "ĠĠ ĠĠ", "i n", "Ġ t",...
+[36289] llama_model_loader: - kv  41:                tokenizer.ggml.eos_token_id u32              = 248046
+[36289] llama_model_loader: - kv  42:            tokenizer.ggml.padding_token_id u32              = 248055
+[36289] llama_model_loader: - kv  43:                tokenizer.ggml.bos_token_id u32              = 248044
+[36289] llama_model_loader: - kv  44:                    tokenizer.chat_template str              = {%- set image_count = namespace(value...
+[36289] llama_model_loader: - kv  45:               general.quantization_version u32              = 2
+[36289] llama_model_loader: - kv  46:                          general.file_type u32              = 15
+[36289] llama_model_loader: - kv  47:                      quantize.imatrix.file str              = /home/ubuntu/work/apex/qwen36_opus47_...
+[36289] llama_model_loader: - kv  48:                   quantize.imatrix.dataset str              = /home/mudler/autoresearch-quant/calib...
+[36289] llama_model_loader: - kv  49:             quantize.imatrix.entries_count u32              = 510
+[36289] llama_model_loader: - kv  50:              quantize.imatrix.chunks_count u32              = 2820
+[36289] llama_model_loader: - type  f32:  301 tensors
+[36289] llama_model_loader: - type q3_K:   90 tensors
+[36289] llama_model_loader: - type q4_K:  191 tensors
+[36289] llama_model_loader: - type q6_K:  151 tensors
+[36289] print_info: file format = GGUF V3 (latest)
+[36289] print_info: file type   = Q4_K - Medium
+[36289] print_info: file size   = 16.10 GiB (3.99 BPW) 
+[36289] load: 0 unused tokens
+[36289] load: printing all EOG tokens:
+[36289] load:   - 248044 ('<|endoftext|>')
+[36289] load:   - 248046 ('<|im_end|>')
+[36289] load:   - 248063 ('<|fim_pad|>')
+[36289] load:   - 248064 ('<|repo_name|>')
+[36289] load:   - 248065 ('<|file_sep|>')
+[36289] load: special tokens cache size = 33
+[36289] load: token to piece cache size = 1.7581 MB
+[36289] print_info: arch                  = qwen35moe
+[36289] print_info: vocab_only            = 0
+[36289] print_info: no_alloc              = 0
+[36289] print_info: n_ctx_train           = 262144
+[36289] print_info: n_embd                = 2048
+[36289] print_info: n_embd_inp            = 2048
+[36289] print_info: n_layer               = 40
+[36289] print_info: n_head                = 16
+[36289] print_info: n_head_kv             = 2
+[36289] print_info: n_rot                 = 64
+[36289] print_info: n_swa                 = 0
+[36289] print_info: is_swa_any            = 0
+[36289] print_info: n_embd_head_k         = 256
+[36289] print_info: n_embd_head_v         = 256
+[36289] print_info: n_gqa                 = 8
+[36289] print_info: n_embd_k_gqa          = 512
+[36289] print_info: n_embd_v_gqa          = 512
+[36289] print_info: f_norm_eps            = 0.0e+00
+[36289] print_info: f_norm_rms_eps        = 1.0e-06
+[36289] print_info: f_clamp_kqv           = 0.0e+00
+[36289] print_info: f_max_alibi_bias      = 0.0e+00
+[36289] print_info: f_logit_scale         = 0.0e+00
+[36289] print_info: f_attn_scale          = 0.0e+00
+[36289] print_info: n_ff                  = 0
+[36289] print_info: n_expert              = 256
+[36289] print_info: n_expert_used         = 8
+[36289] print_info: n_expert_groups       = 0
+[36289] print_info: n_group_used          = 0
+[36289] print_info: causal attn           = 1
+[36289] print_info: pooling type          = -1
+[36289] print_info: rope type             = 40
+[36289] print_info: rope scaling          = linear
+[36289] print_info: freq_base_train       = 10000000.0
+[36289] print_info: freq_scale_train      = 1
+[36289] print_info: n_ctx_orig_yarn       = 262144
+[36289] print_info: rope_yarn_log_mul     = 0.0000
+[36289] print_info: rope_finetuned        = unknown
+[36289] print_info: mrope sections        = [11, 11, 10, 0]
+[36289] print_info: ssm_d_conv            = 4
+[36289] print_info: ssm_d_inner           = 4096
+[36289] print_info: ssm_d_state           = 128
+[36289] print_info: ssm_dt_rank           = 32
+[36289] print_info: ssm_n_group           = 16
+[36289] print_info: ssm_dt_b_c_rms        = 0
+[36289] print_info: model type            = 35B.A3B
+[36289] print_info: model params          = 34.66 B
+[36289] print_info: general.name          = Safetensors
+[36289] print_info: vocab type            = BPE
+[36289] print_info: n_vocab               = 248320
+[36289] print_info: n_merges              = 247587
+[36289] print_info: BOS token             = 248044 '<|endoftext|>'
+[36289] print_info: EOS token             = 248046 '<|im_end|>'
+[36289] print_info: EOT token             = 248046 '<|im_end|>'
+[36289] print_info: PAD token             = 248055 '<|vision_pad|>'
+[36289] print_info: LF token              = 198 'Ċ'
+[36289] print_info: FIM PRE token         = 248060 '<|fim_prefix|>'
+[36289] print_info: FIM SUF token         = 248062 '<|fim_suffix|>'
+[36289] print_info: FIM MID token         = 248061 '<|fim_middle|>'
+[36289] print_info: FIM PAD token         = 248063 '<|fim_pad|>'
+[36289] print_info: FIM REP token         = 248064 '<|repo_name|>'
+[36289] print_info: FIM SEP token         = 248065 '<|file_sep|>'
+[36289] print_info: EOG token             = 248044 '<|endoftext|>'
+[36289] print_info: EOG token             = 248046 '<|im_end|>'
+[36289] print_info: EOG token             = 248063 '<|fim_pad|>'
+[36289] print_info: EOG token             = 248064 '<|repo_name|>'
+[36289] print_info: EOG token             = 248065 '<|file_sep|>'
+[36289] print_info: max token length      = 256
+[36289] load_tensors: loading model tensors, this can take a while... (mmap = false, direct_io = false)
+[36289] load_tensors: offloading output layer to GPU
+[36289] load_tensors: offloading 39 repeating layers to GPU
+[36289] load_tensors: offloaded 41/41 layers to GPU
+[36289] load_tensors:          CPU model buffer size =   272.81 MiB
+[36289] load_tensors:        CUDA0 model buffer size =  6144.76 MiB
+[36289] load_tensors:        CUDA1 model buffer size =  6909.45 MiB
+[36289] load_tensors:    CUDA_Host model buffer size =  3154.47 MiB
+
+=== 2026-05-06T00:29:37.527Z START llama-b trigger=healthcheck ===
+🚀 Iniciando llama-server...
+ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+  Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+  Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+
+system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+
+init: using 27 threads for HTTP server
+srv   load_models: Loaded 0 cached model presets
+srv   load_models: Loaded 1 custom model presets from ./models.ini
+srv   load_models: Available models (1) (*: custom preset)
+srv   load_models:   * qwen
+main: starting router server, no model will be loaded in this process
+start: binding port with default address family
+main: router server is listening on http://0.0.0.0:11435
+main: NOTE: router mode is experimental
+main:       it is not recommended to use this mode in untrusted environments
+🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
+srv          load: spawning server instance with name=qwen on port 35921
+srv          load: spawning server instance with args:
+srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   --host
+srv          load:   127.0.0.1
+srv          load:   --jinja
+srv          load:   --metrics
+srv          load:   --min-p
+srv          load:   0.0
+srv          load:   --no-mmap
+srv          load:   --port
+srv          load:   35921
+srv          load:   --slot-save-path
+srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   --temperature
+srv          load:   0.6
+srv          load:   --top-k
+srv          load:   20
+srv          load:   --top-p
+srv          load:   0.95
+srv          load:   --alias
+srv          load:   qwen
+srv          load:   --batch-size
+srv          load:   2048
+srv          load:   --ctx-size
+srv          load:   262144
+srv          load:   --cache-type-k
+srv          load:   turbo4
+srv          load:   --cache-type-v
+srv          load:   turbo4
+srv          load:   --flash-attn
+srv          load:   1
+srv          load:   --model
+srv          load:   Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf
+srv          load:   --parallel
+srv          load:   2
+srv          load:   --split-mode
+srv          load:   layer
+srv          load:   --ubatch-size
+srv          load:   2048
+srv  log_server_r: done request: POST /models/load 127.0.0.1 200
+✅ ¡Modelos pre-cargados y listos para OpenClaw!
+[35921] ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+[35921]   Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+[35921]   Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+[35921] system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+[35921] 
+[35921] system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+[35921] 
+[35921] init: using 27 threads for HTTP server
+[35921] start: binding port with default address family
+[35921] main: loading model
+[35921] srv    load_model: loading model 'Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf'
+[35921] common_init_result: fitting params to device memory, for bugs during this step try to reproduce them with -fit off, or provide --verbose logs if the bug only occurs with -fit on
+[35921] llama_params_fit_impl: projected memory use with initial parameters [MiB]:
+[35921] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti):  11165 total,  15245 used,  -4286 free vs. target of   1024
+[35921] llama_params_fit_impl:   - CUDA1 (NVIDIA GeForce GTX 1080 Ti):  11165 total,  14117 used,  -3150 free vs. target of   1024
+[35921] llama_params_fit_impl: projected to use 29362 MiB of device memory vs. 21926 MiB of free device memory
+[35921] llama_params_fit_impl: cannot meet free memory targets on all devices, need to use 9484 MiB less in total
+[35921] llama_params_fit_impl: context size set by user to 262144 -> no change
+[35921] llama_params_fit_impl: with only dense weights in device memory there is a total surplus of 13278 MiB
+[35921] llama_params_fit_impl: filling dense-only layers back-to-front:
+[35921] llama_params_fit_impl:   - CUDA1 (NVIDIA GeForce GTX 1080 Ti): 41 layers,   5300 MiB used,   5666 MiB free
+[35921] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti):  0 layers,    499 MiB used,  10459 MiB free
+[35921] llama_params_fit_impl: converting dense-only layers to full layers and filling them front-to-back with overflow to next device/system memory:
+[35921] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti): 19 layers ( 0 overflowing),   9875 MiB used,   1084 MiB free
+[35921] llama_params_fit_impl:   - CUDA1 (NVIDIA GeForce GTX 1080 Ti): 22 layers ( 5 overflowing),   9814 MiB used,   1152 MiB free
+[35921] llama_params_fit: successfully fit params to free device memory
+[35921] llama_params_fit: fitting params to free memory took 14.95 seconds
+[35921] llama_model_load_from_file_impl: using device CUDA0 (NVIDIA GeForce GTX 1080 Ti) (0000:09:00.0) - 11027 MiB free
+[35921] llama_model_load_from_file_impl: using device CUDA1 (NVIDIA GeForce GTX 1080 Ti) (0000:0a:00.0) - 11027 MiB free
+[35921] llama_model_loader: loaded meta data with 51 key-value pairs and 733 tensors from Qwen3.6-35B-A3B-Claude-4.7-Opus-Reasoning-Distilled-APEX-I-Compact.gguf (version GGUF V3 (latest))
+[35921] llama_model_loader: Dumping metadata keys/values. Note: KV overrides do not apply in this output.
+[35921] llama_model_loader: - kv   0:                       general.architecture str              = qwen35moe
+[35921] llama_model_loader: - kv   1:                               general.type str              = model
+[35921] llama_model_loader: - kv   2:                               general.name str              = Safetensors
+[35921] llama_model_loader: - kv   3:                         general.size_label str              = 256x2.6B
+[35921] llama_model_loader: - kv   4:                            general.license str              = apache-2.0
+[35921] llama_model_loader: - kv   5:                   general.base_model.count u32              = 1
+[35921] llama_model_loader: - kv   6:                  general.base_model.0.name str              = Qwen3.6 35B A3B
+[35921] llama_model_loader: - kv   7:          general.base_model.0.organization str              = Qwen
+[35921] llama_model_loader: - kv   8:              general.base_model.0.repo_url str              = https://huggingface.co/Qwen/Qwen3.6-3...
+[35921] llama_model_loader: - kv   9:                      general.dataset.count u32              = 1
+[35921] llama_model_loader: - kv  10:                     general.dataset.0.name str              = Reasoning Distill Opus 4 7 Max Sft
+[35921] llama_model_loader: - kv  11:             general.dataset.0.organization str              = Lordx64
+[35921] llama_model_loader: - kv  12:                 general.dataset.0.repo_url str              = https://huggingface.co/lordx64/reason...
+[35921] llama_model_loader: - kv  13:                               general.tags arr[str,11]      = ["text-generation", "reasoning", "dis...
+[35921] llama_model_loader: - kv  14:                          general.languages arr[str,1]       = ["en"]
+[35921] llama_model_loader: - kv  15:                      qwen35moe.block_count u32              = 40
+[35921] llama_model_loader: - kv  16:                   qwen35moe.context_length u32              = 262144
+[35921] llama_model_loader: - kv  17:                 qwen35moe.embedding_length u32              = 2048
+[35921] llama_model_loader: - kv  18:             qwen35moe.attention.head_count u32              = 16
+[35921] llama_model_loader: - kv  19:          qwen35moe.attention.head_count_kv u32              = 2
+[35921] llama_model_loader: - kv  20:          qwen35moe.rope.dimension_sections arr[i32,4]       = [11, 11, 10, 0]
+[35921] llama_model_loader: - kv  21:                   qwen35moe.rope.freq_base f32              = 10000000.000000
+[35921] llama_model_loader: - kv  22: qwen35moe.attention.layer_norm_rms_epsilon f32              = 0.000001
+[35921] llama_model_loader: - kv  23:                     qwen35moe.expert_count u32              = 256
+[35921] llama_model_loader: - kv  24:                qwen35moe.expert_used_count u32              = 8
+[35921] llama_model_loader: - kv  25:             qwen35moe.attention.key_length u32              = 256
+[35921] llama_model_loader: - kv  26:           qwen35moe.attention.value_length u32              = 256
+[35921] llama_model_loader: - kv  27:       qwen35moe.expert_feed_forward_length u32              = 512
+[35921] llama_model_loader: - kv  28: qwen35moe.expert_shared_feed_forward_length u32              = 512
+[35921] llama_model_loader: - kv  29:                  qwen35moe.ssm.conv_kernel u32              = 4
+[35921] llama_model_loader: - kv  30:                   qwen35moe.ssm.state_size u32              = 128
+[35921] llama_model_loader: - kv  31:                  qwen35moe.ssm.group_count u32              = 16
+[35921] llama_model_loader: - kv  32:               qwen35moe.ssm.time_step_rank u32              = 32
+[35921] llama_model_loader: - kv  33:                   qwen35moe.ssm.inner_size u32              = 4096
+[35921] llama_model_loader: - kv  34:          qwen35moe.full_attention_interval u32              = 4
+[35921] llama_model_loader: - kv  35:             qwen35moe.rope.dimension_count u32              = 64
+[35921] llama_model_loader: - kv  36:                       tokenizer.ggml.model str              = gpt2
+[35921] llama_model_loader: - kv  37:                         tokenizer.ggml.pre str              = qwen35
+[35921] llama_model_loader: - kv  38:                      tokenizer.ggml.tokens arr[str,248320]  = ["!", "\"", "#", "$", "%", "&", "'", ...
+[35921] llama_model_loader: - kv  39:                  tokenizer.ggml.token_type arr[i32,248320]  = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+[35921] llama_model_loader: - kv  40:                      tokenizer.ggml.merges arr[str,247587]  = ["Ġ Ġ", "ĠĠ ĠĠ", "i n", "Ġ t",...
+[35921] llama_model_loader: - kv  41:                tokenizer.ggml.eos_token_id u32              = 248046
+[35921] llama_model_loader: - kv  42:            tokenizer.ggml.padding_token_id u32              = 248055
+[35921] llama_model_loader: - kv  43:                tokenizer.ggml.bos_token_id u32              = 248044
+[35921] llama_model_loader: - kv  44:                    tokenizer.chat_template str              = {%- set image_count = namespace(value...
+[35921] llama_model_loader: - kv  45:               general.quantization_version u32              = 2
+[35921] llama_model_loader: - kv  46:                          general.file_type u32              = 15
+[35921] llama_model_loader: - kv  47:                      quantize.imatrix.file str              = /home/ubuntu/work/apex/qwen36_opus47_...
+[35921] llama_model_loader: - kv  48:                   quantize.imatrix.dataset str              = /home/mudler/autoresearch-quant/calib...
+[35921] llama_model_loader: - kv  49:             quantize.imatrix.entries_count u32              = 510
+[35921] llama_model_loader: - kv  50:              quantize.imatrix.chunks_count u32              = 2820
+[35921] llama_model_loader: - type  f32:  301 tensors
+[35921] llama_model_loader: - type q3_K:   90 tensors
+[35921] llama_model_loader: - type q4_K:  191 tensors
+[35921] llama_model_loader: - type q6_K:  151 tensors
+[35921] print_info: file format = GGUF V3 (latest)
+[35921] print_info: file type   = Q4_K - Medium
+[35921] print_info: file size   = 16.10 GiB (3.99 BPW) 
+[35921] load: 0 unused tokens
+[35921] load: printing all EOG tokens:
+[35921] load:   - 248044 ('<|endoftext|>')
+[35921] load:   - 248046 ('<|im_end|>')
+[35921] load:   - 248063 ('<|fim_pad|>')
+[35921] load:   - 248064 ('<|repo_name|>')
+[35921] load:   - 248065 ('<|file_sep|>')
+[35921] load: special tokens cache size = 33
+[35921] load: token to piece cache size = 1.7581 MB
+[35921] print_info: arch                  = qwen35moe
+[35921] print_info: vocab_only            = 0
+[35921] print_info: no_alloc              = 0
+[35921] print_info: n_ctx_train           = 262144
+[35921] print_info: n_embd                = 2048
+[35921] print_info: n_embd_inp            = 2048
+[35921] print_info: n_layer               = 40
+[35921] print_info: n_head                = 16
+[35921] print_info: n_head_kv             = 2
+[35921] print_info: n_rot                 = 64
+[35921] print_info: n_swa                 = 0
+[35921] print_info: is_swa_any            = 0
+[35921] print_info: n_embd_head_k         = 256
+[35921] print_info: n_embd_head_v         = 256
+[35921] print_info: n_gqa                 = 8
+[35921] print_info: n_embd_k_gqa          = 512
+[35921] print_info: n_embd_v_gqa          = 512
+[35921] print_info: f_norm_eps            = 0.0e+00
+[35921] print_info: f_norm_rms_eps        = 1.0e-06
+[35921] print_info: f_clamp_kqv           = 0.0e+00
+[35921] print_info: f_max_alibi_bias      = 0.0e+00
+[35921] print_info: f_logit_scale         = 0.0e+00
+[35921] print_info: f_attn_scale          = 0.0e+00
+[35921] print_info: n_ff                  = 0
+[35921] print_info: n_expert              = 256
+[35921] print_info: n_expert_used         = 8
+[35921] print_info: n_expert_groups       = 0
+[35921] print_info: n_group_used          = 0
+[35921] print_info: causal attn           = 1
+[35921] print_info: pooling type          = -1
+[35921] print_info: rope type             = 40
+[35921] print_info: rope scaling          = linear
+[35921] print_info: freq_base_train       = 10000000.0
+[35921] print_info: freq_scale_train      = 1
+[35921] print_info: n_ctx_orig_yarn       = 262144
+[35921] print_info: rope_yarn_log_mul     = 0.0000
+[35921] print_info: rope_finetuned        = unknown
+[35921] print_info: mrope sections        = [11, 11, 10, 0]
+[35921] print_info: ssm_d_conv            = 4
+[35921] print_info: ssm_d_inner           = 4096
+[35921] print_info: ssm_d_state           = 128
+[35921] print_info: ssm_dt_rank           = 32
+[35921] print_info: ssm_n_group           = 16
+[35921] print_info: ssm_dt_b_c_rms        = 0
+[35921] print_info: model type            = 35B.A3B
+[35921] print_info: model params          = 34.66 B
+[35921] print_info: general.name          = Safetensors
+[35921] print_info: vocab type            = BPE
+[35921] print_info: n_vocab               = 248320
+[35921] print_info: n_merges              = 247587
+[35921] print_info: BOS token             = 248044 '<|endoftext|>'
+[35921] print_info: EOS token             = 248046 '<|im_end|>'
+[35921] print_info: EOT token             = 248046 '<|im_end|>'
+[35921] print_info: PAD token             = 248055 '<|vision_pad|>'
+[35921] print_info: LF token              = 198 'Ċ'
+[35921] print_info: FIM PRE token         = 248060 '<|fim_prefix|>'
+[35921] print_info: FIM SUF token         = 248062 '<|fim_suffix|>'
+[35921] print_info: FIM MID token         = 248061 '<|fim_middle|>'
+[35921] print_info: FIM PAD token         = 248063 '<|fim_pad|>'
+[35921] print_info: FIM REP token         = 248064 '<|repo_name|>'
+[35921] print_info: FIM SEP token         = 248065 '<|file_sep|>'
+[35921] print_info: EOG token             = 248044 '<|endoftext|>'
+[35921] print_info: EOG token             = 248046 '<|im_end|>'
+[35921] print_info: EOG token             = 248063 '<|fim_pad|>'
+[35921] print_info: EOG token             = 248064 '<|repo_name|>'
+[35921] print_info: EOG token             = 248065 '<|file_sep|>'
+[35921] print_info: max token length      = 256
+[35921] load_tensors: loading model tensors, this can take a while... (mmap = false, direct_io = false)
+[35921] load_tensors: offloading output layer to GPU
+[35921] load_tensors: offloading 39 repeating layers to GPU
+[35921] load_tensors: offloaded 41/41 layers to GPU
+[35921] load_tensors:          CPU model buffer size =   272.81 MiB
+[35921] load_tensors:        CUDA0 model buffer size =  7556.04 MiB
+[35921] load_tensors:        CUDA1 model buffer size =  6947.82 MiB
+[35921] load_tensors:    CUDA_Host model buffer size =  1704.82 MiB
+[35921] ..............................................................................................
+[35921] common_init_result: added <|endoftext|> logit bias = -inf
+[35921] common_init_result: added <|im_end|> logit bias = -inf
+[35921] common_init_result: added <|fim_pad|> logit bias = -inf
+[35921] common_init_result: added <|repo_name|> logit bias = -inf
+[35921] common_init_result: added <|file_sep|> logit bias = -inf
+[35921] llama_context: constructing llama_context
+[35921] llama_context: n_seq_max     = 2
+[35921] llama_context: n_ctx         = 262144
+[35921] llama_context: n_ctx_seq     = 131072
+[35921] llama_context: n_batch       = 2048
+[35921] llama_context: n_ubatch      = 2048
+[35921] llama_context: causal_attn   = 1
+[35921] llama_context: flash_attn    = enabled
+[35921] llama_context: kv_unified    = false
+[35921] llama_context: freq_base     = 10000000.0
+[35921] llama_context: freq_scale    = 1
+[35921] llama_context: n_ctx_seq (131072) < n_ctx_train (262144) -- the full capacity of the model will not be utilized
+[35921] llama_context:  CUDA_Host  output buffer size =     1.89 MiB
+[35921] llama_kv_cache:      CUDA0 KV buffer size =   544.13 MiB
+[35921] llama_kv_cache: TurboQuant rotation matrices initialized (128x128)
+[35921] llama_kv_cache:      CUDA1 KV buffer size =   816.00 MiB
+[35921] llama_kv_cache: TurboQuant rotation matrices initialized (128x128)
+[35921] llama_kv_cache: size = 1360.00 MiB (131072 cells,  10 layers,  2/2 seqs), K (turbo4):  680.00 MiB, V (turbo4):  680.00 MiB
+[35921] llama_kv_cache: upstream attention rotation disabled (TurboQuant uses kernel-level WHT)
+[35921] llama_kv_cache: attn_rot_k = 0
+[35921] llama_kv_cache: attn_rot_v = 0
+[35921] llama_memory_recurrent:      CUDA0 RS buffer size =    62.81 MiB
+[35921] llama_memory_recurrent:      CUDA1 RS buffer size =    62.81 MiB
+[35921] llama_memory_recurrent: size =  125.62 MiB (     2 cells,  40 layers,  2 seqs), R (f32):    5.62 MiB, S (f32):  120.00 MiB
+[35921] sched_reserve: reserving ...
+[35921] sched_reserve: resolving fused Gated Delta Net support:
+[35921] sched_reserve: fused Gated Delta Net (autoregressive) enabled
+[35921] sched_reserve: fused Gated Delta Net (chunked) enabled
+[35921] sched_reserve:      CUDA0 compute buffer size =  1712.06 MiB
+[35921] sched_reserve:      CUDA1 compute buffer size =  1988.00 MiB
+[35921] sched_reserve:  CUDA_Host compute buffer size =  1056.08 MiB
+[35921] sched_reserve: graph nodes  = 3769
+[35921] sched_reserve: graph splits = 43 (with bs=2048), 37 (with bs=1)
+[35921] sched_reserve: reserve took 704.54 ms, sched copies = 1
+[35921] common_init_from_params: warming up the model with an empty run - please wait ... (--no-warmup to disable)
+[35921] srv    load_model: initializing slots, n_slots = 2
+[35921] common_speculative_is_compat: the target context does not support partial sequence removal
+[35921] srv    load_model: speculative decoding not supported by this context
+[35921] slot   load_model: id  0 | task -1 | new slot, n_ctx = 131072
+[35921] slot   load_model: id  1 | task -1 | new slot, n_ctx = 131072
+[35921] srv    load_model: prompt cache is enabled, size limit: 8192 MiB
+[35921] srv    load_model: use `--cache-ram 0` to disable the prompt cache
+[35921] srv    load_model: for more info see https://github.com/ggml-org/llama.cpp/pull/16391
+[35921] srv          init: init: --clear-idle requires --kv-unified, disabling
+[35921] init: chat template, example_format: '<|im_start|>system
+[35921] You are a helpful assistant<|im_end|>
+[35921] <|im_start|>user
+[35921] Hello<|im_end|>
+[35921] <|im_start|>assistant
+[35921] Hi there<|im_end|>
+[35921] <|im_start|>user
+[35921] How are you?<|im_end|>
+[35921] <|im_start|>assistant
+[35921] <think>
+[35921] '
+[35921] srv          init: init: chat template, thinking = 1
+[35921] main: model loaded
+[35921] main: server is listening on http://127.0.0.1:35921
+[35921] main: starting the main loop...
+[35921] cmd_child_to_router:ready
+[35921] srv  update_slots: all slots are idle
+[35921] srv    operator(): child server monitoring thread started, waiting for EOF on stdin...

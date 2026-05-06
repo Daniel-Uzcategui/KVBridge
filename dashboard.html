@@ -3,331 +3,543 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KV Cache Semantic Router Dashboard</title>
+  <title>Mnemosyne Control Deck</title>
   <style>
     :root {
-      --bg: #0f172a;
-      --glass-bg: rgba(30, 41, 59, 0.7);
-      --glass-border: rgba(255, 255, 255, 0.1);
-      --accent: #38bdf8;
-      --accent-glow: rgba(56, 189, 248, 0.4);
-      --success: #10b981;
-      --warning: #f59e0b;
+      --bg: #08111f;
+      --panel: rgba(10, 19, 35, 0.78);
+      --panel-strong: rgba(6, 14, 28, 0.92);
+      --border: rgba(148, 163, 184, 0.16);
+      --text: #e5eefc;
+      --muted: #8fa3bf;
+      --accent: #4fd1c5;
+      --accent-soft: rgba(79, 209, 197, 0.12);
+      --warn: #f59e0b;
       --danger: #ef4444;
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
+      --success: #22c55e;
     }
-    
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
     body {
-      background-color: var(--bg);
-      background-image: 
-        radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.15), transparent 25%),
-        radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.15), transparent 25%);
-      color: var(--text);
       min-height: 100vh;
-      padding: 2rem;
+      background:
+        radial-gradient(circle at top left, rgba(79, 209, 197, 0.16), transparent 28%),
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.14), transparent 24%),
+        linear-gradient(180deg, #07101e, #091525 54%, #07101b 100%);
+      color: var(--text);
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      padding: 28px;
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 1380px;
       margin: 0 auto;
     }
 
     header {
-      margin-bottom: 2rem;
-      text-align: center;
-      animation: fadeInDown 0.8s ease-out;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: flex-end;
+      margin-bottom: 22px;
     }
 
     h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      background: linear-gradient(to right, #38bdf8, #8b5cf6);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 0.5rem;
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
     }
 
-    p.subtitle {
-      color: var(--text-muted);
-      font-size: 1.1rem;
+    .subtitle {
+      color: var(--muted);
+      font-size: 1rem;
     }
 
-    .glass-panel {
-      background: var(--glass-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--glass-border);
-      border-radius: 16px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .glass-panel:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .metric {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .metric-label {
-      color: var(--text-muted);
+    .stamp {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
       font-size: 0.9rem;
+    }
+
+    .metrics,
+    .backend-grid,
+    .slots-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .metrics {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      margin-bottom: 16px;
+    }
+
+    .backend-grid {
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      margin-bottom: 16px;
+    }
+
+    .slots-grid {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 18px;
+      backdrop-filter: blur(18px);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.24);
+    }
+
+    .metric-label,
+    .meta-label {
+      color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
     }
 
     .metric-value {
       font-size: 2rem;
-      font-weight: 600;
-      color: var(--text);
+      font-weight: 700;
+      margin-top: 8px;
     }
 
-    .progress-bar {
-      width: 100%;
-      height: 8px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 4px;
+    .subcopy {
+      color: var(--muted);
+      margin-top: 8px;
+      font-size: 0.92rem;
+    }
+
+    .progress {
+      margin-top: 12px;
+      height: 10px;
+      border-radius: 999px;
       overflow: hidden;
-      margin-top: 0.5rem;
+      background: rgba(255, 255, 255, 0.08);
     }
 
-    .progress-fill {
+    .progress > span {
+      display: block;
       height: 100%;
-      background: var(--accent);
-      border-radius: 4px;
-      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 0 10px var(--accent-glow);
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), #60a5fa);
     }
 
-    .slots-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
+    .section-title {
+      font-size: 1.15rem;
+      margin-bottom: 14px;
     }
 
-    .slot-card {
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      padding: 1rem;
+    .backend-card {
+      background: rgba(6, 14, 28, 0.72);
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 16px;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
-      position: relative;
-      overflow: hidden;
+      gap: 14px;
     }
 
-    .slot-status-indicator {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: var(--success);
-      transition: background-color 0.3s ease;
+    .backend-card.selected {
+      box-shadow: 0 0 0 1px rgba(79, 209, 197, 0.7);
     }
 
-    .slot-card.busy .slot-status-indicator {
-      background: var(--warning);
-    }
-
-    .slot-header {
+    .backend-head,
+    .slot-head,
+    .log-head {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
+      gap: 12px;
+      align-items: flex-start;
     }
 
-    .slot-title {
-      font-weight: 600;
-      color: var(--text);
-    }
-
-    .badge {
-      padding: 0.25rem 0.75rem;
-      border-radius: 9999px;
-      font-size: 0.75rem;
-      font-weight: 500;
-      background: rgba(16, 185, 129, 0.1);
-      color: var(--success);
-      border: 1px solid rgba(16, 185, 129, 0.2);
-    }
-
-    .slot-card.busy .badge {
-      background: rgba(245, 158, 11, 0.1);
-      color: var(--warning);
-      border-color: rgba(245, 158, 11, 0.2);
+    .backend-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 4px;
     }
 
     .mono {
-      font-family: 'JetBrains Mono', 'Fira Code', monospace;
-      font-size: 0.85rem;
-      color: var(--text-muted);
+      font-family: "IBM Plex Mono", "Fira Code", monospace;
+      color: #c3d3ea;
+      font-size: 0.84rem;
       word-break: break-all;
     }
 
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .badge-row,
+    .action-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
-    .pulse {
-      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    .badge {
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(34, 197, 94, 0.12);
+      color: #86efac;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: .5; }
+    .badge.warn {
+      background: rgba(245, 158, 11, 0.12);
+      color: #fcd34d;
+    }
+
+    .badge.danger {
+      background: rgba(239, 68, 68, 0.12);
+      color: #fca5a5;
+    }
+
+    .backend-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .meta-value {
+      margin-top: 5px;
+      color: var(--text);
+      font-size: 0.96rem;
+    }
+
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font: inherit;
+      font-weight: 700;
+      color: var(--text);
+      cursor: pointer;
+      background: var(--accent-soft);
+      transition: transform 0.18s ease, opacity 0.18s ease, background 0.18s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      background: rgba(79, 209, 197, 0.18);
+    }
+
+    button.warn {
+      background: rgba(245, 158, 11, 0.16);
+    }
+
+    button.danger {
+      background: rgba(239, 68, 68, 0.16);
+    }
+
+    button:disabled {
+      cursor: wait;
+      opacity: 0.45;
+      transform: none;
+    }
+
+    .slot-card {
+      background: rgba(6, 14, 28, 0.72);
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .slot-card.busy {
+      box-shadow: inset 3px 0 0 0 var(--warn);
+    }
+
+    .slot-card.idle {
+      box-shadow: inset 3px 0 0 0 var(--success);
+    }
+
+    .log-shell {
+      background: var(--panel-strong);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+    }
+
+    .log-head {
+      padding: 16px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .log-output {
+      min-height: 320px;
+      max-height: 460px;
+      overflow: auto;
+      padding: 18px;
+      white-space: pre-wrap;
+      line-height: 1.5;
+      color: #d4e4fb;
+      font-family: "IBM Plex Mono", "Fira Code", monospace;
+      font-size: 0.82rem;
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding: 18px;
+      }
+
+      header,
+      .backend-head,
+      .log-head {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .backend-meta {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
     <header>
-      <h1>KV Cache Router</h1>
-      <p class="subtitle">Real-time Telemetry & Orchestration</p>
+      <div>
+        <h1>Mnemosyne Control Deck</h1>
+        <p class="subtitle">Health, routing pressure, process control and recent llama-server output.</p>
+      </div>
+      <div class="stamp" id="last-refresh">Waiting for first refresh...</div>
     </header>
 
-    <div class="grid">
-      <div class="glass-panel metric">
-        <div class="metric-label">Max Tokens Observed</div>
-        <div class="metric-value" id="vram-val">0</div>
-        <div class="progress-bar">
-          <div class="progress-fill" id="vram-bar" style="width: 0%; background: #8b5cf6; box-shadow: 0 0 10px rgba(139, 92, 246, 0.4);"></div>
-        </div>
-      </div>
-      
-      <div class="glass-panel metric">
-        <div class="metric-label">L1 RAMDisk Capacity</div>
-        <div class="metric-value" id="l1-val">-- GB / 2.5 GB</div>
-        <div class="progress-bar">
-          <div class="progress-fill" id="l1-bar" style="width: 0%;"></div>
-        </div>
-      </div>
-
-      <div class="glass-panel metric">
+    <section class="metrics">
+      <div class="panel">
         <div class="metric-label">Router Queue</div>
         <div class="metric-value" id="queue-val">0</div>
-        <p class="metric-label" style="font-size:0.75rem; margin-top:0.5rem; text-transform:none;" id="queue-sub">All requests handling smoothly.</p>
+        <div class="subcopy" id="queue-sub">All requests handling smoothly.</div>
       </div>
-    </div>
+      <div class="panel">
+        <div class="metric-label">Max Tokens Observed</div>
+        <div class="metric-value" id="vram-val">0</div>
+        <div class="progress"><span id="vram-bar" style="width:0%"></span></div>
+      </div>
+      <div class="panel">
+        <div class="metric-label">L1 RAMDisk Capacity</div>
+        <div class="metric-value" id="l1-val">-- GB / 2.5 GB</div>
+        <div class="progress"><span id="l1-bar" style="width:0%"></span></div>
+      </div>
+      <div class="panel">
+        <div class="metric-label">Aggregate Throughput</div>
+        <div class="metric-value" id="tokens-eval">--</div>
+        <div class="subcopy">Prompt T/s: <span id="reqs-proc">--</span> · Predicted total: <span id="tokens-pred">--</span></div>
+      </div>
+    </section>
 
-    <div class="glass-panel" style="margin-bottom: 1.5rem;">
-      <h2 style="margin-bottom: 1rem; font-size: 1.25rem;">Active Hardware Slots (Llama.cpp)</h2>
-      <div class="slots-container" id="slots-container">
-        <!-- Rendered via JS -->
-      </div>
-    </div>
+    <section class="panel" style="margin-bottom:16px;">
+      <div class="section-title">Backend Processes</div>
+      <div class="backend-grid" id="backend-grid"></div>
+    </section>
 
-    <div class="glass-panel">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-        <h2 style="font-size: 1.25rem;">Llama.cpp Node Metrics</h2>
-        <span class="pulse" style="width: 8px; height: 8px; background: var(--success); border-radius: 50%; box-shadow: 0 0 8px var(--success);"></span>
+    <section class="panel" style="margin-bottom:16px;">
+      <div class="section-title">Active Hardware Slots</div>
+      <div class="slots-grid" id="slots-container"></div>
+    </section>
+
+    <section class="panel">
+      <div class="log-shell">
+        <div class="log-head">
+          <div>
+            <div class="section-title" style="margin-bottom:6px;">Backend Logs</div>
+            <div class="subcopy" id="log-subtitle">Select a backend to inspect recent output.</div>
+          </div>
+          <div class="action-row">
+            <button id="refresh-log-btn">Refresh Logs</button>
+          </div>
+        </div>
+        <pre class="log-output" id="log-output">Waiting for backend selection...</pre>
       </div>
-      <div class="grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 0;">
-        <div>
-          <div class="metric-label">Tokens Predicted</div>
-          <div class="metric-value" style="font-size:1.5rem" id="tokens-pred">--</div>
-        </div>
-        <div>
-          <div class="metric-label">Avg Generation (T/s)</div>
-          <div class="metric-value" style="font-size:1.5rem" id="tokens-eval">--</div>
-        </div>
-        <div>
-          <div class="metric-label">Avg Prompt (T/s)</div>
-          <div class="metric-value" style="font-size:1.5rem" id="reqs-proc">--</div>
-        </div>
-      </div>
-    </div>
+    </section>
   </div>
 
   <script>
+    let selectedBackendId = null;
+    const actionInFlight = new Set();
+
+    function formatTime(timestamp) {
+      if (!timestamp) return 'never';
+      return new Date(timestamp).toLocaleTimeString();
+    }
+
+    function badge(label, tone = '') {
+      return `<span class="badge ${tone}">${label}</span>`;
+    }
+
+    function processTone(status) {
+      if (status === 'running') return '';
+      if (status === 'starting' || status === 'stopping') return 'warn';
+      return 'danger';
+    }
+
+    async function runBackendAction(backendId, action) {
+      const key = `${backendId}:${action}`;
+      if (actionInFlight.has(key)) return;
+      actionInFlight.add(key);
+
+      try {
+        await fetch(`/api/backends/${backendId}/${action}`, { method: 'POST' });
+        await updateDashboard();
+        if (selectedBackendId === backendId) {
+          await loadLogs(backendId);
+        }
+      } catch (error) {
+        console.error(`Failed to ${action} backend`, error);
+      } finally {
+        actionInFlight.delete(key);
+      }
+    }
+
+    async function loadLogs(backendId) {
+      if (!backendId) return;
+      selectedBackendId = backendId;
+      try {
+        const res = await fetch(`/api/backends/${backendId}/logs?lines=180`);
+        const data = await res.json();
+        document.getElementById('log-output').innerText = data.content || 'No logs yet.';
+        document.getElementById('log-subtitle').innerText = `${backendId} · ${data.logPath}`;
+      } catch (error) {
+        document.getElementById('log-output').innerText = 'Failed to load logs.';
+      }
+    }
+
+    function renderBackends(backends) {
+      const html = backends.map(backend => {
+        const process = backend.process || {};
+        const selected = selectedBackendId === backend.id ? 'selected' : '';
+        return `
+          <article class="backend-card ${selected}">
+            <div class="backend-head">
+              <div>
+                <div class="backend-name">${backend.id}</div>
+                <div class="mono">${backend.url}</div>
+              </div>
+              <div class="badge-row">
+                ${backend.healthy ? badge('HEALTHY') : badge('UNHEALTHY', 'danger')}
+                ${badge((process.status || 'stopped').toUpperCase(), processTone(process.status))}
+              </div>
+            </div>
+            <div class="backend-meta">
+              <div>
+                <div class="meta-label">GPU Group</div>
+                <div class="meta-value mono">${backend.gpuGroup}</div>
+              </div>
+              <div>
+                <div class="meta-label">PID</div>
+                <div class="meta-value mono">${process.pid || 'none'}</div>
+              </div>
+              <div>
+                <div class="meta-label">Active / Free</div>
+                <div class="meta-value">${backend.activeRequests} / ${backend.availableSlots}</div>
+              </div>
+              <div>
+                <div class="meta-label">Queue</div>
+                <div class="meta-value">${backend.queueLength}</div>
+              </div>
+              <div>
+                <div class="meta-label">Last Health</div>
+                <div class="meta-value mono">${formatTime(backend.lastCheckAt)}</div>
+              </div>
+              <div>
+                <div class="meta-label">Last Error</div>
+                <div class="meta-value mono">${backend.lastError || 'none'}</div>
+              </div>
+            </div>
+            <div class="action-row">
+              <button onclick="runBackendAction('${backend.id}', 'start')" ${actionInFlight.has(`${backend.id}:start`) ? 'disabled' : ''}>Start</button>
+              <button class="warn" onclick="runBackendAction('${backend.id}', 'restart')" ${actionInFlight.has(`${backend.id}:restart`) ? 'disabled' : ''}>Restart</button>
+              <button class="danger" onclick="runBackendAction('${backend.id}', 'stop')" ${actionInFlight.has(`${backend.id}:stop`) ? 'disabled' : ''}>Stop</button>
+              <button onclick="loadLogs('${backend.id}')">View Logs</button>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      document.getElementById('backend-grid').innerHTML = html;
+    }
+
+    function renderSlots(slots) {
+      const html = slots.map(slot => {
+        const busy = slot.activeReq !== null;
+        return `
+          <article class="slot-card ${busy ? 'busy' : 'idle'}">
+            <div class="slot-head">
+              <div>
+                <div class="backend-name" style="font-size:0.98rem;">${slot.id}</div>
+                <div class="mono">${slot.backendLabel}</div>
+              </div>
+              <div>${busy ? badge('ACTIVE', 'warn') : badge('IDLE')}</div>
+            </div>
+            <div>
+              <div class="meta-label">Cache Hash</div>
+              <div class="meta-value mono">${slot.hash ? `${slot.hash.slice(0, 24)}...` : 'Empty'}</div>
+            </div>
+            ${busy ? `<div><div class="meta-label">ReqID</div><div class="meta-value mono">${slot.activeReq}</div></div>` : ''}
+          </article>
+        `;
+      }).join('');
+      document.getElementById('slots-container').innerHTML = html;
+    }
+
     async function updateDashboard() {
       try {
         const res = await fetch('/api/stats');
         const data = await res.json();
-        
-        // Update Metrics
+
+        document.getElementById('last-refresh').innerText = `Last refresh ${new Date().toLocaleTimeString()}`;
+
         document.getElementById('queue-val').innerText = data.queueLength;
         if (data.queueLength > 0) {
-          document.getElementById('queue-sub').innerText = `Traffic spike! ${data.queueLength} requests waiting.`;
-          document.getElementById('queue-val').style.color = 'var(--warning)';
+          document.getElementById('queue-sub').innerText = `${data.queueLength} requests waiting for immediate capacity.`;
+          document.getElementById('queue-val').style.color = 'var(--warn)';
         } else {
           document.getElementById('queue-sub').innerText = 'All requests handling smoothly.';
           document.getElementById('queue-val').style.color = 'var(--text)';
         }
 
-        const maxCtx = 262144; // Assume max context of 262k
+        const maxCtx = 262144;
         const maxTokens = data.llamaMetrics?.['llamacpp:n_tokens_max'] || 0;
-        const vPct = Math.min((maxTokens / maxCtx) * 100, 100).toFixed(1);
+        const maxPct = Math.min((maxTokens / maxCtx) * 100, 100);
         document.getElementById('vram-val').innerText = maxTokens;
-        document.getElementById('vram-bar').style.width = `${vPct}%`;
+        document.getElementById('vram-bar').style.width = `${maxPct}%`;
+
+        const l1Gb = (data.l1UsageBytes / (1024 * 1024 * 1024)).toFixed(2);
+        const l1Pct = Math.min((l1Gb / 2.5) * 100, 100);
+        document.getElementById('l1-val').innerText = `${l1Gb} GB / 2.5 GB`;
+        document.getElementById('l1-bar').style.width = `${l1Pct}%`;
+        document.getElementById('l1-bar').style.background = l1Pct > 90 ? 'linear-gradient(90deg, #ef4444, #f97316)' : 'linear-gradient(90deg, var(--accent), #60a5fa)';
 
         document.getElementById('tokens-pred').innerText = data.llamaMetrics?.['llamacpp:tokens_predicted_total'] || 0;
         document.getElementById('tokens-eval').innerText = (data.llamaMetrics?.['llamacpp:predicted_tokens_seconds'] || 0).toFixed(1);
         document.getElementById('reqs-proc').innerText = (data.llamaMetrics?.['llamacpp:prompt_tokens_seconds'] || 0).toFixed(1);
 
-        // RAMDisk L1
-        const l1Gb = (data.l1UsageBytes / (1024*1024*1024)).toFixed(2);
-        const l1Pct = Math.min((l1Gb / 2.5) * 100, 100);
-        document.getElementById('l1-val').innerText = `${l1Gb} GB / 2.5 GB`;
-        document.getElementById('l1-bar').style.width = `${l1Pct}%`;
-        
-        if (l1Pct > 90) {
-          document.getElementById('l1-bar').style.background = 'var(--danger)';
-          document.getElementById('l1-bar').style.boxShadow = '0 0 10px rgba(239, 68, 68, 0.4)';
-        } else {
-          document.getElementById('l1-bar').style.background = 'var(--accent)';
-          document.getElementById('l1-bar').style.boxShadow = '0 0 10px var(--accent-glow)';
+        renderBackends(data.backends || []);
+        renderSlots(data.slots || []);
+
+        if (!selectedBackendId && data.backends?.length) {
+          await loadLogs(data.backends[0].id);
         }
-
-        // Render Slots
-        const slotsHtml = data.slots.map(slot => {
-          const isBusy = slot.activeReq !== null;
-          return `
-            <div class="slot-card ${isBusy ? 'busy' : ''}">
-              <div class="slot-status-indicator"></div>
-              <div class="slot-header">
-                <span class="slot-title">Slot ${slot.id}</span>
-                <span class="badge">${isBusy ? 'ACTIVE' : 'IDLE'}</span>
-              </div>
-              <div class="mono" style="margin-top: 0.5rem;">
-                <span style="color:var(--text)">Cache Hash:</span><br/>
-                ${slot.hash ? slot.hash.slice(0,24) + '...' : 'Empty'}
-              </div>
-              ${isBusy ? `<div class="mono" style="margin-top:0.5rem; color:var(--accent)">ReqID: ${slot.activeReq}</div>` : ''}
-            </div>
-          `;
-        }).join('');
-        document.getElementById('slots-container').innerHTML = slotsHtml;
-
-      } catch (e) {
-        console.error('Failed to fetch stats', e);
+      } catch (error) {
+        console.error('Failed to fetch stats', error);
       }
     }
 
+    document.getElementById('refresh-log-btn').addEventListener('click', () => loadLogs(selectedBackendId));
     setInterval(updateDashboard, 1000);
     updateDashboard();
   </script>

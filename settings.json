@@ -5,10 +5,10 @@
       "base_url": "http://localhost:8080/v1",
       "api_key": "no-necesaria",
       "models": [
-        "qwen3.5-35b-Q6"
+        "qwen"
       ]
     }
   ],
-  "default_model": "qwen3.5-35b-Q6",
+  "default_model": "qwen",
   "$version": 3
 }
