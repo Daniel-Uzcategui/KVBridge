@@ -1,0 +1,58 @@
+{
+  "server": {
+    "port": 8080,
+    "host": "0.0.0.0"
+  },
+  "storage": {
+    "modelsDir": "/home/daniel/Models",
+    "l1Dir": "/home/daniel/Models/ramdisk_cache",
+    "l2Dir": "/home/daniel/Models/slot_cache",
+    "backendLogDir": "/home/daniel/qwencode/runtime-logs"
+  },
+  "backends": [
+    {
+      "id": "llama-a",
+      "host": "127.0.0.1",
+      "port": 11434,
+      "gpuGroup": "2,3",
+      "maxSlots": 1,
+      "scriptPath": "/home/daniel/Models/start_server.sh",
+      "modelName": "qwen"
+    },
+    {
+      "id": "llama-b",
+      "host": "127.0.0.1",
+      "port": 11435,
+      "gpuGroup": "0,1",
+      "maxSlots": 1,
+      "scriptPath": "/home/daniel/Models/start_server2.sh",
+      "modelName": "qwen"
+    }
+  ],
+  "cache": {
+    "l1EvictThresholdBytes": 2684354560,
+    "l1EvictTargetBytes": 2147483648,
+    "partialCacheMinScore": 0.3,
+    "partialCacheSystemBonus": 0.12,
+    "partialCacheSuccessBonus": 0.08,
+    "partialCacheFailurePenalty": 0.18
+  },
+  "health": {
+    "backendHealthcheckIntervalMs": 5000,
+    "backendHealthcheckTimeoutMs": 1500,
+    "dedupWaitTimeoutMs": 15000,
+    "backendStartupGraceMs": 12000,
+    "backendAutoStart": true
+  },
+  "gc": {
+    "gcIntervalMs": 300000,
+    "maxFileAgeMs": 43200000
+  },
+  "misc": {
+    "warmupTopN": 15,
+    "ragContentLengthThreshold": 1000,
+    "hashChunkSize": 65536,
+    "hashYieldInterval": 8,
+    "largeInputCooperativeThreshold": 262144
+  }
+}

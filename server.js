@@ -25,51 +25,51 @@ const { copyFile, rm, readdir, stat, mkdir, appendFile, readFile } = require('fs
 const { existsSync, createWriteStream } = require('fs');
 const { join, extname } = require('path');
 
+const settings = require('./settings');
+const { loadSettings, getSettings, setSettings } = settings;
+
 // ─── Tiered Storage Configuration ───────────────────────────────────
+// All values loaded from settings at startup.
 
-const MODELS_DIR = join('/home/daniel', 'Models');
-const L1_DIR = join(MODELS_DIR, 'ramdisk_cache');  // RAMDisk — volatile
-const L2_DIR = join(MODELS_DIR, 'slot_cache');      // SSD — persistent
-const BACKEND_LOG_DIR = join(__dirname, 'runtime-logs');
+let MODELS_DIR, L1_DIR, L2_DIR, BACKEND_LOG_DIR;
+let DEFAULT_BACKEND_MAX_SLOTS, BACKEND_HEALTHCHECK_INTERVAL_MS, BACKEND_HEALTHCHECK_TIMEOUT_MS;
+let BACKEND_CONFIGS, BACKEND_AUTO_START, BACKEND_STARTUP_GRACE_MS;
+let L1_EVICT_THRESHOLD, L1_EVICT_TARGET;
+let GARBAGE_COLLECT_INTERVAL_MS, MAX_FILE_AGE_MS;
+let RAG_CONTENT_LENGTH_THRESHOLD, WARMUP_TOP_N;
 
-// Backend topology
-const DEFAULT_BACKEND_MAX_SLOTS = 2;
-const BACKEND_HEALTHCHECK_INTERVAL_MS = 5_000;
-const BACKEND_HEALTHCHECK_TIMEOUT_MS = 1_500;
-const BACKEND_CONFIGS = [
-  {
-    id: 'llama-a',
-    host: '127.0.0.1',
-    port: 11434,
-    gpuGroup: '0,1',
-    maxSlots: DEFAULT_BACKEND_MAX_SLOTS,
-    scriptPath: join(MODELS_DIR, 'start_server.sh'),
-  },
-  {
-    id: 'llama-b',
-    host: '127.0.0.1',
-    port: 11435,
-    gpuGroup: '2,3',
-    maxSlots: DEFAULT_BACKEND_MAX_SLOTS,
-    scriptPath: join(MODELS_DIR, 'start_server2.sh'),
-  },
-];
-const BACKEND_AUTO_START = true;
-const BACKEND_STARTUP_GRACE_MS = 12_000;
+async function initSettings() {
+  await loadSettings();
+  const s = getSettings();
 
-// Eviction thresholds (bytes)
-const L1_EVICT_THRESHOLD = 2_684_354_560;  // 2.5 GB — evict when exceeded
-const L1_EVICT_TARGET    = 2_147_483_648;  // 2.0 GB — evict down to this
+  MODELS_DIR = s.storage.modelsDir;
+  L1_DIR = s.storage.l1Dir;
+  L2_DIR = s.storage.l2Dir;
+  BACKEND_LOG_DIR = s.storage.backendLogDir;
 
-// GC sweep interval
-const GARBAGE_COLLECT_INTERVAL_MS = 5 * 60 * 1000;  // 5 min
-const MAX_FILE_AGE_MS = 12 * 60 * 60 * 1000;         // 12 hours
+  DEFAULT_BACKEND_MAX_SLOTS = 2;
+  BACKEND_HEALTHCHECK_INTERVAL_MS = s.health.backendHealthcheckIntervalMs;
+  BACKEND_HEALTHCHECK_TIMEOUT_MS = s.health.backendHealthcheckTimeoutMs;
+  BACKEND_CONFIGS = s.backends.map(b => ({
+    id: b.id,
+    host: b.host,
+    port: b.port,
+    gpuGroup: b.gpuGroup,
+    maxSlots: b.maxSlots,
+    scriptPath: b.scriptPath,
+  }));
+  BACKEND_AUTO_START = s.health.backendAutoStart;
+  BACKEND_STARTUP_GRACE_MS = s.health.backendStartupGraceMs;
 
-// RAG prefix caching
-const RAG_CONTENT_LENGTH_THRESHOLD = 1000;
+  L1_EVICT_THRESHOLD = s.cache.l1EvictThresholdBytes;
+  L1_EVICT_TARGET = s.cache.l1EvictTargetBytes;
 
-// Warm-up (pre-warm on startup)
-const WARMUP_TOP_N = 15;
+  GARBAGE_COLLECT_INTERVAL_MS = s.gc.gcIntervalMs;
+  MAX_FILE_AGE_MS = s.gc.maxFileAgeMs;
+
+  RAG_CONTENT_LENGTH_THRESHOLD = s.misc.ragContentLengthThreshold;
+  WARMUP_TOP_N = s.misc.warmupTopN;
+}
 
 // ─── Helpers ────────────────────────────────────────────────────────
 
@@ -198,8 +198,8 @@ function createBackendState(config) {
   };
 }
 
-const backends = BACKEND_CONFIGS.map(createBackendState);
-const backendsById = new Map(backends.map(backend => [backend.id, backend]));
+let backends = null;
+let backendsById = new Map();
 let roundRobinCursor = 0;
 
 const affinityIndex = {
@@ -1239,6 +1239,62 @@ server.get('/api/stats', async (request, reply) => {
   });
 });
 
+// ─── Settings API ────────────────────────────────────────────────────
+
+server.get('/api/settings', (request, reply) => {
+  reply.send(getSettings());
+});
+
+server.post('/api/settings', async (request, reply) => {
+  try {
+    const newSettings = request.body;
+    setSettings(newSettings);
+    reply.send({ ok: true });
+  } catch (err) {
+    reply.status(500).send({ error: err.message });
+  }
+});
+
+server.post('/api/settings/reload', async (request, reply) => {
+  try {
+    await loadSettings();
+    reply.send({ ok: true });
+  } catch (err) {
+    reply.status(500).send({ error: err.message });
+  }
+});
+
+// ─── Restart API ─────────────────────────────────────────────────────
+
+server.post('/api/restart', async (request, reply) => {
+  try {
+    // Gracefully close the HTTP server
+    server.close();
+    
+    // Wait for connections to drain
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    // Restart the process
+    const { spawn } = require('child_process');
+    const { fork } = require('child_process');
+    const child = fork(process.argv[1], process.argv.slice(2), {
+      cwd: process.cwd(),
+      stdio: 'inherit',
+      env: { ...process.env },
+    });
+    
+    child.on('error', (err) => {
+      console.error('Failed to restart:', err.message);
+    });
+    
+    reply.send({ ok: true, message: 'Server restarting...' });
+  } catch (err) {
+    reply.status(500).send({ error: err.message });
+  }
+});
+
+// ─── Backend Logs ────────────────────────────────────────────────────
+
 server.get('/api/backends/:backendId/logs', async (request, reply) => {
   const backend = backendsById.get(request.params.backendId);
   if (!backend) {
@@ -1487,6 +1543,13 @@ server.setErrorHandler((error, request, reply) => {
 });
 
 const start = async () => {
+  // Load settings first
+  await initSettings();
+
+  // Create backend registry from loaded settings
+  backends = BACKEND_CONFIGS.map(createBackendState);
+  backendsById = new Map(backends.map(backend => [backend.id, backend]));
+
   // Ensure both directories exist
   if (!existsSync(L1_DIR)) {
     mkdir(L1_DIR, { recursive: true });

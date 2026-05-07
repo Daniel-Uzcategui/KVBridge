@@ -69,10 +69,149 @@
       color: var(--muted);
       font-size: 0.9rem;
     }
+    .tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 18px;
+    }
+
+    .tab {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 10px 20px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+    }
+
+    .tab:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .tab.active {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      color: var(--muted);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--panel-strong);
+      color: var(--text);
+      font-size: 0.92rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.18s ease;
+    }
+
+    .form-group input:focus {
+      border-color: var(--accent);
+    }
+
+    .form-group input[type="checkbox"] {
+      width: auto;
+      accent-color: var(--accent);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .form-section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .form-section h3 {
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+      color: var(--accent);
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .status-msg {
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+    }
+
+    .status-msg.success {
+      background: rgba(34, 197, 94, 0.12);
+      color: #86efac;
+    }
+
+    .status-msg.error {
+      background: rgba(239, 68, 68, 0.12);
+      color: #fca5a5;
+    }
+
+    .backend-form {
+      background: rgba(6, 14, 28, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .backend-form .remove-btn {
+      background: rgba(239, 68, 68, 0.16);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .backend-form .remove-btn:hover {
+      background: rgba(239, 68, 68, 0.28);
+    }
 
     .metrics,
+    .gpu-grid,
     .backend-grid,
-    .slots-grid {
+    .slots-grid,
+    .cache-grid {
       display: grid;
       gap: 16px;
     }
@@ -87,8 +226,17 @@
       margin-bottom: 16px;
     }
 
+    .gpu-grid {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      margin-bottom: 16px;
+    }
+
     .slots-grid {
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .cache-grid {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     }
 
     .panel {
@@ -135,6 +283,68 @@
       background: linear-gradient(90deg, var(--accent), #60a5fa);
     }
 
+    .stage-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .stage-row {
+      display: grid;
+      grid-template-columns: 84px 1fr auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .stage-label {
+      color: var(--muted);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .stage-bar {
+      height: 8px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.08);
+      position: relative;
+    }
+
+    .stage-bar > span {
+      display: block;
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), #60a5fa);
+    }
+
+    .stage-bar.warn > span {
+      background: linear-gradient(90deg, #f59e0b, #facc15);
+    }
+
+    .stage-bar.complete > span {
+      width: 100%;
+      background: linear-gradient(90deg, #22c55e, #4ade80);
+    }
+
+    .stage-bar.indeterminate > span {
+      width: 38%;
+      animation: stagePulse 1.2s linear infinite;
+    }
+
+    .stage-value {
+      color: var(--muted);
+      font-size: 0.78rem;
+      min-width: 48px;
+      text-align: right;
+    }
+
+    @keyframes stagePulse {
+      0% { transform: translateX(-120%); }
+      100% { transform: translateX(320%); }
+    }
+
     .section-title {
       font-size: 1.15rem;
       margin-bottom: 14px;
@@ -154,7 +364,18 @@
       box-shadow: 0 0 0 1px rgba(79, 209, 197, 0.7);
     }
 
+    .gpu-card {
+      background: rgba(6, 14, 28, 0.72);
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
     .backend-head,
+    .gpu-head,
     .slot-head,
     .log-head {
       display: flex;
@@ -209,6 +430,12 @@
       gap: 12px;
     }
 
+    .gpu-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
     .meta-value {
       margin-top: 5px;
       color: var(--text);
@@ -246,6 +473,17 @@
       transform: none;
     }
 
+    .slot-card {
+      background: rgba(6, 14, 28, 0.72);
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .cache-card,
     .slot-card {
       background: rgba(6, 14, 28, 0.72);
       border-radius: 18px;
@@ -303,6 +541,10 @@
       .backend-meta {
         grid-template-columns: 1fr;
       }
+
+      .gpu-meta {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -317,9 +559,12 @@
         <p class="subtitle">Health, routing pressure, process control and recent llama-server output.</p>
       </div>
       <div class="stamp" id="last-refresh">Waiting for first refresh...</div>
-    </header>
+    </header>    <nav class="tabs">
+      <button class="tab active" data-tab="monitor">Monitor</button>
+      <button class="tab" data-tab="settings">Settings</button>
+    </nav>
 
-    <section class="metrics">
+<div id="tab-monitor" class="tab-content active">    <section class="metrics">
       <div class="panel">
         <div class="metric-label">Router Queue</div>
         <div class="metric-value" id="queue-val">0</div>
@@ -340,6 +585,26 @@
         <div class="metric-value" id="tokens-eval">--</div>
         <div class="subcopy">Prompt T/s: <span id="reqs-proc">--</span> · Predicted total: <span id="tokens-pred">--</span></div>
       </div>
+      <div class="panel">
+        <div class="metric-label">GPU Thermal Summary</div>
+        <div class="metric-value" id="gpu-temp-val">--</div>
+        <div class="subcopy" id="gpu-temp-sub">Power -- W · Peak utilization --%</div>
+      </div>
+      <div class="panel">
+        <div class="metric-label">Cache Index</div>
+        <div class="metric-value" id="cache-index-val">0</div>
+        <div class="subcopy" id="cache-index-sub">No ranked cache metadata yet.</div>
+      </div>
+    </section>
+
+    <section class="panel" style="margin-bottom:16px;">
+      <div class="log-head" style="padding:0 0 14px 0; border:0;">
+        <div>
+          <div class="section-title" style="margin-bottom:6px;">GPU Telemetry</div>
+          <div class="subcopy" id="gpu-subtitle">Live `nvidia-smi` metrics for all installed GPUs.</div>
+        </div>
+      </div>
+      <div class="gpu-grid" id="gpu-grid"></div>
     </section>
 
     <section class="panel" style="margin-bottom:16px;">
@@ -350,6 +615,11 @@
     <section class="panel" style="margin-bottom:16px;">
       <div class="section-title">Active Hardware Slots</div>
       <div class="slots-grid" id="slots-container"></div>
+    </section>
+
+    <section class="panel" style="margin-bottom:16px;">
+      <div class="section-title">Top Cache Entries</div>
+      <div class="cache-grid" id="cache-container"></div>
     </section>
 
     <section class="panel">
@@ -368,6 +638,145 @@
     </section>
   </div>
 
+  <div id="tab-settings" class="tab-content">
+    <div class="form-section">
+      <h3>🔧 Server Configuration</h3>
+      <div class="form-actions">
+        <button id="save-settings-btn">Save Settings</button>
+        <button id="reload-settings-btn">Reload Settings</button>
+        <button id="restart-server-btn" class="warn">Restart Server</button>
+      </div>
+      <div id="settings-status"></div>
+    </div>
+
+    <div class="form-section">
+      <h3>📁 Storage Paths</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Models Directory</label>
+          <input id="cfg-models-dir" type="text" />
+        </div>
+        <div class="form-group">
+          <label>L1 (RAMDisk) Path</label>
+          <input id="cfg-l1-dir" type="text" />
+        </div>
+        <div class="form-group">
+          <label>L2 (SSD) Path</label>
+          <input id="cfg-l2-dir" type="text" />
+        </div>
+        <div class="form-group">
+          <label>Backend Log Directory</label>
+          <input id="cfg-log-dir" type="text" />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>🖥️ Backend Configurations</h3>
+      <div id="backends-form"></div>
+      <div class="form-actions">
+        <button id="add-backend-btn">+ Add Backend</button>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>⚙️ Cache Settings</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>L1 Evict Threshold (bytes)</label>
+          <input id="cfg-l1-evict-threshold" type="number" />
+        </div>
+        <div class="form-group">
+          <label>L1 Evict Target (bytes)</label>
+          <input id="cfg-l1-evict-target" type="number" />
+        </div>
+        <div class="form-group">
+          <label>Partial Cache Min Score</label>
+          <input id="cfg-partial-min-score" type="number" step="0.01" />
+        </div>
+        <div class="form-group">
+          <label>Partial Cache System Bonus</label>
+          <input id="cfg-partial-system-bonus" type="number" step="0.01" />
+        </div>
+        <div class="form-group">
+          <label>Partial Cache Success Bonus</label>
+          <input id="cfg-partial-success-bonus" type="number" step="0.01" />
+        </div>
+        <div class="form-group">
+          <label>Partial Cache Failure Penalty</label>
+          <input id="cfg-partial-failure-penalty" type="number" step="0.01" />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>❤️ Health Check Settings</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Health Check Interval (ms)</label>
+          <input id="cfg-health-interval" type="number" />
+        </div>
+        <div class="form-group">
+          <label>Health Check Timeout (ms)</label>
+          <input id="cfg-health-timeout" type="number" />
+        </div>
+        <div class="form-group">
+          <label>Dedup Wait Timeout (ms)</label>
+          <input id="cfg-dedup-timeout" type="number" />
+        </div>
+        <div class="form-group">
+          <label>Backend Startup Grace (ms)</label>
+          <input id="cfg-startup-grace" type="number" />
+        </div>
+        <div class="form-group">
+          <label>Auto Start Backends</label>
+          <input id="cfg-auto-start" type="checkbox" />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>🧹 Garbage Collection</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>GC Interval (ms)</label>
+          <input id="cfg-gc-interval" type="number" />
+        </div>
+        <div class="form-group">
+          <label>Max File Age (ms)</label>
+          <input id="cfg-max-file-age" type="number" />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>📊 Misc Settings</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Warmup Top N</label>
+          <input id="cfg-warmup-top-n" type="number" />
+        </div>
+        <div class="form-group">
+          <label>RAG Content Length Threshold</label>
+          <input id="cfg-rag-threshold" type="number" />
+        </div>
+        <div class="form-group">
+          <label>Hash Chunk Size</label>
+          <input id="cfg-hash-chunk" type="number" />
+        </div>
+        <div class="form-group">
+          <label>Hash Yield Interval</label>
+          <input id="cfg-hash-yield" type="number" />
+        </div>
+        <div class="form-group">
+          <label>Large Input Cooperative Threshold</label>
+          <input id="cfg-large-input" type="number" />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
   <script>
     let selectedBackendId = null;
     const actionInFlight = new Set();
@@ -375,6 +784,58 @@
     function formatTime(timestamp) {
       if (!timestamp) return 'never';
       return new Date(timestamp).toLocaleTimeString();
+    }
+    function formatDuration(ms) {
+      if (!Number.isFinite(ms) || ms <= 0) return '0s';
+      const totalSeconds = Math.floor(ms / 1000);
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      if (minutes <= 0) return `${seconds}s`;
+      return `${minutes}m ${seconds}s`;
+    }
+
+    function buildActivityStages(activity) {
+      const phase = activity?.phase || 'idle';
+      const prefillProgress = activity?.progress === null || activity?.progress === undefined
+        ? null
+        : Math.max(0, Math.min(activity.progress * 100, 100));
+
+      const laterThanRestore = ['restored', 'partial-restored', 'prefill', 'awaiting-output', 'generating', 'streaming', 'saving-cache', 'finishing', 'idle', 'busy', 'canceled'].includes(phase);
+      const laterThanPrefill = ['awaiting-output', 'generating', 'streaming', 'saving-cache', 'finishing', 'idle', 'busy', 'canceled'].includes(phase);
+
+      return [
+        {
+          label: 'Restore',
+          status: ['restoring', 'partial-restoring'].includes(phase) ? 'active' : (laterThanRestore ? 'complete' : 'idle'),
+          value: ['restoring', 'partial-restoring'].includes(phase)
+            ? (activity?.cacheStatus === 'PARTIAL_HIT' || activity?.cacheStatus === 'PARTIAL_COLD_HIT' ? 'partial' : 'active')
+            : (laterThanRestore ? 'done' : '--'),
+          progress: ['restoring', 'partial-restoring'].includes(phase) ? null : (laterThanRestore ? 100 : 0),
+          tone: 'warn',
+        },
+        {
+          label: 'Prefill',
+          status: phase === 'prefill' || phase === 'prompt' ? 'active' : (laterThanPrefill ? 'complete' : 'idle'),
+          value: phase === 'prefill' || phase === 'prompt'
+            ? `${Math.round(prefillProgress || 0)}%`
+            : (laterThanPrefill ? 'done' : '--'),
+          progress: phase === 'prefill' || phase === 'prompt'
+            ? (prefillProgress ?? 0)
+            : (laterThanPrefill ? 100 : 0),
+          tone: 'warn',
+        },
+        {
+          label: 'Generate',
+          status: ['awaiting-output', 'generating', 'streaming', 'finishing'].includes(phase)
+            ? 'active'
+            : (['saving-cache', 'idle', 'busy', 'canceled'].includes(phase) && activity?.tokens ? 'complete' : 'idle'),
+          value: phase === 'awaiting-output'
+            ? 'wait'
+            : (['generating', 'streaming', 'finishing'].includes(phase) ? 'live' : (['saving-cache', 'idle', 'busy', 'canceled'].includes(phase) && activity?.tokens ? 'done' : '--')),
+          progress: ['streaming', 'finishing'].includes(phase) ? 100 : 0,
+          tone: '',
+        },
+      ];
     }
 
     function badge(label, tone = '') {
@@ -421,7 +882,23 @@
     function renderBackends(backends) {
       const html = backends.map(backend => {
         const process = backend.process || {};
+        const activity = backend.activity || {};
         const selected = selectedBackendId === backend.id ? 'selected' : '';
+        const activityTone = activity.phase === 'prompt'
+          ? 'warn'
+          : (activity.phase === 'restoring' || activity.phase === 'saving-cache' ? 'warn' : (activity.phase === 'generating' ? '' : (activity.phase === 'idle' ? '' : '')));
+        const progressPct = activity.progress === null || activity.progress === undefined
+          ? null
+          : Math.max(0, Math.min(activity.progress * 100, 100));
+        const elapsedText = activity.startedAt ? formatDuration(Date.now() - activity.startedAt) : null;
+        const requestText = activity.requestId ? `req ${activity.requestId}` : null;
+        const taskText = Number.isInteger(activity.taskId) ? `task ${activity.taskId}` : null;
+        const hashText = activity.cacheHash ? `hash ${activity.cacheHash.slice(0, 8)}` : null;
+        const restoredText = activity.restoredCacheHash ? `base ${activity.restoredCacheHash.slice(0, 8)}` : null;
+        const cacheStatusText = activity.cacheStatus || null;
+        const partialText = Number.isFinite(activity.partialScore) ? `score ${(activity.partialScore * 100).toFixed(0)}%` : null;
+        const cacheReasonText = activity.cacheReason ? `reason ${activity.cacheReason}` : null;
+        const stages = buildActivityStages(activity);
         return `
           <article class="backend-card ${selected}">
             <div class="backend-head">
@@ -460,6 +937,38 @@
                 <div class="meta-value mono">${backend.lastError || 'none'}</div>
               </div>
             </div>
+            <div>
+              <div class="backend-head" style="align-items:center; margin-bottom:6px;">
+                <div>
+                  <div class="meta-label">Current Activity</div>
+                  <div class="meta-value">${activity.summary || 'Idle'}</div>
+                </div>
+                <div>${badge((activity.phase || 'idle').toUpperCase(), activityTone)}</div>
+              </div>
+              <div class="subcopy" style="margin-top:0;">${activity.detail || 'No recent backend activity.'}</div>
+              <div class="subcopy mono">${[elapsedText ? `Elapsed ${elapsedText}` : null, requestText, taskText, hashText, restoredText, cacheStatusText, partialText, cacheReasonText].filter(Boolean).join(' · ') || `Updated ${formatTime(activity.updatedAt)}`}</div>
+              <div class="subcopy mono">Updated ${formatTime(activity.updatedAt)}</div>
+              ${progressPct === null ? '' : `<div class="progress"><span style="width:${progressPct}%"></span></div>`}
+              <div class="stage-list">
+                ${stages.map(stage => {
+                  const stageClass = stage.status === 'complete'
+                    ? 'stage-bar complete'
+                    : (stage.status === 'active'
+                      ? `stage-bar ${stage.progress > 0 ? 'warn' : `indeterminate ${stage.tone}`}`.trim()
+                      : `stage-bar ${stage.tone}`.trim());
+                  const stageWidth = stage.status === 'active' && stage.progress > 0
+                    ? stage.progress
+                    : (stage.status === 'complete' ? 100 : 0);
+                  return `
+                    <div class="stage-row">
+                      <div class="stage-label">${stage.label}</div>
+                      <div class="${stageClass}"><span style="width:${stageWidth}%"></span></div>
+                      <div class="stage-value">${stage.value}</div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
             <div class="action-row">
               <button onclick="runBackendAction('${backend.id}', 'start')" ${actionInFlight.has(`${backend.id}:start`) ? 'disabled' : ''}>Start</button>
               <button class="warn" onclick="runBackendAction('${backend.id}', 'restart')" ${actionInFlight.has(`${backend.id}:restart`) ? 'disabled' : ''}>Restart</button>
@@ -473,9 +982,63 @@
       document.getElementById('backend-grid').innerHTML = html;
     }
 
+    function renderGpus(gpu) {
+      const devices = gpu?.devices || [];
+      const summary = gpu?.summary;
+
+      document.getElementById('gpu-temp-val').innerText = summary ? `${summary.averageTempC}°C avg` : '--';
+      document.getElementById('gpu-temp-sub').innerText = summary
+        ? `Power ${summary.totalPowerWatts} W · Peak utilization ${summary.busiestUtilization}%`
+        : (gpu?.error || 'GPU metrics unavailable');
+
+      const html = devices.map(device => {
+        const memoryPct = device.memoryTotalMiB
+          ? Math.min((device.memoryUsedMiB / device.memoryTotalMiB) * 100, 100)
+          : 0;
+        return `
+          <article class="gpu-card">
+            <div class="gpu-head">
+              <div>
+                <div class="backend-name">GPU ${device.index}</div>
+                <div class="mono">${device.name}</div>
+              </div>
+              <div class="badge-row">
+                ${badge(`${device.temperatureC ?? '--'}°C`, device.temperatureC >= 75 ? 'danger' : (device.temperatureC >= 65 ? 'warn' : ''))}
+                ${badge(`${device.fanSpeedPercent ?? '--'}% fan`, 'warn')}
+              </div>
+            </div>
+            <div class="gpu-meta">
+              <div>
+                <div class="meta-label">Utilization</div>
+                <div class="meta-value">${device.utilizationGpu ?? '--'}%</div>
+              </div>
+              <div>
+                <div class="meta-label">Power</div>
+                <div class="meta-value">${device.powerDrawWatts ?? '--'} W</div>
+              </div>
+              <div>
+                <div class="meta-label">Memory</div>
+                <div class="meta-value mono">${device.memoryUsedMiB ?? '--'} / ${device.memoryTotalMiB ?? '--'} MiB</div>
+              </div>
+              <div>
+                <div class="meta-label">P-State</div>
+                <div class="meta-value mono">${device.pstate || '--'}</div>
+              </div>
+            </div>
+            <div class="progress"><span style="width:${memoryPct}%"></span></div>
+          </article>
+        `;
+      }).join('');
+
+      document.getElementById('gpu-grid').innerHTML = html || '<div class="subcopy">GPU metrics unavailable.</div>';
+    }
+
     function renderSlots(slots) {
       const html = slots.map(slot => {
         const busy = slot.activeReq !== null;
+        const progressPct = slot.progress === null || slot.progress === undefined
+          ? null
+          : Math.max(0, Math.min(slot.progress * 100, 100));
         return `
           <article class="slot-card ${busy ? 'busy' : 'idle'}">
             <div class="slot-head">
@@ -489,11 +1052,57 @@
               <div class="meta-label">Cache Hash</div>
               <div class="meta-value mono">${slot.hash ? `${slot.hash.slice(0, 24)}...` : 'Empty'}</div>
             </div>
+            ${slot.restoredCacheHash ? `<div><div class="meta-label">Restored Base</div><div class="meta-value mono">${slot.restoredCacheHash.slice(0, 24)}...</div></div>` : ''}
+            ${slot.cacheStatus ? `<div><div class="meta-label">Cache Status</div><div class="meta-value mono">${slot.cacheStatus}</div></div>` : ''}
+            ${Number.isFinite(slot.partialScore) ? `<div><div class="meta-label">Partial Score</div><div class="meta-value mono">${Math.round(slot.partialScore * 100)}%</div></div>` : ''}
+            ${slot.cacheReason ? `<div><div class="meta-label">Cache Reason</div><div class="meta-value mono">${slot.cacheReason}</div></div>` : ''}
             ${busy ? `<div><div class="meta-label">ReqID</div><div class="meta-value mono">${slot.activeReq}</div></div>` : ''}
+            ${Number.isInteger(slot.taskId) ? `<div><div class="meta-label">Task ID</div><div class="meta-value mono">${slot.taskId}</div></div>` : ''}
+            ${slot.phase ? `<div><div class="meta-label">Phase</div><div class="meta-value mono">${slot.phase}</div></div>` : ''}
+            ${slot.detail ? `<div><div class="meta-label">Detail</div><div class="meta-value mono">${slot.detail}</div></div>` : ''}
+            ${progressPct === null ? '' : `<div class="progress"><span style="width:${progressPct}%"></span></div>`}
           </article>
         `;
       }).join('');
       document.getElementById('slots-container').innerHTML = html;
+    }
+
+    function formatMs(value) {
+      if (!Number.isFinite(value)) return '--';
+      if (value < 1000) return `${Math.round(value)} ms`;
+      return `${(value / 1000).toFixed(2)} s`;
+    }
+
+    function formatBytes(value) {
+      if (!Number.isFinite(value) || value <= 0) return '--';
+      const gib = value / (1024 * 1024 * 1024);
+      if (gib >= 1) return `${gib.toFixed(2)} GB`;
+      return `${(value / (1024 * 1024)).toFixed(1)} MB`;
+    }
+
+    function renderCacheEntries(entries) {
+      const html = entries.map(entry => {
+        return `
+          <article class="cache-card">
+            <div class="slot-head">
+              <div>
+                <div class="backend-name" style="font-size:0.98rem;">${entry.hash.slice(0, 12)}...</div>
+                <div class="mono">reuse ${entry.reuseScore.toFixed(2)} · ${entry.l1Resident ? 'L1 resident' : 'L2 only'}</div>
+              </div>
+              <div>${badge(entry.lastHitType || 'NO-HIT', entry.lastHitType?.includes('partial') ? 'warn' : '')}</div>
+            </div>
+            <div><div class="meta-label">File Size</div><div class="meta-value mono">${formatBytes(entry.fileSizeBytes)}</div></div>
+            <div><div class="meta-label">Miss TTF</div><div class="meta-value mono">${formatMs(entry.avgMissFirstTokenMs)}</div></div>
+            <div><div class="meta-label">Hit TTF</div><div class="meta-value mono">${formatMs(entry.avgHitFirstTokenMs)}</div></div>
+            <div><div class="meta-label">Partial TTF</div><div class="meta-value mono">${formatMs(entry.avgPartialFirstTokenMs)}</div></div>
+            <div><div class="meta-label">Estimated Savings</div><div class="meta-value mono">${formatMs(entry.estimatedSavingsMs)}</div></div>
+            ${entry.lastCandidateReason ? `<div><div class="meta-label">Reason</div><div class="meta-value mono">${entry.lastCandidateReason}</div></div>` : ''}
+            ${entry.lastRequestHash ? `<div><div class="meta-label">Last Request</div><div class="meta-value mono">${entry.lastRequestHash.slice(0, 12)}...</div></div>` : ''}
+          </article>
+        `;
+      }).join('');
+
+      document.getElementById('cache-container').innerHTML = html || '<div class="subcopy">No ranked cache entries yet.</div>';
     }
 
     async function updateDashboard() {
@@ -524,12 +1133,26 @@
         document.getElementById('l1-bar').style.width = `${l1Pct}%`;
         document.getElementById('l1-bar').style.background = l1Pct > 90 ? 'linear-gradient(90deg, #ef4444, #f97316)' : 'linear-gradient(90deg, var(--accent), #60a5fa)';
 
-        document.getElementById('tokens-pred').innerText = data.llamaMetrics?.['llamacpp:tokens_predicted_total'] || 0;
-        document.getElementById('tokens-eval').innerText = (data.llamaMetrics?.['llamacpp:predicted_tokens_seconds'] || 0).toFixed(1);
-        document.getElementById('reqs-proc').innerText = (data.llamaMetrics?.['llamacpp:prompt_tokens_seconds'] || 0).toFixed(1);
+        const predictedTotal = data.llamaMetrics?.['llamacpp:tokens_predicted_total'] || 0;
+        const predictedSeconds = data.llamaMetrics?.['llamacpp:tokens_predicted_seconds_total'] || 0;
+        const promptTotal = data.llamaMetrics?.['llamacpp:prompt_tokens_total'] || 0;
+        const promptSeconds = data.llamaMetrics?.['llamacpp:prompt_seconds_total'] || 0;
+        const generationRate = predictedSeconds > 0 ? (predictedTotal / predictedSeconds) : 0;
+        const promptRate = promptSeconds > 0 ? (promptTotal / promptSeconds) : 0;
 
+        document.getElementById('tokens-pred').innerText = predictedTotal;
+        document.getElementById('tokens-eval').innerText = generationRate.toFixed(1);
+        document.getElementById('reqs-proc').innerText = promptRate.toFixed(1);
+        document.getElementById('cache-index-val').innerText = data.cache?.totalEntries || 0;
+        const topCache = (data.cache?.topEntries || [])[0];
+        document.getElementById('cache-index-sub').innerText = topCache
+          ? `Top ${topCache.hash.slice(0, 8)} · reuse ${topCache.reuseScore.toFixed(2)} · ${topCache.lastHitType || 'no-hit'}`
+          : 'No ranked cache metadata yet.';
+
+        renderGpus(data.gpu);
         renderBackends(data.backends || []);
         renderSlots(data.slots || []);
+        renderCacheEntries(data.cache?.topEntries || []);
 
         if (!selectedBackendId && data.backends?.length) {
           await loadLogs(data.backends[0].id);
@@ -542,6 +1165,293 @@
     document.getElementById('refresh-log-btn').addEventListener('click', () => loadLogs(selectedBackendId));
     setInterval(updateDashboard, 1000);
     updateDashboard();
+  
+    // ─── Settings Tab ────────────────────────────────────────────────
+
+    let currentSettings = null;
+    let settingsSaving = false;
+
+    // Tab switching
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    function showStatus(msg, type) {
+      const el = document.getElementById('settings-status');
+      el.innerHTML = '<div class="status-msg ' + type + '">' + msg + '</div>';
+      setTimeout(() => { el.innerHTML = ''; }, 5000);
+    }
+
+    async function loadSettings() {
+      try {
+        const res = await fetch('/api/settings');
+        currentSettings = await res.json();
+        populateSettingsForm(currentSettings);
+      } catch (err) {
+        showStatus('Failed to load settings: ' + err.message, 'error');
+      }
+    }
+
+    function populateSettingsForm(s) {
+      document.getElementById('cfg-models-dir').value = s.storage.modelsDir || '';
+      document.getElementById('cfg-l1-dir').value = s.storage.l1Dir || '';
+      document.getElementById('cfg-l2-dir').value = s.storage.l2Dir || '';
+      document.getElementById('cfg-log-dir').value = s.storage.backendLogDir || '';
+
+      renderBackendForms(s.backends || []);
+
+      document.getElementById('cfg-l1-evict-threshold').value = s.cache.l1EvictThresholdBytes || 0;
+      document.getElementById('cfg-l1-evict-target').value = s.cache.l1EvictTargetBytes || 0;
+      document.getElementById('cfg-partial-min-score').value = s.cache.partialCacheMinScore || 0;
+      document.getElementById('cfg-partial-system-bonus').value = s.cache.partialCacheSystemBonus || 0;
+      document.getElementById('cfg-partial-success-bonus').value = s.cache.partialCacheSuccessBonus || 0;
+      document.getElementById('cfg-partial-failure-penalty').value = s.cache.partialCacheFailurePenalty || 0;
+
+      document.getElementById('cfg-health-interval').value = s.health.backendHealthcheckIntervalMs || 0;
+      document.getElementById('cfg-health-timeout').value = s.health.backendHealthcheckTimeoutMs || 0;
+      document.getElementById('cfg-dedup-timeout').value = s.health.dedupWaitTimeoutMs || 0;
+      document.getElementById('cfg-startup-grace').value = s.health.backendStartupGraceMs || 0;
+      document.getElementById('cfg-auto-start').checked = s.health.backendAutoStart || false;
+
+      document.getElementById('cfg-gc-interval').value = s.gc.gcIntervalMs || 0;
+      document.getElementById('cfg-max-file-age').value = s.gc.maxFileAgeMs || 0;
+
+      document.getElementById('cfg-warmup-top-n').value = s.misc.warmupTopN || 0;
+      document.getElementById('cfg-rag-threshold').value = s.misc.ragContentLengthThreshold || 0;
+      document.getElementById('cfg-hash-chunk').value = s.misc.hashChunkSize || 0;
+      document.getElementById('cfg-hash-yield').value = s.misc.hashYieldInterval || 0;
+      document.getElementById('cfg-large-input').value = s.misc.largeInputCooperativeThreshold || 0;
+    }
+
+    function renderBackendForms(backends) {
+      const container = document.getElementById('backends-form');
+      container.innerHTML = backends.map((b, i) => {
+        return `
+          <div class="backend-form" data-idx="${i}">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+              <strong>${b.id}</strong>
+              <button class="remove-btn" onclick="removeBackend(${i})">Remove</button>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>ID</label>
+                <input class="backend-id" data-idx="${i}" value="${b.id}" />
+              </div>
+              <div class="form-group">
+                <label>Host</label>
+                <input class="backend-host" data-idx="${i}" value="${b.host}" />
+              </div>
+              <div class="form-group">
+                <label>Port</label>
+                <input class="backend-port" data-idx="${i}" type="number" value="${b.port}" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>GPU Group</label>
+                <input class="backend-gpu" data-idx="${i}" value="${b.gpuGroup}" />
+              </div>
+              <div class="form-group">
+                <label>Max Slots</label>
+                <input class="backend-slots" data-idx="${i}" type="number" value="${b.maxSlots}" />
+              </div>
+              <div class="form-group">
+                <label>Script Path</label>
+                <input class="backend-script" data-idx="${i}" value="${b.scriptPath}" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Model Name</label>
+                <input class="backend-model" data-idx="${i}" value="${b.modelName}" />
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function collectSettings() {
+      const backendForms = document.querySelectorAll('.backend-form');
+      const backends = Array.from(backendForms).map(form => ({
+        id: form.querySelector('.backend-id').value,
+        host: form.querySelector('.backend-host').value,
+        port: Number.parseInt(form.querySelector('.backend-port').value, 10),
+        gpuGroup: form.querySelector('.backend-gpu').value,
+        maxSlots: Number.parseInt(form.querySelector('.backend-slots').value, 10),
+        scriptPath: form.querySelector('.backend-script').value,
+        modelName: form.querySelector('.backend-model').value,
+      }));
+
+      return {
+        server: {
+          port: Number.parseInt(document.querySelector('#tab-settings input[name="server-port"]')?.value || currentSettings?.server?.port || 8080, 10),
+          host: '0.0.0.0',
+        },
+        storage: {
+          modelsDir: document.getElementById('cfg-models-dir').value,
+          l1Dir: document.getElementById('cfg-l1-dir').value,
+          l2Dir: document.getElementById('cfg-l2-dir').value,
+          backendLogDir: document.getElementById('cfg-log-dir').value,
+        },
+        backends: backends,
+        cache: {
+          l1EvictThresholdBytes: Number.parseInt(document.getElementById('cfg-l1-evict-threshold').value, 10),
+          l1EvictTargetBytes: Number.parseInt(document.getElementById('cfg-l1-evict-target').value, 10),
+          partialCacheMinScore: Number.parseFloat(document.getElementById('cfg-partial-min-score').value),
+          partialCacheSystemBonus: Number.parseFloat(document.getElementById('cfg-partial-system-bonus').value),
+          partialCacheSuccessBonus: Number.parseFloat(document.getElementById('cfg-partial-success-bonus').value),
+          partialCacheFailurePenalty: Number.parseFloat(document.getElementById('cfg-partial-failure-penalty').value),
+        },
+        health: {
+          backendHealthcheckIntervalMs: Number.parseInt(document.getElementById('cfg-health-interval').value, 10),
+          backendHealthcheckTimeoutMs: Number.parseInt(document.getElementById('cfg-health-timeout').value, 10),
+          dedupWaitTimeoutMs: Number.parseInt(document.getElementById('cfg-dedup-timeout').value, 10),
+          backendStartupGraceMs: Number.parseInt(document.getElementById('cfg-startup-grace').value, 10),
+          backendAutoStart: document.getElementById('cfg-auto-start').checked,
+        },
+        gc: {
+          gcIntervalMs: Number.parseInt(document.getElementById('cfg-gc-interval').value, 10),
+          maxFileAgeMs: Number.parseInt(document.getElementById('cfg-max-file-age').value, 10),
+        },
+        misc: {
+          warmupTopN: Number.parseInt(document.getElementById('cfg-warmup-top-n').value, 10),
+          ragContentLengthThreshold: Number.parseInt(document.getElementById('cfg-rag-threshold').value, 10),
+          hashChunkSize: Number.parseInt(document.getElementById('cfg-hash-chunk').value, 10),
+          hashYieldInterval: Number.parseInt(document.getElementById('cfg-hash-yield').value, 10),
+          largeInputCooperativeThreshold: Number.parseInt(document.getElementById('cfg-large-input').value, 10),
+        },
+      };
+    }
+
+    async function saveSettings() {
+      if (settingsSaving) return;
+      settingsSaving = true;
+      try {
+        const settings = collectSettings();
+        const res = await fetch('/api/settings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(settings),
+        });
+        const data = await res.json();
+        if (data.ok) {
+          showStatus('Settings saved successfully!', 'success');
+          currentSettings = settings;
+        } else {
+          showStatus('Failed to save: ' + (data.error || 'unknown'), 'error');
+        }
+      } catch (err) {
+        showStatus('Error saving: ' + err.message, 'error');
+      } finally {
+        settingsSaving = false;
+      }
+    }
+
+    async function reloadSettings() {
+      try {
+        const res = await fetch('/api/settings/reload', { method: 'POST' });
+        const data = await res.json();
+        if (data.ok) {
+          showStatus('Settings reloaded. Changes applied.', 'success');
+          await loadSettings();
+        } else {
+          showStatus('Failed to reload: ' + (data.error || 'unknown'), 'error');
+        }
+      } catch (err) {
+        showStatus('Error reloading: ' + err.message, 'error');
+      }
+    }
+
+    function removeBackend(idx) {
+      // Remove from the form DOM
+      const forms = document.querySelectorAll('.backend-form');
+      if (forms[idx]) {
+        forms[idx].remove();
+        // Re-index remaining forms
+        document.querySelectorAll('.backend-form').forEach((form, i) => {
+          form.dataset.idx = i;
+          form.querySelectorAll('input').forEach(input => {
+            input.dataset.idx = i;
+          });
+        });
+      }
+    }
+
+    document.getElementById('add-backend-btn').addEventListener('click', () => {
+      const forms = document.querySelectorAll('.backend-form');
+      const newIdx = forms.length;
+      const container = document.getElementById('backends-form');
+      container.innerHTML += `
+        <div class="backend-form" data-idx="${newIdx}">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <strong>new-backend</strong>
+            <button class="remove-btn" onclick="removeBackend(${newIdx})">Remove</button>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>ID</label>
+              <input class="backend-id" data-idx="${newIdx}" value="llama-c" />
+            </div>
+            <div class="form-group">
+              <label>Host</label>
+              <input class="backend-host" data-idx="${newIdx}" value="127.0.0.1" />
+            </div>
+            <div class="form-group">
+              <label>Port</label>
+              <input class="backend-port" data-idx="${newIdx}" type="number" value="11436" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>GPU Group</label>
+              <input class="backend-gpu" data-idx="${newIdx}" value="0,1" />
+            </div>
+            <div class="form-group">
+              <label>Max Slots</label>
+              <input class="backend-slots" data-idx="${newIdx}" type="number" value="1" />
+            </div>
+            <div class="form-group">
+              <label>Script Path</label>
+              <input class="backend-script" data-idx="${newIdx}" value="/home/daniel/Models/start_server3.sh" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Model Name</label>
+              <input class="backend-model" data-idx="${newIdx}" value="qwen" />
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    document.getElementById('save-settings-btn').addEventListener('click', saveSettings);
+    document.getElementById('reload-settings-btn').addEventListener('click', reloadSettings);
+    document.getElementById('restart-server-btn').addEventListener('click', async () => {
+      try {
+        const res = await fetch('/api/restart', { method: 'POST' });
+        const data = await res.json();
+        if (data.ok) {
+          showStatus('Server restarting...', 'success');
+          setTimeout(() => { window.location.reload(); }, 3000);
+        } else {
+          showStatus('Failed to restart: ' + (data.error || 'unknown'), 'error');
+        }
+      } catch (err) {
+        showStatus('Error restarting: ' + err.message, 'error');
+      }
+    });
+
+    // Load settings on first visit
+    loadSettings();
   </script>
+</body>
+</html>
 </body>
 </html>
