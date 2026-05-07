@@ -15,9 +15,9 @@ function defaultSettings() {
       host: '0.0.0.0',
     },
     storage: {
-      modelsDir: join('/home/daniel', 'Models'),
-      l1Dir: join('/home/daniel', 'Models', 'ramdisk_cache'),
-      l2Dir: join('/home/daniel', 'Models', 'slot_cache'),
+      modelsDir: join('~', 'Models'),
+      l1Dir: join('~', 'Models', 'ramdisk_cache'),
+      l2Dir: join('~', 'Models', 'slot_cache'),
       backendLogDir: join(__dirname, 'runtime-logs'),
     },
     backends: [
@@ -27,7 +27,7 @@ function defaultSettings() {
         port: 11434,
         gpuGroup: '2,3',
         maxSlots: 1,
-        scriptPath: join('/home/daniel', 'Models', 'start_server.sh'),
+        scriptPath: join('~', 'Models', 'start_server.sh'),
         modelName: 'qwen',
       },
       {
@@ -36,7 +36,7 @@ function defaultSettings() {
         port: 11435,
         gpuGroup: '0,1',
         maxSlots: 1,
-        scriptPath: join('/home/daniel', 'Models', 'start_server2.sh'),
+        scriptPath: join('~', 'Models', 'start_server2.sh'),
         modelName: 'qwen',
       },
     ],

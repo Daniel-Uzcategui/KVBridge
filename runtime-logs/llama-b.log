@@ -45,7 +45,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 56055
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -56,7 +56,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   56055
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -306,7 +306,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 35005
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -317,7 +317,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   35005
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -542,7 +542,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 54005
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -553,7 +553,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   54005
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -629,7 +629,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 38431
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -640,7 +640,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   38431
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -722,7 +722,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 47335
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -733,7 +733,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   47335
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -958,7 +958,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 54399
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -969,7 +969,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   54399
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -1021,7 +1021,7 @@ srv  log_server_r: done request: POST /models/load 127.0.0.1 200
 [54399] llama_params_fit_impl:   - CUDA1 (NVIDIA GeForce GTX 1080 Ti): 41 layers,   6497 MiB used,   4363 MiB free
 [54399] llama_params_fit_impl:   - CUDA0 (NVIDIA GeForce GTX 1080 Ti):  0 layers,    499 MiB used,  10357 MiB free
 [54399] llama_params_fit_impl: converting dense-only layers to full layers and filling them front-to-back with overflow to next device/system memory:
-/home/daniel/Models/start_server2.sh: line 34:  6146 Killed                  llama-server --models-preset ./models.ini --port 11435 --host 0.0.0.0 --ctx-size 262144 -b 2048 -ub 2048 -sm layer --cache-type-k turbo4 --cache-type-v turbo4 -fa 1 -np 1 --metrics --no-mmap --slot-save-path /home/daniel/Models/ramdisk_cache
+~/Models/start_server2.sh: line 34:  6146 Killed                  llama-server --models-preset ./models.ini --port 11435 --host 0.0.0.0 --ctx-size 262144 -b 2048 -ub 2048 -sm layer --cache-type-k turbo4 --cache-type-v turbo4 -fa 1 -np 1 --metrics --no-mmap --slot-save-path ~/Models/ramdisk_cache
 
 === 2026-05-06T00:25:58.817Z EXIT llama-b code=0 signal=none ===
 
@@ -1047,7 +1047,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 54369
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -1058,7 +1058,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   54369
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -1284,7 +1284,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 36289
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -1295,7 +1295,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   36289
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -1520,7 +1520,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 35921
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -1531,7 +1531,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   35921
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -2023,7 +2023,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 60093
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -2034,7 +2034,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   60093
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -3773,7 +3773,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 46887
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -3784,7 +3784,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   46887
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -4103,7 +4103,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 46325
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -4114,7 +4114,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   46325
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -4595,7 +4595,7 @@ main:       it is not recommended to use this mode in untrusted environments
 srv  ensure_model: model name=qwen is not loaded, loading...
 srv          load: spawning server instance with name=qwen on port 33487
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -4606,7 +4606,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   33487
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -5853,7 +5853,7 @@ main:       it is not recommended to use this mode in untrusted environments
 srv  ensure_model: model name=qwen is not loaded, loading...
 srv          load: spawning server instance with name=qwen on port 39223
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -5864,7 +5864,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   39223
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -6499,7 +6499,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 37957
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -6510,7 +6510,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   37957
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -7749,7 +7749,7 @@ main:       it is not recommended to use this mode in untrusted environments
 srv  ensure_model: model name=qwen is not loaded, loading...
 srv          load: spawning server instance with name=qwen on port 37301
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -7764,7 +7764,7 @@ srv          load:   0.0
 srv          load:   --repeat-penalty
 srv          load:   1.0
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -9670,7 +9670,7 @@ start: binding port with default address family
 start: couldn't bind HTTP server socket, hostname: 0.0.0.0, port: 11435
 srv    operator(): operator(): cleaning up before exit...
 main: exiting due to HTTP server error
-/home/daniel/Models/start_server2.sh: line 18: -cpent: command not found
+~/Models/start_server2.sh: line 18: -cpent: command not found
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 ✅ ¡Modelos pre-cargados y listos para OpenClaw!
 
@@ -9696,7 +9696,7 @@ start: binding port with default address family
 start: couldn't bind HTTP server socket, hostname: 0.0.0.0, port: 11435
 srv    operator(): operator(): cleaning up before exit...
 main: exiting due to HTTP server error
-/home/daniel/Models/start_server2.sh: line 18: -cpent: command not found
+~/Models/start_server2.sh: line 18: -cpent: command not found
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 ✅ ¡Modelos pre-cargados y listos para OpenClaw!
 
@@ -9725,7 +9725,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 51377
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --chat-template-kwargs
 srv          load:   {"preserve_thinking": true}
 srv          load:   --host
@@ -9746,7 +9746,7 @@ srv          load:   [SYSTEM ALERT: Reasoning budget exceeded. I am stuck in a l
 srv          load:   --repeat-penalty
 srv          load:   1.0
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -12807,7 +12807,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 55569
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --chat-template-kwargs
 srv          load:   {"preserve_thinking": true}
 srv          load:   --host
@@ -12828,7 +12828,7 @@ srv          load:   [SYSTEM ALERT: Reasoning budget exceeded. I am stuck in a l
 srv          load:   --repeat-penalty
 srv          load:   1.0
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -16263,7 +16263,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 60471
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --chat-template-kwargs
 srv          load:   {"preserve_thinking": true}
 srv          load:   --host
@@ -16284,7 +16284,7 @@ srv          load:   [SYSTEM ALERT: Reasoning budget exceeded. I am stuck in a l
 srv          load:   --repeat-penalty
 srv          load:   1.0
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -27945,7 +27945,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 57871
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --chat-template-kwargs
 srv          load:   {"preserve_thinking": true}
 srv          load:   --host
@@ -27966,7 +27966,7 @@ srv          load:   [SYSTEM ALERT: Reasoning budget exceeded. I am stuck in a l
 srv          load:   --repeat-penalty
 srv          load:   1.0
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -29811,7 +29811,7 @@ main:       it is not recommended to use this mode in untrusted environments
 srv  ensure_model: model name=qwen is not loaded, loading...
 srv          load: spawning server instance with name=qwen on port 44623
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --chat-template-kwargs
 srv          load:   {"preserve_thinking": true}
 srv          load:   --host
@@ -29832,7 +29832,7 @@ srv          load:   [SYSTEM ALERT: Reasoning budget exceeded. I am stuck in a l
 srv          load:   --repeat-penalty
 srv          load:   1.0
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -33399,7 +33399,7 @@ main:       it is not recommended to use this mode in untrusted environments
 srv  ensure_model: model name=qwen is not loaded, loading...
 srv          load: spawning server instance with name=qwen on port 44243
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --chat-template-kwargs
 srv          load:   {"preserve_thinking": true}
 srv          load:   --host
@@ -33420,7 +33420,7 @@ srv          load:   [SYSTEM ALERT: Reasoning budget exceeded. I am stuck in a l
 srv          load:   --repeat-penalty
 srv          load:   1.0
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -33490,7 +33490,7 @@ main:       it is not recommended to use this mode in untrusted environments
 srv  ensure_model: model name=qwen is not loaded, loading...
 srv          load: spawning server instance with name=qwen on port 49481
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --chat-template-kwargs
 srv          load:   {"preserve_thinking": true}
 srv          load:   --host
@@ -33511,7 +33511,7 @@ srv          load:   [SYSTEM ALERT: Reasoning budget exceeded. I am stuck in a l
 srv          load:   --repeat-penalty
 srv          load:   1.0
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -34334,7 +34334,7 @@ main:       it is not recommended to use this mode in untrusted environments
 srv  ensure_model: model name=qwen is not loaded, loading...
 srv          load: spawning server instance with name=qwen on port 39685
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --chat-template-kwargs
 srv          load:   {"preserve_thinking": true}
 srv          load:   --host
@@ -34355,7 +34355,7 @@ srv          load:   [SYSTEM ALERT: Reasoning budget exceeded. I am stuck in a l
 srv          load:   --repeat-penalty
 srv          load:   1.0
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -40448,3 +40448,961 @@ srv  proxy_reques: proxying request to model qwen on port 39685
 [39685] slot update_slots: id  0 | task 48218 | created context checkpoint 20 of 32 (pos_min = 23856, pos_max = 23856, n_tokens = 23857, size = 62.813 MiB)
 [39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
 srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 48218 | 
+[39685] prompt eval time =     719.17 ms /   100 tokens (    7.19 ms per token,   139.05 tokens per second)
+[39685]        eval time =   36917.36 ms /   762 tokens (   48.45 ms per token,    20.64 tokens per second)
+[39685]       total time =   37636.53 ms /   862 tokens
+[39685] slot      release: id  0 | task 48218 | stop processing: n_tokens = 24622, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 48982 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 48982 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 25357
+[39685] slot update_slots: id  0 | task 48982 | n_tokens = 24622, memory_seq_rm [24622, end)
+[39685] slot update_slots: id  0 | task 48982 | prompt processing progress, n_tokens = 25353, batch.n_tokens = 731, progress = 0.999842
+[39685] slot update_slots: id  0 | task 48982 | created context checkpoint 21 of 32 (pos_min = 24621, pos_max = 24621, n_tokens = 24622, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 48982 | n_tokens = 25353, memory_seq_rm [25353, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 48982 | init sampler, took 4.65 ms, tokens: text = 25357, total = 25357
+[39685] slot update_slots: id  0 | task 48982 | prompt processing done, n_tokens = 25357, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 48982 | created context checkpoint 22 of 32 (pos_min = 25352, pos_max = 25352, n_tokens = 25353, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 48982 | 
+[39685] prompt eval time =    2342.81 ms /   735 tokens (    3.19 ms per token,   313.73 tokens per second)
+[39685]        eval time =    5913.73 ms /   121 tokens (   48.87 ms per token,    20.46 tokens per second)
+[39685]       total time =    8256.53 ms /   856 tokens
+[39685] slot      release: id  0 | task 48982 | stop processing: n_tokens = 25477, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 49105 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 49105 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 25516
+[39685] slot update_slots: id  0 | task 49105 | n_tokens = 25477, memory_seq_rm [25477, end)
+[39685] slot update_slots: id  0 | task 49105 | prompt processing progress, n_tokens = 25512, batch.n_tokens = 35, progress = 0.999843
+[39685] slot update_slots: id  0 | task 49105 | created context checkpoint 23 of 32 (pos_min = 25476, pos_max = 25476, n_tokens = 25477, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 49105 | n_tokens = 25512, memory_seq_rm [25512, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 49105 | init sampler, took 5.40 ms, tokens: text = 25516, total = 25516
+[39685] slot update_slots: id  0 | task 49105 | prompt processing done, n_tokens = 25516, batch.n_tokens = 4
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 49105 | 
+[39685] prompt eval time =     502.53 ms /    39 tokens (   12.89 ms per token,    77.61 tokens per second)
+[39685]        eval time =    4555.40 ms /    97 tokens (   46.96 ms per token,    21.29 tokens per second)
+[39685]       total time =    5057.93 ms /   136 tokens
+[39685] slot      release: id  0 | task 49105 | stop processing: n_tokens = 25612, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 49204 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 49204 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 25906
+[39685] slot update_slots: id  0 | task 49204 | n_tokens = 25612, memory_seq_rm [25612, end)
+[39685] slot update_slots: id  0 | task 49204 | prompt processing progress, n_tokens = 25902, batch.n_tokens = 290, progress = 0.999846
+[39685] slot update_slots: id  0 | task 49204 | created context checkpoint 24 of 32 (pos_min = 25611, pos_max = 25611, n_tokens = 25612, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 49204 | n_tokens = 25902, memory_seq_rm [25902, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 49204 | init sampler, took 4.62 ms, tokens: text = 25906, total = 25906
+[39685] slot update_slots: id  0 | task 49204 | prompt processing done, n_tokens = 25906, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 49204 | created context checkpoint 25 of 32 (pos_min = 25901, pos_max = 25901, n_tokens = 25902, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 49204 | 
+[39685] prompt eval time =    1318.98 ms /   294 tokens (    4.49 ms per token,   222.90 tokens per second)
+[39685]        eval time =   36812.15 ms /   748 tokens (   49.21 ms per token,    20.32 tokens per second)
+[39685]       total time =   38131.13 ms /  1042 tokens
+[39685] slot      release: id  0 | task 49204 | stop processing: n_tokens = 26653, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 49954 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 49954 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 27347
+[39685] slot update_slots: id  0 | task 49954 | n_tokens = 26653, memory_seq_rm [26653, end)
+[39685] slot update_slots: id  0 | task 49954 | prompt processing progress, n_tokens = 27343, batch.n_tokens = 690, progress = 0.999854
+[39685] slot update_slots: id  0 | task 49954 | created context checkpoint 26 of 32 (pos_min = 26652, pos_max = 26652, n_tokens = 26653, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 49954 | n_tokens = 27343, memory_seq_rm [27343, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 49954 | init sampler, took 5.67 ms, tokens: text = 27347, total = 27347
+[39685] slot update_slots: id  0 | task 49954 | prompt processing done, n_tokens = 27347, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 49954 | created context checkpoint 27 of 32 (pos_min = 27342, pos_max = 27342, n_tokens = 27343, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 49954 | 
+[39685] prompt eval time =    2136.80 ms /   694 tokens (    3.08 ms per token,   324.78 tokens per second)
+[39685]        eval time =    5225.38 ms /   103 tokens (   50.73 ms per token,    19.71 tokens per second)
+[39685]       total time =    7362.18 ms /   797 tokens
+[39685] slot      release: id  0 | task 49954 | stop processing: n_tokens = 27449, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 50059 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 50059 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 28032
+[39685] slot update_slots: id  0 | task 50059 | n_tokens = 27449, memory_seq_rm [27449, end)
+[39685] slot update_slots: id  0 | task 50059 | prompt processing progress, n_tokens = 28028, batch.n_tokens = 579, progress = 0.999857
+[39685] slot update_slots: id  0 | task 50059 | created context checkpoint 28 of 32 (pos_min = 27448, pos_max = 27448, n_tokens = 27449, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 50059 | n_tokens = 28028, memory_seq_rm [28028, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 50059 | init sampler, took 5.08 ms, tokens: text = 28032, total = 28032
+[39685] slot update_slots: id  0 | task 50059 | prompt processing done, n_tokens = 28032, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 50059 | created context checkpoint 29 of 32 (pos_min = 28027, pos_max = 28027, n_tokens = 28028, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 50059 | 
+[39685] prompt eval time =    1900.97 ms /   583 tokens (    3.26 ms per token,   306.69 tokens per second)
+[39685]        eval time =    4955.98 ms /    96 tokens (   51.62 ms per token,    19.37 tokens per second)
+[39685]       total time =    6856.95 ms /   679 tokens
+[39685] slot      release: id  0 | task 50059 | stop processing: n_tokens = 28127, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 50157 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 50157 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 28452
+[39685] slot update_slots: id  0 | task 50157 | n_tokens = 28127, memory_seq_rm [28127, end)
+[39685] slot update_slots: id  0 | task 50157 | prompt processing progress, n_tokens = 28448, batch.n_tokens = 321, progress = 0.999859
+[39685] slot update_slots: id  0 | task 50157 | created context checkpoint 30 of 32 (pos_min = 28126, pos_max = 28126, n_tokens = 28127, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 50157 | n_tokens = 28448, memory_seq_rm [28448, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 50157 | init sampler, took 5.10 ms, tokens: text = 28452, total = 28452
+[39685] slot update_slots: id  0 | task 50157 | prompt processing done, n_tokens = 28452, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 50157 | created context checkpoint 31 of 32 (pos_min = 28447, pos_max = 28447, n_tokens = 28448, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 50157 | 
+[39685] prompt eval time =    1426.00 ms /   325 tokens (    4.39 ms per token,   227.91 tokens per second)
+[39685]        eval time =   19025.91 ms /   371 tokens (   51.28 ms per token,    19.50 tokens per second)
+[39685]       total time =   20451.90 ms /   696 tokens
+[39685] slot      release: id  0 | task 50157 | stop processing: n_tokens = 28822, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 50530 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 50530 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 29164
+[39685] slot update_slots: id  0 | task 50530 | n_tokens = 28822, memory_seq_rm [28822, end)
+[39685] slot update_slots: id  0 | task 50530 | prompt processing progress, n_tokens = 29160, batch.n_tokens = 338, progress = 0.999863
+[39685] slot update_slots: id  0 | task 50530 | created context checkpoint 32 of 32 (pos_min = 28821, pos_max = 28821, n_tokens = 28822, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 50530 | n_tokens = 29160, memory_seq_rm [29160, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 50530 | init sampler, took 6.42 ms, tokens: text = 29164, total = 29164
+[39685] slot update_slots: id  0 | task 50530 | prompt processing done, n_tokens = 29164, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 50530 | erasing old context checkpoint (pos_min = 8191, pos_max = 8191, n_tokens = 8192, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 50530 | created context checkpoint 32 of 32 (pos_min = 29159, pos_max = 29159, n_tokens = 29160, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 50530 | 
+[39685] prompt eval time =    1485.20 ms /   342 tokens (    4.34 ms per token,   230.27 tokens per second)
+[39685]        eval time =    4366.08 ms /    86 tokens (   50.77 ms per token,    19.70 tokens per second)
+[39685]       total time =    5851.29 ms /   428 tokens
+[39685] slot      release: id  0 | task 50530 | stop processing: n_tokens = 29249, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 50618 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 50618 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 30059
+[39685] slot update_slots: id  0 | task 50618 | n_tokens = 29249, memory_seq_rm [29249, end)
+[39685] slot update_slots: id  0 | task 50618 | prompt processing progress, n_tokens = 30055, batch.n_tokens = 806, progress = 0.999867
+[39685] slot update_slots: id  0 | task 50618 | erasing old context checkpoint (pos_min = 16383, pos_max = 16383, n_tokens = 16384, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 50618 | created context checkpoint 32 of 32 (pos_min = 29248, pos_max = 29248, n_tokens = 29249, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 50618 | n_tokens = 30055, memory_seq_rm [30055, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 50618 | init sampler, took 8.24 ms, tokens: text = 30059, total = 30059
+[39685] slot update_slots: id  0 | task 50618 | prompt processing done, n_tokens = 30059, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 50618 | erasing old context checkpoint (pos_min = 16466, pos_max = 16466, n_tokens = 16467, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 50618 | created context checkpoint 32 of 32 (pos_min = 30054, pos_max = 30054, n_tokens = 30055, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 50618 | 
+[39685] prompt eval time =    2429.82 ms /   810 tokens (    3.00 ms per token,   333.36 tokens per second)
+[39685]        eval time =    4278.59 ms /    81 tokens (   52.82 ms per token,    18.93 tokens per second)
+[39685]       total time =    6708.40 ms /   891 tokens
+[39685] slot      release: id  0 | task 50618 | stop processing: n_tokens = 30139, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 50701 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 50701 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 30385
+[39685] slot update_slots: id  0 | task 50701 | n_tokens = 30139, memory_seq_rm [30139, end)
+[39685] slot update_slots: id  0 | task 50701 | prompt processing progress, n_tokens = 30381, batch.n_tokens = 242, progress = 0.999868
+[39685] slot update_slots: id  0 | task 50701 | erasing old context checkpoint (pos_min = 18510, pos_max = 18510, n_tokens = 18511, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 50701 | created context checkpoint 32 of 32 (pos_min = 30138, pos_max = 30138, n_tokens = 30139, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 50701 | n_tokens = 30381, memory_seq_rm [30381, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 50701 | init sampler, took 5.51 ms, tokens: text = 30385, total = 30385
+[39685] slot update_slots: id  0 | task 50701 | prompt processing done, n_tokens = 30385, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 50701 | erasing old context checkpoint (pos_min = 18596, pos_max = 18596, n_tokens = 18597, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 50701 | created context checkpoint 32 of 32 (pos_min = 30380, pos_max = 30380, n_tokens = 30381, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 50701 | 
+[39685] prompt eval time =    1274.43 ms /   246 tokens (    5.18 ms per token,   193.03 tokens per second)
+[39685]        eval time =   12592.58 ms /   238 tokens (   52.91 ms per token,    18.90 tokens per second)
+[39685]       total time =   13867.01 ms /   484 tokens
+[39685] slot      release: id  0 | task 50701 | stop processing: n_tokens = 30622, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 50941 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 50941 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 31029
+[39685] slot update_slots: id  0 | task 50941 | n_tokens = 30622, memory_seq_rm [30622, end)
+[39685] slot update_slots: id  0 | task 50941 | prompt processing progress, n_tokens = 31025, batch.n_tokens = 403, progress = 0.999871
+[39685] slot update_slots: id  0 | task 50941 | erasing old context checkpoint (pos_min = 18674, pos_max = 18674, n_tokens = 18675, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 50941 | created context checkpoint 32 of 32 (pos_min = 30621, pos_max = 30621, n_tokens = 30622, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 50941 | n_tokens = 31025, memory_seq_rm [31025, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 50941 | init sampler, took 5.18 ms, tokens: text = 31029, total = 31029
+[39685] slot update_slots: id  0 | task 50941 | prompt processing done, n_tokens = 31029, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 50941 | erasing old context checkpoint (pos_min = 18757, pos_max = 18757, n_tokens = 18758, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 50941 | created context checkpoint 32 of 32 (pos_min = 31024, pos_max = 31024, n_tokens = 31025, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 50941 | 
+[39685] prompt eval time =    1626.81 ms /   407 tokens (    4.00 ms per token,   250.18 tokens per second)
+[39685]        eval time =    6849.47 ms /   128 tokens (   53.51 ms per token,    18.69 tokens per second)
+[39685]       total time =    8476.28 ms /   535 tokens
+[39685] slot      release: id  0 | task 50941 | stop processing: n_tokens = 31156, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 51071 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 51071 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 31235
+[39685] slot update_slots: id  0 | task 51071 | n_tokens = 31156, memory_seq_rm [31156, end)
+[39685] slot update_slots: id  0 | task 51071 | prompt processing progress, n_tokens = 31231, batch.n_tokens = 75, progress = 0.999872
+[39685] slot update_slots: id  0 | task 51071 | erasing old context checkpoint (pos_min = 19568, pos_max = 19568, n_tokens = 19569, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 51071 | created context checkpoint 32 of 32 (pos_min = 31155, pos_max = 31155, n_tokens = 31156, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 51071 | n_tokens = 31231, memory_seq_rm [31231, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 51071 | init sampler, took 5.26 ms, tokens: text = 31235, total = 31235
+[39685] slot update_slots: id  0 | task 51071 | prompt processing done, n_tokens = 31235, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 51071 | erasing old context checkpoint (pos_min = 19699, pos_max = 19699, n_tokens = 19700, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 51071 | created context checkpoint 32 of 32 (pos_min = 31230, pos_max = 31230, n_tokens = 31231, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 51071 | 
+[39685] prompt eval time =     773.08 ms /    79 tokens (    9.79 ms per token,   102.19 tokens per second)
+[39685]        eval time =   11327.17 ms /   211 tokens (   53.68 ms per token,    18.63 tokens per second)
+[39685]       total time =   12100.25 ms /   290 tokens
+[39685] slot      release: id  0 | task 51071 | stop processing: n_tokens = 31445, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 51284 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 51284 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 31671
+[39685] slot update_slots: id  0 | task 51284 | n_tokens = 31445, memory_seq_rm [31445, end)
+[39685] slot update_slots: id  0 | task 51284 | prompt processing progress, n_tokens = 31667, batch.n_tokens = 222, progress = 0.999874
+[39685] slot update_slots: id  0 | task 51284 | erasing old context checkpoint (pos_min = 19791, pos_max = 19791, n_tokens = 19792, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 51284 | created context checkpoint 32 of 32 (pos_min = 31444, pos_max = 31444, n_tokens = 31445, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 51284 | n_tokens = 31667, memory_seq_rm [31667, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 51284 | init sampler, took 5.07 ms, tokens: text = 31671, total = 31671
+[39685] slot update_slots: id  0 | task 51284 | prompt processing done, n_tokens = 31671, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 51284 | erasing old context checkpoint (pos_min = 19884, pos_max = 19884, n_tokens = 19885, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 51284 | created context checkpoint 32 of 32 (pos_min = 31666, pos_max = 31666, n_tokens = 31667, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 51284 | 
+[39685] prompt eval time =    1252.75 ms /   226 tokens (    5.54 ms per token,   180.40 tokens per second)
+[39685]        eval time =    7885.07 ms /   141 tokens (   55.92 ms per token,    17.88 tokens per second)
+[39685]       total time =    9137.82 ms /   367 tokens
+[39685] slot      release: id  0 | task 51284 | stop processing: n_tokens = 31811, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 51427 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 51427 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 31961
+[39685] slot update_slots: id  0 | task 51427 | n_tokens = 31811, memory_seq_rm [31811, end)
+[39685] slot update_slots: id  0 | task 51427 | prompt processing progress, n_tokens = 31957, batch.n_tokens = 146, progress = 0.999875
+[39685] slot update_slots: id  0 | task 51427 | erasing old context checkpoint (pos_min = 21208, pos_max = 21208, n_tokens = 21209, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 51427 | created context checkpoint 32 of 32 (pos_min = 31810, pos_max = 31810, n_tokens = 31811, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 51427 | n_tokens = 31957, memory_seq_rm [31957, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 51427 | init sampler, took 6.02 ms, tokens: text = 31961, total = 31961
+[39685] slot update_slots: id  0 | task 51427 | prompt processing done, n_tokens = 31961, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 51427 | erasing old context checkpoint (pos_min = 21293, pos_max = 21293, n_tokens = 21294, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 51427 | created context checkpoint 32 of 32 (pos_min = 31956, pos_max = 31956, n_tokens = 31957, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 51427 | 
+[39685] prompt eval time =    1061.70 ms /   150 tokens (    7.08 ms per token,   141.28 tokens per second)
+[39685]        eval time =    5441.87 ms /   100 tokens (   54.42 ms per token,    18.38 tokens per second)
+[39685]       total time =    6503.57 ms /   250 tokens
+[39685] slot      release: id  0 | task 51427 | stop processing: n_tokens = 32060, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 51529 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 51529 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 32238
+[39685] slot update_slots: id  0 | task 51529 | n_tokens = 32060, memory_seq_rm [32060, end)
+[39685] slot update_slots: id  0 | task 51529 | prompt processing progress, n_tokens = 32234, batch.n_tokens = 174, progress = 0.999876
+[39685] slot update_slots: id  0 | task 51529 | erasing old context checkpoint (pos_min = 21490, pos_max = 21490, n_tokens = 21491, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 51529 | created context checkpoint 32 of 32 (pos_min = 32059, pos_max = 32059, n_tokens = 32060, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 51529 | n_tokens = 32234, memory_seq_rm [32234, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 51529 | init sampler, took 5.60 ms, tokens: text = 32238, total = 32238
+[39685] slot update_slots: id  0 | task 51529 | prompt processing done, n_tokens = 32238, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 51529 | erasing old context checkpoint (pos_min = 21598, pos_max = 21598, n_tokens = 21599, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 51529 | created context checkpoint 32 of 32 (pos_min = 32233, pos_max = 32233, n_tokens = 32234, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 51529 | 
+[39685] prompt eval time =    1076.87 ms /   178 tokens (    6.05 ms per token,   165.29 tokens per second)
+[39685]        eval time =   11467.41 ms /   210 tokens (   54.61 ms per token,    18.31 tokens per second)
+[39685]       total time =   12544.28 ms /   388 tokens
+[39685] slot      release: id  0 | task 51529 | stop processing: n_tokens = 32447, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 51741 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 51741 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 32603
+[39685] slot update_slots: id  0 | task 51741 | n_tokens = 32447, memory_seq_rm [32447, end)
+[39685] slot update_slots: id  0 | task 51741 | prompt processing progress, n_tokens = 32599, batch.n_tokens = 152, progress = 0.999877
+[39685] slot update_slots: id  0 | task 51741 | erasing old context checkpoint (pos_min = 22190, pos_max = 22190, n_tokens = 22191, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 51741 | created context checkpoint 32 of 32 (pos_min = 32446, pos_max = 32446, n_tokens = 32447, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 51741 | n_tokens = 32599, memory_seq_rm [32599, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 51741 | init sampler, took 5.35 ms, tokens: text = 32603, total = 32603
+[39685] slot update_slots: id  0 | task 51741 | prompt processing done, n_tokens = 32603, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 51741 | erasing old context checkpoint (pos_min = 22394, pos_max = 22394, n_tokens = 22395, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 51741 | created context checkpoint 32 of 32 (pos_min = 32598, pos_max = 32598, n_tokens = 32599, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 51741 | 
+[39685] prompt eval time =    1039.21 ms /   156 tokens (    6.66 ms per token,   150.11 tokens per second)
+[39685]        eval time =    4549.27 ms /    85 tokens (   53.52 ms per token,    18.68 tokens per second)
+[39685]       total time =    5588.48 ms /   241 tokens
+[39685] slot      release: id  0 | task 51741 | stop processing: n_tokens = 32687, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 51828 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 51828 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 32766
+[39685] slot update_slots: id  0 | task 51828 | n_tokens = 32687, memory_seq_rm [32687, end)
+[39685] slot update_slots: id  0 | task 51828 | prompt processing progress, n_tokens = 32762, batch.n_tokens = 75, progress = 0.999878
+[39685] slot update_slots: id  0 | task 51828 | erasing old context checkpoint (pos_min = 22930, pos_max = 22930, n_tokens = 22931, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 51828 | created context checkpoint 32 of 32 (pos_min = 32686, pos_max = 32686, n_tokens = 32687, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 51828 | n_tokens = 32762, memory_seq_rm [32762, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 51828 | init sampler, took 5.16 ms, tokens: text = 32766, total = 32766
+[39685] slot update_slots: id  0 | task 51828 | prompt processing done, n_tokens = 32766, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 51828 | erasing old context checkpoint (pos_min = 23760, pos_max = 23760, n_tokens = 23761, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 51828 | created context checkpoint 32 of 32 (pos_min = 32761, pos_max = 32761, n_tokens = 32762, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 51828 | 
+[39685] prompt eval time =     757.46 ms /    79 tokens (    9.59 ms per token,   104.30 tokens per second)
+[39685]        eval time =    5150.38 ms /    93 tokens (   55.38 ms per token,    18.06 tokens per second)
+[39685]       total time =    5907.84 ms /   172 tokens
+[39685] slot      release: id  0 | task 51828 | stop processing: n_tokens = 32858, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 51923 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 51923 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 32899
+[39685] slot update_slots: id  0 | task 51923 | n_past = 32847, slot.prompt.tokens.size() = 32858, seq_id = 0, pos_min = 32857, n_swa = 0
+[39685] slot update_slots: id  0 | task 51923 | Checking checkpoint with [32761, 32761] against 32847...
+[39685] slot update_slots: id  0 | task 51923 | restored context checkpoint (pos_min = 32761, pos_max = 32761, n_tokens = 32762, n_past = 32762, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 51923 | n_tokens = 32762, memory_seq_rm [32762, end)
+[39685] slot update_slots: id  0 | task 51923 | prompt processing progress, n_tokens = 32895, batch.n_tokens = 133, progress = 0.999878
+[39685] slot update_slots: id  0 | task 51923 | n_tokens = 32895, memory_seq_rm [32895, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 51923 | init sampler, took 4.98 ms, tokens: text = 32899, total = 32899
+[39685] slot update_slots: id  0 | task 51923 | prompt processing done, n_tokens = 32899, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 51923 | erasing old context checkpoint (pos_min = 23856, pos_max = 23856, n_tokens = 23857, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 51923 | created context checkpoint 32 of 32 (pos_min = 32894, pos_max = 32894, n_tokens = 32895, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 51923 | 
+[39685] prompt eval time =     887.98 ms /   137 tokens (    6.48 ms per token,   154.28 tokens per second)
+[39685]        eval time =    5091.26 ms /    82 tokens (   62.09 ms per token,    16.11 tokens per second)
+[39685]       total time =    5979.24 ms /   219 tokens
+[39685] slot      release: id  0 | task 51923 | stop processing: n_tokens = 32980, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 52007 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 52007 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 33180
+[39685] slot update_slots: id  0 | task 52007 | n_past = 32969, slot.prompt.tokens.size() = 32980, seq_id = 0, pos_min = 32979, n_swa = 0
+[39685] slot update_slots: id  0 | task 52007 | Checking checkpoint with [32894, 32894] against 32969...
+[39685] slot update_slots: id  0 | task 52007 | restored context checkpoint (pos_min = 32894, pos_max = 32894, n_tokens = 32895, n_past = 32895, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 52007 | n_tokens = 32895, memory_seq_rm [32895, end)
+[39685] slot update_slots: id  0 | task 52007 | prompt processing progress, n_tokens = 33176, batch.n_tokens = 281, progress = 0.999879
+[39685] slot update_slots: id  0 | task 52007 | n_tokens = 33176, memory_seq_rm [33176, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 52007 | init sampler, took 9.70 ms, tokens: text = 33180, total = 33180
+[39685] slot update_slots: id  0 | task 52007 | prompt processing done, n_tokens = 33180, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 52007 | erasing old context checkpoint (pos_min = 24621, pos_max = 24621, n_tokens = 24622, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 52007 | created context checkpoint 32 of 32 (pos_min = 33175, pos_max = 33175, n_tokens = 33176, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+
+=== 2026-05-07T22:52:09.249Z START llama-b trigger=bootstrap ===
+🚀 Iniciando llama-server...
+ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+  Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+  Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+
+system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+
+init: using 27 threads for HTTP server
+srv   load_models: Loaded 0 cached model presets
+srv   load_models: Loaded 1 custom model presets from ./models.ini
+srv   load_models: Available models (1) (*: custom preset)
+srv   load_models:   * qwen
+main: starting router server, no model will be loaded in this process
+start: binding port with default address family
+start: couldn't bind HTTP server socket, hostname: 0.0.0.0, port: 11435
+srv    operator(): operator(): cleaning up before exit...
+main: exiting due to HTTP server error
+🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
+srv  log_server_r: done request: POST /models/load 127.0.0.1 400
+✅ ¡Modelos pre-cargados y listos para OpenClaw!
+
+=== 2026-05-07T22:52:12.372Z EXIT llama-b code=0 signal=none ===
+[39685] slot print_timing: id  0 | task 52007 | 
+[39685] prompt eval time =    1477.90 ms /   285 tokens (    5.19 ms per token,   192.84 tokens per second)
+[39685]        eval time =    6767.31 ms /   119 tokens (   56.87 ms per token,    17.58 tokens per second)
+[39685]       total time =    8245.21 ms /   404 tokens
+[39685] slot      release: id  0 | task 52007 | stop processing: n_tokens = 33298, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 52128 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 52128 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 33428
+[39685] slot update_slots: id  0 | task 52128 | n_tokens = 33298, memory_seq_rm [33298, end)
+[39685] slot update_slots: id  0 | task 52128 | prompt processing progress, n_tokens = 33424, batch.n_tokens = 126, progress = 0.999880
+[39685] slot update_slots: id  0 | task 52128 | erasing old context checkpoint (pos_min = 25352, pos_max = 25352, n_tokens = 25353, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 52128 | created context checkpoint 32 of 32 (pos_min = 33297, pos_max = 33297, n_tokens = 33298, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 52128 | n_tokens = 33424, memory_seq_rm [33424, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 52128 | init sampler, took 5.16 ms, tokens: text = 33428, total = 33428
+[39685] slot update_slots: id  0 | task 52128 | prompt processing done, n_tokens = 33428, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 52128 | erasing old context checkpoint (pos_min = 25476, pos_max = 25476, n_tokens = 25477, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 52128 | created context checkpoint 32 of 32 (pos_min = 33423, pos_max = 33423, n_tokens = 33424, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 52128 | 
+[39685] prompt eval time =     992.14 ms /   130 tokens (    7.63 ms per token,   131.03 tokens per second)
+[39685]        eval time =    9795.30 ms /   174 tokens (   56.29 ms per token,    17.76 tokens per second)
+[39685]       total time =   10787.44 ms /   304 tokens
+[39685] slot      release: id  0 | task 52128 | stop processing: n_tokens = 33601, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 52304 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 52304 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 33790
+[39685] slot update_slots: id  0 | task 52304 | n_tokens = 33601, memory_seq_rm [33601, end)
+[39685] slot update_slots: id  0 | task 52304 | prompt processing progress, n_tokens = 33786, batch.n_tokens = 185, progress = 0.999882
+[39685] slot update_slots: id  0 | task 52304 | erasing old context checkpoint (pos_min = 25611, pos_max = 25611, n_tokens = 25612, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 52304 | created context checkpoint 32 of 32 (pos_min = 33600, pos_max = 33600, n_tokens = 33601, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 52304 | n_tokens = 33786, memory_seq_rm [33786, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 52304 | init sampler, took 8.44 ms, tokens: text = 33790, total = 33790
+[39685] slot update_slots: id  0 | task 52304 | prompt processing done, n_tokens = 33790, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 52304 | erasing old context checkpoint (pos_min = 25901, pos_max = 25901, n_tokens = 25902, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 52304 | created context checkpoint 32 of 32 (pos_min = 33785, pos_max = 33785, n_tokens = 33786, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 52304 | 
+[39685] prompt eval time =    1219.87 ms /   189 tokens (    6.45 ms per token,   154.93 tokens per second)
+[39685]        eval time =    4655.97 ms /    82 tokens (   56.78 ms per token,    17.61 tokens per second)
+[39685]       total time =    5875.84 ms /   271 tokens
+[39685] slot      release: id  0 | task 52304 | stop processing: n_tokens = 33871, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 52388 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 52388 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 33944
+[39685] slot update_slots: id  0 | task 52388 | n_tokens = 33871, memory_seq_rm [33871, end)
+[39685] slot update_slots: id  0 | task 52388 | prompt processing progress, n_tokens = 33940, batch.n_tokens = 69, progress = 0.999882
+[39685] slot update_slots: id  0 | task 52388 | erasing old context checkpoint (pos_min = 26652, pos_max = 26652, n_tokens = 26653, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 52388 | created context checkpoint 32 of 32 (pos_min = 33870, pos_max = 33870, n_tokens = 33871, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 52388 | n_tokens = 33940, memory_seq_rm [33940, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 52388 | init sampler, took 5.46 ms, tokens: text = 33944, total = 33944
+[39685] slot update_slots: id  0 | task 52388 | prompt processing done, n_tokens = 33944, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 52388 | erasing old context checkpoint (pos_min = 27342, pos_max = 27342, n_tokens = 27343, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 52388 | created context checkpoint 32 of 32 (pos_min = 33939, pos_max = 33939, n_tokens = 33940, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 52388 | 
+[39685] prompt eval time =     795.65 ms /    73 tokens (   10.90 ms per token,    91.75 tokens per second)
+[39685]        eval time =    4274.13 ms /    77 tokens (   55.51 ms per token,    18.02 tokens per second)
+[39685]       total time =    5069.79 ms /   150 tokens
+[39685] slot      release: id  0 | task 52388 | stop processing: n_tokens = 34020, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 52467 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 52467 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 34218
+[39685] slot update_slots: id  0 | task 52467 | n_past = 34009, slot.prompt.tokens.size() = 34020, seq_id = 0, pos_min = 34019, n_swa = 0
+[39685] slot update_slots: id  0 | task 52467 | Checking checkpoint with [33939, 33939] against 34009...
+[39685] slot update_slots: id  0 | task 52467 | restored context checkpoint (pos_min = 33939, pos_max = 33939, n_tokens = 33940, n_past = 33940, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 52467 | n_tokens = 33940, memory_seq_rm [33940, end)
+[39685] slot update_slots: id  0 | task 52467 | prompt processing progress, n_tokens = 34214, batch.n_tokens = 274, progress = 0.999883
+[39685] slot update_slots: id  0 | task 52467 | n_tokens = 34214, memory_seq_rm [34214, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 52467 | init sampler, took 14.95 ms, tokens: text = 34218, total = 34218
+[39685] slot update_slots: id  0 | task 52467 | prompt processing done, n_tokens = 34218, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 52467 | erasing old context checkpoint (pos_min = 27448, pos_max = 27448, n_tokens = 27449, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 52467 | created context checkpoint 32 of 32 (pos_min = 34213, pos_max = 34213, n_tokens = 34214, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+
+=== 2026-05-07T22:52:52.494Z START llama-b trigger=bootstrap ===
+🚀 Iniciando llama-server...
+ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+  Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+  Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+
+system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+
+init: using 27 threads for HTTP server
+srv   load_models: Loaded 0 cached model presets
+srv   load_models: Loaded 1 custom model presets from ./models.ini
+srv   load_models: Available models (1) (*: custom preset)
+srv   load_models:   * qwen
+main: starting router server, no model will be loaded in this process
+start: binding port with default address family
+start: couldn't bind HTTP server socket, hostname: 0.0.0.0, port: 11435
+srv    operator(): operator(): cleaning up before exit...
+main: exiting due to HTTP server error
+[39685] slot print_timing: id  0 | task 52467 | 
+[39685] prompt eval time =    1396.87 ms /   278 tokens (    5.02 ms per token,   199.02 tokens per second)
+[39685]        eval time =   10036.18 ms /   176 tokens (   57.02 ms per token,    17.54 tokens per second)
+[39685]       total time =   11433.05 ms /   454 tokens
+[39685] slot      release: id  0 | task 52467 | stop processing: n_tokens = 34393, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
+srv  log_server_r: done request: POST /models/load 127.0.0.1 400
+✅ ¡Modelos pre-cargados y listos para OpenClaw!
+
+=== 2026-05-07T22:52:55.689Z EXIT llama-b code=0 signal=none ===
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 52645 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 52645 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 34731
+[39685] slot update_slots: id  0 | task 52645 | n_tokens = 34393, memory_seq_rm [34393, end)
+[39685] slot update_slots: id  0 | task 52645 | prompt processing progress, n_tokens = 34727, batch.n_tokens = 334, progress = 0.999885
+[39685] slot update_slots: id  0 | task 52645 | erasing old context checkpoint (pos_min = 28027, pos_max = 28027, n_tokens = 28028, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 52645 | created context checkpoint 32 of 32 (pos_min = 34392, pos_max = 34392, n_tokens = 34393, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 52645 | n_tokens = 34727, memory_seq_rm [34727, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 52645 | init sampler, took 5.97 ms, tokens: text = 34731, total = 34731
+[39685] slot update_slots: id  0 | task 52645 | prompt processing done, n_tokens = 34731, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 52645 | erasing old context checkpoint (pos_min = 28126, pos_max = 28126, n_tokens = 28127, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 52645 | created context checkpoint 32 of 32 (pos_min = 34726, pos_max = 34726, n_tokens = 34727, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 52645 | 
+[39685] prompt eval time =    1519.27 ms /   338 tokens (    4.49 ms per token,   222.47 tokens per second)
+[39685]        eval time =   10906.43 ms /   193 tokens (   56.51 ms per token,    17.70 tokens per second)
+[39685]       total time =   12425.70 ms /   531 tokens
+[39685] slot      release: id  0 | task 52645 | stop processing: n_tokens = 34923, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 52840 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 52840 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 35289
+[39685] slot update_slots: id  0 | task 52840 | n_tokens = 34923, memory_seq_rm [34923, end)
+[39685] slot update_slots: id  0 | task 52840 | prompt processing progress, n_tokens = 35285, batch.n_tokens = 362, progress = 0.999887
+[39685] slot update_slots: id  0 | task 52840 | erasing old context checkpoint (pos_min = 28447, pos_max = 28447, n_tokens = 28448, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 52840 | created context checkpoint 32 of 32 (pos_min = 34922, pos_max = 34922, n_tokens = 34923, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 52840 | n_tokens = 35285, memory_seq_rm [35285, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 52840 | init sampler, took 5.57 ms, tokens: text = 35289, total = 35289
+[39685] slot update_slots: id  0 | task 52840 | prompt processing done, n_tokens = 35289, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 52840 | erasing old context checkpoint (pos_min = 28821, pos_max = 28821, n_tokens = 28822, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 52840 | created context checkpoint 32 of 32 (pos_min = 35284, pos_max = 35284, n_tokens = 35285, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 52840 | 
+[39685] prompt eval time =    1592.80 ms /   366 tokens (    4.35 ms per token,   229.78 tokens per second)
+[39685]        eval time =    5668.10 ms /   108 tokens (   52.48 ms per token,    19.05 tokens per second)
+[39685]       total time =    7260.90 ms /   474 tokens
+[39685] slot      release: id  0 | task 52840 | stop processing: n_tokens = 35396, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 52950 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 52950 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 35642
+[39685] slot update_slots: id  0 | task 52950 | n_tokens = 35396, memory_seq_rm [35396, end)
+[39685] slot update_slots: id  0 | task 52950 | prompt processing progress, n_tokens = 35638, batch.n_tokens = 242, progress = 0.999888
+[39685] slot update_slots: id  0 | task 52950 | erasing old context checkpoint (pos_min = 29159, pos_max = 29159, n_tokens = 29160, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 52950 | created context checkpoint 32 of 32 (pos_min = 35395, pos_max = 35395, n_tokens = 35396, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 52950 | n_tokens = 35638, memory_seq_rm [35638, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 52950 | init sampler, took 5.16 ms, tokens: text = 35642, total = 35642
+[39685] slot update_slots: id  0 | task 52950 | prompt processing done, n_tokens = 35642, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 52950 | erasing old context checkpoint (pos_min = 29248, pos_max = 29248, n_tokens = 29249, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 52950 | created context checkpoint 32 of 32 (pos_min = 35637, pos_max = 35637, n_tokens = 35638, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 52950 | 
+[39685] prompt eval time =    1308.00 ms /   246 tokens (    5.32 ms per token,   188.07 tokens per second)
+[39685]        eval time =    5349.74 ms /    99 tokens (   54.04 ms per token,    18.51 tokens per second)
+[39685]       total time =    6657.74 ms /   345 tokens
+[39685] slot      release: id  0 | task 52950 | stop processing: n_tokens = 35740, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 53051 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 53051 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 35809
+[39685] slot update_slots: id  0 | task 53051 | n_tokens = 35740, memory_seq_rm [35740, end)
+[39685] slot update_slots: id  0 | task 53051 | prompt processing progress, n_tokens = 35805, batch.n_tokens = 65, progress = 0.999888
+[39685] slot update_slots: id  0 | task 53051 | erasing old context checkpoint (pos_min = 30054, pos_max = 30054, n_tokens = 30055, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 53051 | created context checkpoint 32 of 32 (pos_min = 35739, pos_max = 35739, n_tokens = 35740, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 53051 | n_tokens = 35805, memory_seq_rm [35805, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 53051 | init sampler, took 7.07 ms, tokens: text = 35809, total = 35809
+[39685] slot update_slots: id  0 | task 53051 | prompt processing done, n_tokens = 35809, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 53051 | erasing old context checkpoint (pos_min = 30138, pos_max = 30138, n_tokens = 30139, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 53051 | created context checkpoint 32 of 32 (pos_min = 35804, pos_max = 35804, n_tokens = 35805, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 53051 | 
+[39685] prompt eval time =     732.14 ms /    69 tokens (   10.61 ms per token,    94.24 tokens per second)
+[39685]        eval time =    6090.39 ms /   114 tokens (   53.42 ms per token,    18.72 tokens per second)
+[39685]       total time =    6822.53 ms /   183 tokens
+[39685] slot      release: id  0 | task 53051 | stop processing: n_tokens = 35922, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 53167 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 53167 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 36456
+[39685] slot update_slots: id  0 | task 53167 | n_tokens = 35922, memory_seq_rm [35922, end)
+[39685] slot update_slots: id  0 | task 53167 | prompt processing progress, n_tokens = 36452, batch.n_tokens = 530, progress = 0.999890
+[39685] slot update_slots: id  0 | task 53167 | erasing old context checkpoint (pos_min = 30380, pos_max = 30380, n_tokens = 30381, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 53167 | created context checkpoint 32 of 32 (pos_min = 35921, pos_max = 35921, n_tokens = 35922, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 53167 | n_tokens = 36452, memory_seq_rm [36452, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 53167 | init sampler, took 7.25 ms, tokens: text = 36456, total = 36456
+[39685] slot update_slots: id  0 | task 53167 | prompt processing done, n_tokens = 36456, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 53167 | erasing old context checkpoint (pos_min = 30621, pos_max = 30621, n_tokens = 30622, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 53167 | created context checkpoint 32 of 32 (pos_min = 36451, pos_max = 36451, n_tokens = 36452, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 53167 | 
+[39685] prompt eval time =    2061.79 ms /   534 tokens (    3.86 ms per token,   259.00 tokens per second)
+[39685]        eval time =   22043.61 ms /   397 tokens (   55.53 ms per token,    18.01 tokens per second)
+[39685]       total time =   24105.40 ms /   931 tokens
+[39685] slot      release: id  0 | task 53167 | stop processing: n_tokens = 36852, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 53566 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 53566 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 37523
+[39685] slot update_slots: id  0 | task 53566 | n_tokens = 36852, memory_seq_rm [36852, end)
+[39685] slot update_slots: id  0 | task 53566 | prompt processing progress, n_tokens = 37519, batch.n_tokens = 667, progress = 0.999893
+[39685] slot update_slots: id  0 | task 53566 | erasing old context checkpoint (pos_min = 31024, pos_max = 31024, n_tokens = 31025, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 53566 | created context checkpoint 32 of 32 (pos_min = 36851, pos_max = 36851, n_tokens = 36852, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 53566 | n_tokens = 37519, memory_seq_rm [37519, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 53566 | init sampler, took 5.60 ms, tokens: text = 37523, total = 37523
+[39685] slot update_slots: id  0 | task 53566 | prompt processing done, n_tokens = 37523, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 53566 | erasing old context checkpoint (pos_min = 31155, pos_max = 31155, n_tokens = 31156, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 53566 | created context checkpoint 32 of 32 (pos_min = 37518, pos_max = 37518, n_tokens = 37519, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 53566 | 
+[39685] prompt eval time =    2375.21 ms /   671 tokens (    3.54 ms per token,   282.50 tokens per second)
+[39685]        eval time =    8100.22 ms /   148 tokens (   54.73 ms per token,    18.27 tokens per second)
+[39685]       total time =   10475.43 ms /   819 tokens
+[39685] slot      release: id  0 | task 53566 | stop processing: n_tokens = 37670, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 53716 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 53716 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 37780
+[39685] slot update_slots: id  0 | task 53716 | n_tokens = 37670, memory_seq_rm [37670, end)
+[39685] slot update_slots: id  0 | task 53716 | prompt processing progress, n_tokens = 37776, batch.n_tokens = 106, progress = 0.999894
+[39685] slot update_slots: id  0 | task 53716 | erasing old context checkpoint (pos_min = 31230, pos_max = 31230, n_tokens = 31231, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 53716 | created context checkpoint 32 of 32 (pos_min = 37669, pos_max = 37669, n_tokens = 37670, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 53716 | n_tokens = 37776, memory_seq_rm [37776, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 53716 | init sampler, took 6.08 ms, tokens: text = 37780, total = 37780
+[39685] slot update_slots: id  0 | task 53716 | prompt processing done, n_tokens = 37780, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 53716 | erasing old context checkpoint (pos_min = 31444, pos_max = 31444, n_tokens = 31445, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 53716 | created context checkpoint 32 of 32 (pos_min = 37775, pos_max = 37775, n_tokens = 37776, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 53716 | 
+[39685] prompt eval time =     866.16 ms /   110 tokens (    7.87 ms per token,   127.00 tokens per second)
+[39685]        eval time =    5176.61 ms /    93 tokens (   55.66 ms per token,    17.97 tokens per second)
+[39685]       total time =    6042.77 ms /   203 tokens
+[39685] slot      release: id  0 | task 53716 | stop processing: n_tokens = 37872, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 53811 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 53811 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 38070
+[39685] slot update_slots: id  0 | task 53811 | n_past = 37861, slot.prompt.tokens.size() = 37872, seq_id = 0, pos_min = 37871, n_swa = 0
+[39685] slot update_slots: id  0 | task 53811 | Checking checkpoint with [37775, 37775] against 37861...
+[39685] slot update_slots: id  0 | task 53811 | restored context checkpoint (pos_min = 37775, pos_max = 37775, n_tokens = 37776, n_past = 37776, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 53811 | n_tokens = 37776, memory_seq_rm [37776, end)
+[39685] slot update_slots: id  0 | task 53811 | prompt processing progress, n_tokens = 38066, batch.n_tokens = 290, progress = 0.999895
+[39685] slot update_slots: id  0 | task 53811 | n_tokens = 38066, memory_seq_rm [38066, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 53811 | init sampler, took 7.78 ms, tokens: text = 38070, total = 38070
+[39685] slot update_slots: id  0 | task 53811 | prompt processing done, n_tokens = 38070, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 53811 | erasing old context checkpoint (pos_min = 31666, pos_max = 31666, n_tokens = 31667, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 53811 | created context checkpoint 32 of 32 (pos_min = 38065, pos_max = 38065, n_tokens = 38066, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+
+=== 2026-05-07T22:54:20.333Z START llama-b trigger=bootstrap ===
+🚀 Iniciando llama-server...
+ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+  Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+  Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+
+system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+
+init: using 27 threads for HTTP server
+srv   load_models: Loaded 0 cached model presets
+srv   load_models: Loaded 1 custom model presets from ./models.ini
+srv   load_models: Available models (1) (*: custom preset)
+srv   load_models:   * qwen
+main: starting router server, no model will be loaded in this process
+start: binding port with default address family
+start: couldn't bind HTTP server socket, hostname: 0.0.0.0, port: 11435
+srv    operator(): operator(): cleaning up before exit...
+main: exiting due to HTTP server error
+🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
+srv  log_server_r: done request: POST /models/load 127.0.0.1 400
+✅ ¡Modelos pre-cargados y listos para OpenClaw!
+
+=== 2026-05-07T22:54:23.390Z EXIT llama-b code=0 signal=none ===
+[39685] slot print_timing: id  0 | task 53811 | 
+[39685] prompt eval time =    1430.17 ms /   294 tokens (    4.86 ms per token,   205.57 tokens per second)
+[39685]        eval time =    9066.10 ms /   159 tokens (   57.02 ms per token,    17.54 tokens per second)
+[39685]       total time =   10496.27 ms /   453 tokens
+[39685] slot      release: id  0 | task 53811 | stop processing: n_tokens = 38228, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 53972 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 53972 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 38394
+[39685] slot update_slots: id  0 | task 53972 | n_tokens = 38228, memory_seq_rm [38228, end)
+[39685] slot update_slots: id  0 | task 53972 | prompt processing progress, n_tokens = 38390, batch.n_tokens = 162, progress = 0.999896
+[39685] slot update_slots: id  0 | task 53972 | erasing old context checkpoint (pos_min = 31810, pos_max = 31810, n_tokens = 31811, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 53972 | created context checkpoint 32 of 32 (pos_min = 38227, pos_max = 38227, n_tokens = 38228, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 53972 | n_tokens = 38390, memory_seq_rm [38390, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 53972 | init sampler, took 5.79 ms, tokens: text = 38394, total = 38394
+[39685] slot update_slots: id  0 | task 53972 | prompt processing done, n_tokens = 38394, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 53972 | erasing old context checkpoint (pos_min = 31956, pos_max = 31956, n_tokens = 31957, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 53972 | created context checkpoint 32 of 32 (pos_min = 38389, pos_max = 38389, n_tokens = 38390, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 53972 | 
+[39685] prompt eval time =    1113.14 ms /   166 tokens (    6.71 ms per token,   149.13 tokens per second)
+[39685]        eval time =    9013.23 ms /   164 tokens (   54.96 ms per token,    18.20 tokens per second)
+[39685]       total time =   10126.37 ms /   330 tokens
+[39685] slot      release: id  0 | task 53972 | stop processing: n_tokens = 38557, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 54138 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 54138 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 38593
+[39685] slot update_slots: id  0 | task 54138 | n_tokens = 38557, memory_seq_rm [38557, end)
+[39685] slot update_slots: id  0 | task 54138 | prompt processing progress, n_tokens = 38589, batch.n_tokens = 32, progress = 0.999896
+[39685] slot update_slots: id  0 | task 54138 | erasing old context checkpoint (pos_min = 32059, pos_max = 32059, n_tokens = 32060, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 54138 | created context checkpoint 32 of 32 (pos_min = 38556, pos_max = 38556, n_tokens = 38557, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 54138 | n_tokens = 38589, memory_seq_rm [38589, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 54138 | init sampler, took 5.41 ms, tokens: text = 38593, total = 38593
+[39685] slot update_slots: id  0 | task 54138 | prompt processing done, n_tokens = 38593, batch.n_tokens = 4
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 54138 | 
+[39685] prompt eval time =     473.13 ms /    36 tokens (   13.14 ms per token,    76.09 tokens per second)
+[39685]        eval time =    9599.93 ms /   172 tokens (   55.81 ms per token,    17.92 tokens per second)
+[39685]       total time =   10073.07 ms /   208 tokens
+[39685] slot      release: id  0 | task 54138 | stop processing: n_tokens = 38764, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 54312 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 54312 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 39009
+[39685] slot update_slots: id  0 | task 54312 | n_tokens = 38764, memory_seq_rm [38764, end)
+[39685] slot update_slots: id  0 | task 54312 | prompt processing progress, n_tokens = 39005, batch.n_tokens = 241, progress = 0.999897
+[39685] slot update_slots: id  0 | task 54312 | erasing old context checkpoint (pos_min = 32233, pos_max = 32233, n_tokens = 32234, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 54312 | created context checkpoint 32 of 32 (pos_min = 38763, pos_max = 38763, n_tokens = 38764, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 54312 | n_tokens = 39005, memory_seq_rm [39005, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 54312 | init sampler, took 5.84 ms, tokens: text = 39009, total = 39009
+[39685] slot update_slots: id  0 | task 54312 | prompt processing done, n_tokens = 39009, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 54312 | erasing old context checkpoint (pos_min = 32446, pos_max = 32446, n_tokens = 32447, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 54312 | created context checkpoint 32 of 32 (pos_min = 39004, pos_max = 39004, n_tokens = 39005, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 54312 | 
+[39685] prompt eval time =    1330.39 ms /   245 tokens (    5.43 ms per token,   184.16 tokens per second)
+[39685]        eval time =    3503.01 ms /    64 tokens (   54.73 ms per token,    18.27 tokens per second)
+[39685]       total time =    4833.40 ms /   309 tokens
+[39685] slot      release: id  0 | task 54312 | stop processing: n_tokens = 39072, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 54378 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 54378 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 39171
+[39685] slot update_slots: id  0 | task 54378 | n_tokens = 39072, memory_seq_rm [39072, end)
+[39685] slot update_slots: id  0 | task 54378 | prompt processing progress, n_tokens = 39167, batch.n_tokens = 95, progress = 0.999898
+[39685] slot update_slots: id  0 | task 54378 | erasing old context checkpoint (pos_min = 32598, pos_max = 32598, n_tokens = 32599, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 54378 | created context checkpoint 32 of 32 (pos_min = 39071, pos_max = 39071, n_tokens = 39072, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 54378 | n_tokens = 39167, memory_seq_rm [39167, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 54378 | init sampler, took 5.45 ms, tokens: text = 39171, total = 39171
+[39685] slot update_slots: id  0 | task 54378 | prompt processing done, n_tokens = 39171, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 54378 | erasing old context checkpoint (pos_min = 32686, pos_max = 32686, n_tokens = 32687, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 54378 | created context checkpoint 32 of 32 (pos_min = 39166, pos_max = 39166, n_tokens = 39167, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 54378 | 
+[39685] prompt eval time =     844.71 ms /    99 tokens (    8.53 ms per token,   117.20 tokens per second)
+[39685]        eval time =    6438.48 ms /   116 tokens (   55.50 ms per token,    18.02 tokens per second)
+[39685]       total time =    7283.19 ms /   215 tokens
+[39685] slot      release: id  0 | task 54378 | stop processing: n_tokens = 39286, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 54496 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 54496 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 39407
+[39685] slot update_slots: id  0 | task 54496 | n_tokens = 39286, memory_seq_rm [39286, end)
+[39685] slot update_slots: id  0 | task 54496 | prompt processing progress, n_tokens = 39403, batch.n_tokens = 117, progress = 0.999898
+[39685] slot update_slots: id  0 | task 54496 | erasing old context checkpoint (pos_min = 32761, pos_max = 32761, n_tokens = 32762, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 54496 | created context checkpoint 32 of 32 (pos_min = 39285, pos_max = 39285, n_tokens = 39286, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 54496 | n_tokens = 39403, memory_seq_rm [39403, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 54496 | init sampler, took 5.59 ms, tokens: text = 39407, total = 39407
+[39685] slot update_slots: id  0 | task 54496 | prompt processing done, n_tokens = 39407, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 54496 | erasing old context checkpoint (pos_min = 32894, pos_max = 32894, n_tokens = 32895, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 54496 | created context checkpoint 32 of 32 (pos_min = 39402, pos_max = 39402, n_tokens = 39403, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 54496 | 
+[39685] prompt eval time =     945.73 ms /   121 tokens (    7.82 ms per token,   127.94 tokens per second)
+[39685]        eval time =   11290.87 ms /   200 tokens (   56.45 ms per token,    17.71 tokens per second)
+[39685]       total time =   12236.59 ms /   321 tokens
+[39685] slot      release: id  0 | task 54496 | stop processing: n_tokens = 39606, truncated = 0
+[39685] srv  update_slots: all slots are idle
+srv  proxy_reques: proxying request to model qwen on port 39685
+[39685] srv  params_from_: Chat format: peg-native
+[39685] slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist 
+[39685] slot launch_slot_: id  0 | task 54698 | processing task, is_child = 0
+[39685] slot update_slots: id  0 | task 54698 | new prompt, n_ctx_slot = 262144, n_keep = 0, task.n_tokens = 40002
+[39685] slot update_slots: id  0 | task 54698 | n_tokens = 39606, memory_seq_rm [39606, end)
+[39685] slot update_slots: id  0 | task 54698 | prompt processing progress, n_tokens = 39998, batch.n_tokens = 392, progress = 0.999900
+[39685] slot update_slots: id  0 | task 54698 | erasing old context checkpoint (pos_min = 33175, pos_max = 33175, n_tokens = 33176, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 54698 | created context checkpoint 32 of 32 (pos_min = 39605, pos_max = 39605, n_tokens = 39606, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 54698 | n_tokens = 39998, memory_seq_rm [39998, end)
+[39685] reasoning-budget: activated, budget=4096 tokens
+[39685] reasoning-budget: deactivated (natural end)
+[39685] slot init_sampler: id  0 | task 54698 | init sampler, took 5.73 ms, tokens: text = 40002, total = 40002
+[39685] slot update_slots: id  0 | task 54698 | prompt processing done, n_tokens = 40002, batch.n_tokens = 4
+[39685] slot update_slots: id  0 | task 54698 | erasing old context checkpoint (pos_min = 33297, pos_max = 33297, n_tokens = 33298, size = 62.813 MiB)
+[39685] slot update_slots: id  0 | task 54698 | created context checkpoint 32 of 32 (pos_min = 39997, pos_max = 39997, n_tokens = 39998, size = 62.813 MiB)
+[39685] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+[39685] slot print_timing: id  0 | task 54698 | 
+[39685] prompt eval time =    1673.45 ms /   396 tokens (    4.23 ms per token,   236.64 tokens per second)
+[39685]        eval time =    6793.44 ms /   120 tokens (   56.61 ms per token,    17.66 tokens per second)
+[39685]       total time =    8466.89 ms /   516 tokens
+[39685] slot      release: id  0 | task 54698 | stop processing: n_tokens = 40121, truncated = 0
+[39685] srv  update_slots: all slots are idle
+
+=== 2026-05-07T22:56:29.397Z START llama-b trigger=bootstrap ===
+🚀 Iniciando llama-server...
+ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+  Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+  Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+
+system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+
+init: using 27 threads for HTTP server
+srv   load_models: Loaded 0 cached model presets
+srv   load_models: Loaded 1 custom model presets from ./models.ini
+srv   load_models: Available models (1) (*: custom preset)
+srv   load_models:   * qwen
+main: starting router server, no model will be loaded in this process
+start: binding port with default address family
+start: couldn't bind HTTP server socket, hostname: 0.0.0.0, port: 11435
+srv    operator(): operator(): cleaning up before exit...
+main: exiting due to HTTP server error
+🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
+srv  log_server_r: done request: POST /models/load 127.0.0.1 400
+✅ ¡Modelos pre-cargados y listos para OpenClaw!
+
+=== 2026-05-07T22:56:32.738Z EXIT llama-b code=0 signal=none ===

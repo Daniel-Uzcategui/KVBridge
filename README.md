@@ -12,7 +12,7 @@ OpenClaw ──→ Mnemosyne (:8080) ──→ llama.cpp (:11434)
         ┌──────────┴──────────┐
         ▼                     ▼
   L1: RAMDisk (tmpfs)    L2: SSD (persistent)
-  /home/daniel/Models/   /home/daniel/Models/
+  ~/Models/   ~/Models/
   ramdisk_cache/         slot_cache/
     *.bin files            *.bin files
 ```
@@ -74,7 +74,7 @@ All incoming requests (with system prompts and first user messages) are logged t
 
 - Node.js ≥ 18 (for native `fetch`)
 - llama.cpp running on `http://127.0.0.1:11434`
-- A tmpfs/RAMDisk mounted at `/home/daniel/Models/ramdisk_cache` (L1)
+- A tmpfs/RAMDisk mounted at `~/Models/ramdisk_cache` (L1)
 
 ### Installation
 

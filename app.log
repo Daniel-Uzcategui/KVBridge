@@ -2,7 +2,7 @@
 > kv-cache-semantic-router@1.0.0 start
 > node server.js
 
-[90m18:26:34.981[0m  [1m[WARMUP][0m [32mPre-warmed[0m  2/2 files → L1 (/home/daniel/Models/ramdisk_cache)
+[90m18:26:34.981[0m  [1m[WARMUP][0m [32mPre-warmed[0m  2/2 files → L1 (~/Models/ramdisk_cache)
 [90m18:26:35.082[0m  [1m[HEALTH][0m [32mUP[0m  backend=llama-a  http://127.0.0.1:11434
 [90m18:26:35.090[0m  [1m[HEALTH][0m [32mUP[0m  backend=llama-b  http://127.0.0.1:11435
 [90m18:26:35.098[0m  [1m[PROC][0m Starting backend=llama-a pid=74759 trigger=bootstrap
@@ -13,8 +13,8 @@
 [1m[36m║[0m  Listening on  [1mhttp://0.0.0.0:8080[0m                                 [1m[36m║[0m
 [1m[36m║[0m  Dashboard UI  [1m[35mhttp://127.0.0.1:8080/dashboard[0m                     [1m[36m║[0m
 [1m[36m║[0m  Backends      [1mllama-a=http://127.0.0.1:11434 gpu:0,1 slots:2 | llama-b=http://127.0.0.1:11435 gpu:2,3 slots:2[0m[1m[36m║[0m
-[1m[36m║[0m  L1 (RAMDisk)  [1m/home/daniel/Models/ramdisk_cache[0m (tmpfs)           [1m[36m║[0m
-[1m[36m║[0m  L2 (SSD)      [1m/home/daniel/Models/slot_cache[0m (persistent)         [1m[36m║[0m
+[1m[36m║[0m  L1 (RAMDisk)  [1m~/Models/ramdisk_cache[0m (tmpfs)           [1m[36m║[0m
+[1m[36m║[0m  L2 (SSD)      [1m~/Models/slot_cache[0m (persistent)         [1m[36m║[0m
 [1m[36m║[0m  Health check  [1m5s[0m timeout [1m1500ms[0m                                   [1m[36m║[0m
 [1m[36m║[0m  Evict >       [1m2.5GB[0m down to [1m2.0GB[0m                                 [1m[36m║[0m
 [1m[36m║[0m  GC interval   [1m5min[0m maxAge [1m12h[0m                                     [1m[36m║[0m

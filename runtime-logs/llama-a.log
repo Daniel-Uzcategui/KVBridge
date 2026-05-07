@@ -141,7 +141,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 33807
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -152,7 +152,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   33807
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -234,7 +234,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 50085
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -245,7 +245,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   50085
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -494,7 +494,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 40043
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -505,7 +505,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   40043
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -730,7 +730,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 37247
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -741,7 +741,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   37247
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -2477,7 +2477,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 41727
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -2488,7 +2488,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   41727
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -3520,7 +3520,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 52109
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -3531,7 +3531,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   52109
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -3850,7 +3850,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 42845
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -3861,7 +3861,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   42845
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -4466,7 +4466,7 @@ main:       it is not recommended to use this mode in untrusted environments
 srv  ensure_model: model name=qwen is not loaded, loading...
 srv          load: spawning server instance with name=qwen on port 52831
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -4477,7 +4477,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   52831
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -5515,7 +5515,7 @@ main:       it is not recommended to use this mode in untrusted environments
 srv  ensure_model: model name=qwen is not loaded, loading...
 srv          load: spawning server instance with name=qwen on port 48421
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -5526,7 +5526,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   48421
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -6154,7 +6154,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 34997
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -6165,7 +6165,7 @@ srv          load:   --no-mmap
 srv          load:   --port
 srv          load:   34997
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -7304,7 +7304,7 @@ main:       it is not recommended to use this mode in untrusted environments
 srv  ensure_model: model name=qwen is not loaded, loading...
 srv          load: spawning server instance with name=qwen on port 55235
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --host
 srv          load:   127.0.0.1
 srv          load:   --jinja
@@ -7319,7 +7319,7 @@ srv          load:   0.0
 srv          load:   --repeat-penalty
 srv          load:   1.0
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -9284,7 +9284,7 @@ start: binding port with default address family
 start: couldn't bind HTTP server socket, hostname: 0.0.0.0, port: 11434
 srv    operator(): operator(): cleaning up before exit...
 main: exiting due to HTTP server error
-/home/daniel/Models/start_server.sh: line 18: -cpent: command not found
+~/Models/start_server.sh: line 18: -cpent: command not found
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 ✅ ¡Modelos pre-cargados y listos para OpenClaw!
 
@@ -9310,7 +9310,7 @@ start: binding port with default address family
 start: couldn't bind HTTP server socket, hostname: 0.0.0.0, port: 11434
 srv    operator(): operator(): cleaning up before exit...
 main: exiting due to HTTP server error
-/home/daniel/Models/start_server.sh: line 18: -cpent: command not found
+~/Models/start_server.sh: line 18: -cpent: command not found
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 ✅ ¡Modelos pre-cargados y listos para OpenClaw!
 
@@ -9339,7 +9339,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 40573
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --chat-template-kwargs
 srv          load:   {"preserve_thinking": true}
 srv          load:   --host
@@ -9360,7 +9360,7 @@ srv          load:   [SYSTEM ALERT: Reasoning budget exceeded. I am stuck in a l
 srv          load:   --repeat-penalty
 srv          load:   1.0
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -12474,7 +12474,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 47117
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --chat-template-kwargs
 srv          load:   {"preserve_thinking": true}
 srv          load:   --host
@@ -12495,7 +12495,7 @@ srv          load:   [SYSTEM ALERT: Reasoning budget exceeded. I am stuck in a l
 srv          load:   --repeat-penalty
 srv          load:   1.0
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -15655,7 +15655,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 53623
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --chat-template-kwargs
 srv          load:   {"preserve_thinking": true}
 srv          load:   --host
@@ -15676,7 +15676,7 @@ srv          load:   [SYSTEM ALERT: Reasoning budget exceeded. I am stuck in a l
 srv          load:   --repeat-penalty
 srv          load:   1.0
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -26350,7 +26350,7 @@ main:       it is not recommended to use this mode in untrusted environments
 🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
 srv          load: spawning server instance with name=qwen on port 56903
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --chat-template-kwargs
 srv          load:   {"preserve_thinking": true}
 srv          load:   --host
@@ -26371,7 +26371,7 @@ srv          load:   [SYSTEM ALERT: Reasoning budget exceeded. I am stuck in a l
 srv          load:   --repeat-penalty
 srv          load:   1.0
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -28030,7 +28030,7 @@ main:       it is not recommended to use this mode in untrusted environments
 srv  ensure_model: model name=qwen is not loaded, loading...
 srv          load: spawning server instance with name=qwen on port 45069
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --chat-template-kwargs
 srv          load:   {"preserve_thinking": true}
 srv          load:   --host
@@ -28051,7 +28051,7 @@ srv          load:   [SYSTEM ALERT: Reasoning budget exceeded. I am stuck in a l
 srv          load:   --repeat-penalty
 srv          load:   1.0
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -32270,7 +32270,7 @@ srv  proxy_reques: proxying request to model qwen on port 45069
 [45069] Received second interrupt, terminating immediately.
 Received second interrupt, terminating immediately.
 Received second interrupt, terminating immediately.
-/home/daniel/Models/start_server.sh: line 41:  1815 Killed                  llama-server --models-preset ./models.ini --port 11434 --host 0.0.0.0 -b 2048 -ub 2048 -sm layer --cache-type-k turbo4 --cache-type-v turbo4 -fa 1 -np 1 --metrics --no-mmap --slot-save-path /home/daniel/Models/ramdisk_cache --reasoning on --reasoning-budget 4096 --reasoning-budget-message "[SYSTEM ALERT: Reasoning budget exceeded. I am stuck in a loop or overcomplicating. I must stop IMMEDIATELY and use the ask_followup_question tool to notify the user and ask for guidance.]" --chat-template-kwargs '{"preserve_thinking": true}'
+~/Models/start_server.sh: line 41:  1815 Killed                  llama-server --models-preset ./models.ini --port 11434 --host 0.0.0.0 -b 2048 -ub 2048 -sm layer --cache-type-k turbo4 --cache-type-v turbo4 -fa 1 -np 1 --metrics --no-mmap --slot-save-path ~/Models/ramdisk_cache --reasoning on --reasoning-budget 4096 --reasoning-budget-message "[SYSTEM ALERT: Reasoning budget exceeded. I am stuck in a loop or overcomplicating. I must stop IMMEDIATELY and use the ask_followup_question tool to notify the user and ask for guidance.]" --chat-template-kwargs '{"preserve_thinking": true}'
 
 === 2026-05-07T11:38:58.467Z EXIT llama-a code=0 signal=none ===
 
@@ -32296,7 +32296,7 @@ main:       it is not recommended to use this mode in untrusted environments
 srv  ensure_model: model name=qwen is not loaded, loading...
 srv          load: spawning server instance with name=qwen on port 59717
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --chat-template-kwargs
 srv          load:   {"preserve_thinking": true}
 srv          load:   --host
@@ -32317,7 +32317,7 @@ srv          load:   [SYSTEM ALERT: Reasoning budget exceeded. I am stuck in a l
 srv          load:   --repeat-penalty
 srv          load:   1.0
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -33029,7 +33029,7 @@ main:       it is not recommended to use this mode in untrusted environments
 srv  ensure_model: model name=qwen is not loaded, loading...
 srv          load: spawning server instance with name=qwen on port 53827
 srv          load: spawning server instance with args:
-srv          load:   /home/daniel/llama-cpp-turboquant/build/bin/llama-server
+srv          load:   ~/llama-cpp-turboquant/build/bin/llama-server
 srv          load:   --chat-template-kwargs
 srv          load:   {"preserve_thinking": true}
 srv          load:   --host
@@ -33050,7 +33050,7 @@ srv          load:   [SYSTEM ALERT: Reasoning budget exceeded. I am stuck in a l
 srv          load:   --repeat-penalty
 srv          load:   1.0
 srv          load:   --slot-save-path
-srv          load:   /home/daniel/Models/ramdisk_cache
+srv          load:   ~/Models/ramdisk_cache
 srv          load:   --temperature
 srv          load:   0.6
 srv          load:   --top-k
@@ -40501,3 +40501,109 @@ srv  proxy_reques: proxying request to model qwen on port 53827
 [53827] slot update_slots: id  0 | task 20894 | created context checkpoint 14 of 32 (pos_min = 28427, pos_max = 28427, n_tokens = 28428, size = 62.813 MiB)
 [53827] srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
 srv  log_server_r: done request: POST /v1/chat/completions 127.0.0.1 200
+
+=== 2026-05-07T22:52:09.243Z START llama-a trigger=bootstrap ===
+🚀 Iniciando llama-server...
+ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+  Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+  Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+
+system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+
+init: using 27 threads for HTTP server
+srv   load_models: Loaded 0 cached model presets
+srv   load_models: Loaded 1 custom model presets from ./models.ini
+srv   load_models: Available models (1) (*: custom preset)
+srv   load_models:   * qwen
+main: starting router server, no model will be loaded in this process
+start: binding port with default address family
+start: couldn't bind HTTP server socket, hostname: 0.0.0.0, port: 11434
+srv    operator(): operator(): cleaning up before exit...
+main: exiting due to HTTP server error
+🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
+srv  log_server_r: done request: POST /models/load 127.0.0.1 400
+✅ ¡Modelos pre-cargados y listos para OpenClaw!
+
+=== 2026-05-07T22:52:12.382Z EXIT llama-a code=0 signal=none ===
+
+=== 2026-05-07T22:52:52.481Z START llama-a trigger=bootstrap ===
+🚀 Iniciando llama-server...
+ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+  Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+  Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+
+system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+
+init: using 27 threads for HTTP server
+srv   load_models: Loaded 0 cached model presets
+srv   load_models: Loaded 1 custom model presets from ./models.ini
+srv   load_models: Available models (1) (*: custom preset)
+srv   load_models:   * qwen
+main: starting router server, no model will be loaded in this process
+start: binding port with default address family
+start: couldn't bind HTTP server socket, hostname: 0.0.0.0, port: 11434
+srv    operator(): operator(): cleaning up before exit...
+main: exiting due to HTTP server error
+🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
+srv  log_server_r: done request: POST /models/load 127.0.0.1 400
+✅ ¡Modelos pre-cargados y listos para OpenClaw!
+
+=== 2026-05-07T22:52:55.691Z EXIT llama-a code=0 signal=none ===
+[53827] slot print_timing: id  0 | task 20894 | 
+[53827] prompt eval time =    1881.71 ms /   620 tokens (    3.04 ms per token,   329.49 tokens per second)
+[53827]        eval time =  419812.23 ms /  6510 tokens (   64.49 ms per token,    15.51 tokens per second)
+[53827]       total time =  421693.93 ms /  7130 tokens
+[53827] slot      release: id  0 | task 20894 | stop processing: n_tokens = 34941, truncated = 0
+[53827] srv  update_slots: all slots are idle
+
+=== 2026-05-07T22:54:20.324Z START llama-a trigger=bootstrap ===
+🚀 Iniciando llama-server...
+ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+  Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+  Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+
+system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+
+init: using 27 threads for HTTP server
+srv   load_models: Loaded 0 cached model presets
+srv   load_models: Loaded 1 custom model presets from ./models.ini
+srv   load_models: Available models (1) (*: custom preset)
+srv   load_models:   * qwen
+main: starting router server, no model will be loaded in this process
+start: binding port with default address family
+start: couldn't bind HTTP server socket, hostname: 0.0.0.0, port: 11434
+srv    operator(): operator(): cleaning up before exit...
+main: exiting due to HTTP server error
+🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
+✅ ¡Modelos pre-cargados y listos para OpenClaw!
+srv  log_server_r: done request: POST /models/load 127.0.0.1 400
+
+=== 2026-05-07T22:54:23.389Z EXIT llama-a code=0 signal=none ===
+
+=== 2026-05-07T22:56:29.390Z START llama-a trigger=bootstrap ===
+🚀 Iniciando llama-server...
+ggml_cuda_init: found 2 CUDA devices (Total VRAM: 22330 MiB):
+  Device 0: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+  Device 1: NVIDIA GeForce GTX 1080 Ti, compute capability 6.1, VMM: yes, VRAM: 11165 MiB
+system info: n_threads = 14, n_threads_batch = 14, total_threads = 28
+
+system_info: n_threads = 14 (n_threads_batch = 14) / 28 | CUDA : ARCHS = 610 | USE_GRAPHS = 1 | PEER_MAX_BATCH_SIZE = 128 | CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | OPENMP = 1 | REPACK = 1 | 
+
+init: using 27 threads for HTTP server
+srv   load_models: Loaded 0 cached model presets
+srv   load_models: Loaded 1 custom model presets from ./models.ini
+srv   load_models: Available models (1) (*: custom preset)
+srv   load_models:   * qwen
+main: starting router server, no model will be loaded in this process
+start: binding port with default address family
+start: couldn't bind HTTP server socket, hostname: 0.0.0.0, port: 11434
+srv    operator(): operator(): cleaning up before exit...
+main: exiting due to HTTP server error
+🧠 Obligando a las 1080 Ti a cargar los modelos en VRAM...
+srv  log_server_r: done request: POST /models/load 127.0.0.1 400
+✅ ¡Modelos pre-cargados y listos para OpenClaw!
+
+=== 2026-05-07T22:56:32.793Z EXIT llama-a code=0 signal=none ===

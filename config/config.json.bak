@@ -4,10 +4,10 @@
     "host": "0.0.0.0"
   },
   "storage": {
-    "modelsDir": "/home/daniel/Models",
-    "l1Dir": "/home/daniel/Models/ramdisk_cache",
-    "l2Dir": "/home/daniel/Models/slot_cache",
-    "backendLogDir": "/home/daniel/qwencode/runtime-logs"
+    "modelsDir": "~/Models",
+    "l1Dir": "~/Models/ramdisk_cache",
+    "l2Dir": "~/Models/slot_cache",
+    "backendLogDir": "~/qwencode/runtime-logs"
   },
   "backends": [
     {
@@ -16,7 +16,7 @@
       "port": 11434,
       "gpuGroup": "2,3",
       "maxSlots": 1,
-      "scriptPath": "/home/daniel/Models/start_server.sh",
+      "scriptPath": "~/Models/start_server.sh",
       "modelName": "qwen"
     },
     {
@@ -25,7 +25,7 @@
       "port": 11435,
       "gpuGroup": "0,1",
       "maxSlots": 1,
-      "scriptPath": "/home/daniel/Models/start_server2.sh",
+      "scriptPath": "~/Models/start_server2.sh",
       "modelName": "qwen"
     }
   ],
