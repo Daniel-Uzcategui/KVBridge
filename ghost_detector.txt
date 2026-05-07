@@ -14436,3 +14436,577 @@ You are Qwen Code, an interactive CLI agent developed by Alibaba Group, speciali
 [FIRST USER MSG]
 [{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
 ======================================================
+
+========== [2026-05-07T22:59:49.708Z] REQ: req-g ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:00:59.189Z] REQ: req-m ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:01:19.255Z] REQ: req-s ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:01:26.248Z] REQ: req-t ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:01:39.858Z] REQ: req-u ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:01:52.113Z] REQ: req-v ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:02:01.622Z] REQ: req-x ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:02:12.233Z] REQ: req-y ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:02:28.878Z] REQ: req-14 ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:02:35.276Z] REQ: req-15 ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:02:37.703Z] REQ: req-16 ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:02:40.826Z] REQ: req-17 ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:02:46.993Z] REQ: req-18 ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:02:54.821Z] REQ: req-19 ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:02:58.764Z] REQ: req-1a ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:03:22.341Z] REQ: req-1g ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:03:48.771Z] REQ: req-1h ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:04:26.418Z] REQ: req-1n ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:04:43.080Z] REQ: req-1o ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:09:18.165Z] REQ: req-2e ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:09:24.563Z] REQ: req-2f ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:11:32.112Z] REQ: req-2q ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:11:37.077Z] REQ: req-2r ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:12:36.465Z] REQ: req-2x ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:12:49.478Z] REQ: req-2y ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:13:02.165Z] REQ: req-2z ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:13:10.905Z] REQ: req-30 ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:13:20.952Z] REQ: req-36 ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:13:51.482Z] REQ: req-37 ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:14:30.863Z] REQ: req-3d ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:15:00.848Z] REQ: req-3e ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:15:10.597Z] REQ: req-3f ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:15:20.129Z] REQ: req-3l ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:15:46.787Z] REQ: req-3m ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:15:55.953Z] REQ: req-3n ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:16:04.609Z] REQ: req-3o ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:16:12.678Z] REQ: req-3p ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:16:24.218Z] REQ: req-3v ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:16:31.713Z] REQ: req-3w ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:17:02.742Z] REQ: req-3x ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================
+
+========== [2026-05-07T23:17:15.751Z] REQ: req-43 ==========
+[SYSTEM PROMPT]
+You are Qwen Code, an interactive CLI agent developed by Alibaba Group, specializing in software engineering tasks. Your primary goal is to help users safely and efficiently, adhering strictly to the following instructions and utilizing your available tools.
+
+# Core Mandates
+
+- **Conventions:** Rigorously adhere to existing project conventions when reading or modifying code. Analyze surrounding code, tests, and configuration first.
+- **Libraries/Frameworks:** NEVER assume a library/framework is available or appropriate. Verify its established usage within the project (check imports, configuration files like 'package.json', 'Cargo.toml', 'requirements.txt', 'build.gradle', etc., or observe neighboring files) before employing it.
+- **Style & Structure:** Mimic the style (formatting, naming),...
+
+[FIRST USER MSG]
+[{"type":"text","text":"This is the Qwen Code. We are setting up the context for our chat.\nToday's date is Thursday, May 7, 2026 (formatted according to the user's locale).\nMy operating system is: linux\nI'm currently working in the directory: /home/daniel/qwencode\nHere is the folder structure of the current working directories:\n\nShowing up to 20 items:\n\n/home/daniel/qwencode/\n├───.gitignore\n├───app.log\n├───dashboard.html\n├───ghost_detector.txt\n├───package-lock.json\n├───package.json...
+======================================================

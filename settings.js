@@ -199,24 +199,6 @@ function applySettings(server, backendsById) {
     }
   }
 
-  // Update intervals
-  if (_gcInterval) { clearInterval(_gcInterval); _gcInterval = null; }
-  if (_healthInterval) { clearInterval(_healthInterval); _healthInterval = null; }
-
-  // Restart intervals with new values
-  const { gc, health } = s;
-  _gcInterval = setInterval(() => {
-    if (server && server.ready) {
-      // GC would run here
-    }
-  }, gc.gcIntervalMs);
-  if (_gcInterval.unref) _gcInterval.unref();
-
-  _healthInterval = setInterval(() => {
-    // Health check would run here
-  }, health.backendHealthcheckIntervalMs);
-  if (_healthInterval.unref) _healthInterval.unref();
-
   return s;
 }
 

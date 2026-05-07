@@ -1,0 +1,10 @@
+
+=== 2026-05-07T23:01:19.682Z START llama-b trigger=bootstrap ===
+/bin/bash: ~/Models/start_server2.sh: No such file or directory
+
+=== 2026-05-07T23:01:19.690Z EXIT llama-b code=127 signal=none ===
+
+=== 2026-05-07T23:23:20.397Z START llama-b trigger=bootstrap ===
+/bin/bash: ~/Models/start_server2.sh: No such file or directory
+
+=== 2026-05-07T23:23:20.404Z EXIT llama-b code=127 signal=none ===

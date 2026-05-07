@@ -117,6 +117,7 @@ function logErr(msg) {
 // Each call enqueues a log entry; a single background drain serializes
 // writes to disk so no two appendFile calls overlap.
 
+const MAX_LOG_QUEUE = 10_000;
 const logQueue = [];
 let logDraining = false;
 
@@ -135,6 +136,10 @@ async function flushLogQueue() {
 }
 
 function enqueueLogEntry(logContent) {
+  if (logQueue.length >= MAX_LOG_QUEUE) {
+    logWarn('Log queue full, dropping oldest entry');
+    logQueue.shift();
+  }
   logQueue.push(logContent);
   flushLogQueue().catch(err => {
     logWarn(`Log flush failed: ${err.message}`);
@@ -200,13 +205,28 @@ function createBackendState(config) {
 
 let backends = null;
 let backendsById = new Map();
-let roundRobinCursor = 0;
+let roundRobinCounter = 0;
+
+// ─── Affinity Index — bounded LRU to prevent unbounded memory growth ──
+
+const MAX_AFFINITY_ENTRIES = 10_000;
+
+function evictAffinityMap(map) {
+  if (map.size > MAX_AFFINITY_ENTRIES) {
+    const oldestKey = [...map.entries()].sort((a, b) => a[1].updatedAt - b[1].updatedAt)[0]?.[0];
+    if (oldestKey) map.delete(oldestKey);
+  }
+}
 
 const affinityIndex = {
   exact: new Map(),
   system: new Map(),
   prefix: new Map(),
 };
+
+// ─── Per-backend startup lock to prevent concurrent spawn races ──────
+
+const backendStartupLocks = new Map();
 
 function resetBackendRuntimeState(backend) {
   backend.slotQueue.length = 0;
@@ -281,7 +301,7 @@ async function startBackendProcess(backend, trigger = 'manual') {
     backend.processInfo.status = 'error';
     backend.processInfo.lastExitSignal = null;
     backend.processInfo.lastExitCode = null;
-    appendFile(backend.processInfo.logPath, `\n[manager:error] ${err.message}\n`, 'utf8').catch(() => {});
+    appendFile(backend.processInfo.logPath, `\n[manager:error] ${err.message}\n`, 'utf8').catch(err => logWarn(`File operation failed: ${err.message}`));
   });
 
   child.on('exit', (code, signal) => {
@@ -294,10 +314,9 @@ async function startBackendProcess(backend, trigger = 'manual') {
       backend.processInfo.logPath,
       `\n=== ${new Date().toISOString()} EXIT ${backend.id} code=${code} signal=${signal || 'none'} ===\n`,
       'utf8'
-    ).catch(() => {});
+    ).catch(err => logWarn(`File operation failed: ${err.message}`));
   });
 
-  child.unref();
   log('PROC', `Starting backend=${backend.id} pid=${child.pid} trigger=${trigger}`);
   return getBackendProcessSnapshot(backend);
 }
@@ -340,12 +359,24 @@ async function ensureBackendProcess(backend, trigger = 'auto') {
     return;
   }
 
+  let lock = backendStartupLocks.get(backend.id);
+  if (lock) {
+    await lock;
+    if (isBackendProcessActive(backend)) return;
+  }
+
   const lastAttemptAge = Date.now() - backend.processInfo.lastStartAttemptAt;
   if (lastAttemptAge >= 0 && lastAttemptAge < BACKEND_STARTUP_GRACE_MS) {
     return;
   }
 
-  await startBackendProcess(backend, trigger);
+  // Acquire lock to prevent concurrent spawns
+  backendStartupLocks.set(backend.id, () => {});
+  try {
+    await startBackendProcess(backend, trigger);
+  } finally {
+    backendStartupLocks.delete(backend.id);
+  }
 }
 
 function wait(ms) {
@@ -507,9 +538,9 @@ async function checkAllBackendsHealth() {
 
 function chooseRoundRobin(backendsPool) {
   if (backendsPool.length === 0) return null;
-  const backend = backendsPool[roundRobinCursor % backendsPool.length];
-  roundRobinCursor = (roundRobinCursor + 1) % Number.MAX_SAFE_INTEGER;
-  return backend;
+  const idx = roundRobinCounter % backendsPool.length;
+  roundRobinCounter = (roundRobinCounter + 1) % Number.MAX_SAFE_INTEGER;
+  return backendsPool[idx];
 }
 
 function hasFreeSlot(backend, preferredSlotId = null) {
@@ -706,6 +737,11 @@ function upsertAffinity(requestContext, backendId, slotId) {
     updatedAt: Date.now(),
   };
 
+  // Evict oldest entries before inserting to prevent unbounded growth
+  evictAffinityMap(affinityIndex.exact);
+  evictAffinityMap(affinityIndex.system);
+  evictAffinityMap(affinityIndex.prefix);
+
   if (requestContext.exactHash) {
     affinityIndex.exact.set(requestContext.exactHash, entry);
   }
@@ -783,9 +819,7 @@ async function sweepL1Eviction() {
       // Race guard: skip if file became active since we scanned
       if (activeCacheFiles.has(fi.hash)) continue;
       const fpath = join(L1_DIR, fi.name);
-      // Existence double-check before delete (second race guard)
-      if (!existsSync(fpath)) continue;
-      await rm(fpath);
+      await rm(fpath, { force: true });  // atomic: no-op if file gone
       evicted++;
       freed += fi.size;
       totalSize -= fi.size;
@@ -815,9 +849,7 @@ async function gcSweep() {
       const s = await safeStat(join(L1_DIR, f));
       if (s && now - s.mtimeMs > MAX_FILE_AGE_MS) {
         const fpath = join(L1_DIR, f);
-        // Existence double-check before delete (race guard)
-        if (!existsSync(fpath)) continue;
-        await rm(fpath);
+        await rm(fpath, { force: true });  // atomic: no-op if file gone
         deleted++;
         log('GC', `  ${C.red}DELETED${C.reset}  ${f}  (age=${Math.round((now - s.mtimeMs) / 3600000)}h)`);
       }
@@ -1001,7 +1033,6 @@ function normalizeSlotId(slotId, fallbackSlotId, backend) {
 
 async function proxyStreamWithHeaders(llamaRes, reply, extraHeaders, signal, onChunk) {
   reply.hijack();
-
   reply.raw.writeHead(llamaRes.status, extraHeaders);
 
   const reader = llamaRes.body?.getReader();
@@ -1012,7 +1043,12 @@ async function proxyStreamWithHeaders(llamaRes, reply, extraHeaders, signal, onC
         if (done) break;
         if (signal.aborted) break;
         if (onChunk) onChunk(value);
-        reply.raw.write(value);
+
+        // Handle backpressure: if write() returns false, wait for drain
+        const canContinue = reply.raw.write(value);
+        if (!canContinue) {
+          await new Promise(resolve => reply.raw.once('drain', resolve));
+        }
       }
     } catch (err) {
       if (err.name !== 'AbortError') {
@@ -1317,30 +1353,15 @@ server.post('/api/settings/reload', async (request, reply) => {
 
 server.post('/api/restart', async (request, reply) => {
   try {
-    // Gracefully close the HTTP server
-    server.close();
-    
-    // Wait for connections to drain
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    // Restart the process
-    const { spawn } = require('child_process');
-    const { fork } = require('child_process');
-    const child = fork(process.argv[1], process.argv.slice(2), {
-      cwd: process.cwd(),
-      stdio: 'inherit',
-      env: { ...process.env },
-    });
-    
-    child.on('error', (err) => {
-      console.error('Failed to restart:', err.message);
-    });
-    
-    reply.send({ ok: true, message: 'Server restarting...' });
+    // Close the HTTP server (stops accepting new connections)
+    await server.close();
+    // Let the supervisor (systemd/PM2) handle respawn
+    process.exit(0);
   } catch (err) {
     reply.status(500).send({ error: err.message });
   }
 });
+
 
 // ─── Backend Logs ────────────────────────────────────────────────────
 
@@ -1449,6 +1470,8 @@ server.post('/v1/chat/completions', async (request, reply) => {
     try {
       await new Promise((resolve, reject) => {
         const onAbort = () => {
+          // Clean up entry on abort to prevent memory leak
+          inFlightMisses.delete(requestContext.exactHash);
           const err = new Error('aborted');
           err.name = 'AbortError';
           reject(err);
@@ -1552,7 +1575,13 @@ server.post('/v1/chat/completions', async (request, reply) => {
         const saveResult = await saveKVCache(requestContext.exactHash, requestContext.model, selectedBackend, assignedSlotId);
         if (saveResult) {
           rememberSlotContext(selectedBackend, effectiveSlotId, requestContext, 'save');
-          copyFile(join(L1_DIR, `${requestContext.exactHash}.bin`), l2Path)
+          const copyWithTimeout = (src, dst, timeoutMs = 30_000) => {
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), timeoutMs);
+            return copyFile(src, dst).finally(() => clearTimeout(timer));
+          };
+
+          copyWithTimeout(join(L1_DIR, `${requestContext.exactHash}.bin`), l2Path)
             .then(() => {
               log('SAVE', `${C.green}Persisted${C.reset}  →  L2 SSD`);
             })
@@ -1589,6 +1618,28 @@ server.setErrorHandler((error, request, reply) => {
       },
     });
   }
+});
+
+// ─── Graceful Shutdown ──────────────────────────────────────────────
+
+process.on('SIGTERM', async () => {
+  log('SHUTDOWN', 'SIGTERM received, shutting down...');
+
+  // Kill all backend child processes
+  for (const backend of backends) {
+    if (backend.processInfo.pid) {
+      try { process.kill(-backend.processInfo.pid, 'SIGTERM'); } catch {}
+    }
+  }
+
+  // Close Fastify server
+  await server.close();
+  process.exit(0);
+});
+
+process.on('SIGINT', () => {
+  log('SHUTDOWN', 'SIGINT received');
+  process.exit(130);
 });
 
 const start = async () => {
