@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Example llama.cpp server script for Mnemosyne
+# Example llama.cpp server script for KVBridge
 #
 # This script starts a llama.cpp server instance.
 # Customize the model path, GPU layers, and other options for your setup.
 #
-# Mnemosyne expects the server to listen on the port specified in config/config.json.
+# KVBridge expects the server to listen on the port specified in config/config.json.
 # This example uses port 11434.
 
 set -euo pipefail

@@ -8,7 +8,7 @@ Modern AI orchestration tools (like vLLM or TGI) are designed for enterprise dat
 
 If you are running budget-friendly or legacy hardware (like GTX 1080 Tis, RTX 2000/3000 series, or AMD ROCm setups) over standard PCIe Gen 3/4 lanes, modern Tensor Parallelism will choke your system. 
 
-**KVBridge** (formerly *Mnemosyne*) was engineered from the ground up to shatter the hardware bottleneck. It acts as a Stateful Load Balancer and Context Router for `llama.cpp`, giving you enterprise-grade context management on a homelab budget.
+**KVBridge** (formerly *KVBridge*) was engineered from the ground up to shatter the hardware bottleneck. It acts as a Stateful Load Balancer and Context Router for `llama.cpp`, giving you enterprise-grade context management on a homelab budget.
 
 ---
 

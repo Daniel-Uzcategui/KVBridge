@@ -5,7 +5,7 @@
 # load balancing. Each backend should use a different port and
 # ideally a different GPU group.
 #
-# Mnemosyne expects the server to listen on the port specified in config/config.json.
+# KVBridge expects the server to listen on the port specified in config/config.json.
 # This example uses port 11435.
 
 set -euo pipefail
