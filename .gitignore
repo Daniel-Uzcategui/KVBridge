@@ -19,3 +19,4 @@ config/start_server.sh
 config/start_server2.sh
 runtime-logs/llama-a.log
 runtime-logs/llama-b.log
+package-lock.json
