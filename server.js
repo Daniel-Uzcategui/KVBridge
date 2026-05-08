@@ -1675,7 +1675,7 @@ server.post('/v1/chat/completions', async (request, reply) => {
           detail: 'Cached prefix restored. Replaying request delta.',
           restoredCacheHash: requestContext.exactHash,
           cacheStatus,
-          progress: 1,
+          progress: null,
         });
       }
     } else if (requestContext.canUseCache && !l1Exists && !l2Exists) {
@@ -1709,7 +1709,7 @@ server.post('/v1/chat/completions', async (request, reply) => {
         summary: 'Generating response',
         detail: 'Streaming tokens to client.',
         cacheStatus,
-        progress: 1,
+        progress: null,
         tokens: streamedChunkCount,
       });
     };
@@ -1725,7 +1725,7 @@ server.post('/v1/chat/completions', async (request, reply) => {
       summary: 'Waiting for first token',
       detail: 'Backend accepted request.',
       cacheStatus,
-      progress: 1,
+      progress: null,
       tokens: streamedChunkCount,
     });
 

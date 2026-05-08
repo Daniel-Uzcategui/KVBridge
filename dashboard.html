@@ -799,6 +799,7 @@
       const prefillProgress = activity?.progress === null || activity?.progress === undefined
         ? null
         : Math.max(0, Math.min(activity.progress * 100, 100));
+      const hasDeterminatePrefill = prefillProgress !== null && prefillProgress > 0 && prefillProgress < 100;
 
       const laterThanRestore = ['restored', 'partial-restored', 'prefill', 'awaiting-output', 'generating', 'streaming', 'saving-cache', 'finishing', 'idle', 'busy', 'canceled'].includes(phase);
       const laterThanPrefill = ['awaiting-output', 'generating', 'streaming', 'saving-cache', 'finishing', 'idle', 'busy', 'canceled'].includes(phase);
@@ -817,10 +818,10 @@
           label: 'Prefill',
           status: phase === 'prefill' || phase === 'prompt' ? 'active' : (laterThanPrefill ? 'complete' : 'idle'),
           value: phase === 'prefill' || phase === 'prompt'
-            ? `${Math.round(prefillProgress || 0)}%`
+            ? (hasDeterminatePrefill ? `${Math.round(prefillProgress)}%` : 'active')
             : (laterThanPrefill ? 'done' : '--'),
           progress: phase === 'prefill' || phase === 'prompt'
-            ? (prefillProgress ?? 0)
+            ? (hasDeterminatePrefill ? prefillProgress : 0)
             : (laterThanPrefill ? 100 : 0),
           tone: 'warn',
         },
@@ -890,6 +891,7 @@
         const progressPct = activity.progress === null || activity.progress === undefined
           ? null
           : Math.max(0, Math.min(activity.progress * 100, 100));
+        const showProgressBar = progressPct !== null && progressPct > 0 && progressPct < 100;
         const elapsedText = activity.startedAt ? formatDuration(Date.now() - activity.startedAt) : null;
         const requestText = activity.requestId ? `req ${activity.requestId}` : null;
         const taskText = Number.isInteger(activity.taskId) ? `task ${activity.taskId}` : null;
@@ -948,7 +950,7 @@
               <div class="subcopy" style="margin-top:0;">${activity.detail || 'No recent backend activity.'}</div>
               <div class="subcopy mono">${[elapsedText ? `Elapsed ${elapsedText}` : null, requestText, taskText, hashText, restoredText, cacheStatusText, partialText, cacheReasonText].filter(Boolean).join(' · ') || `Updated ${formatTime(activity.updatedAt)}`}</div>
               <div class="subcopy mono">Updated ${formatTime(activity.updatedAt)}</div>
-              ${progressPct === null ? '' : `<div class="progress"><span style="width:${progressPct}%"></span></div>`}
+              ${showProgressBar ? `<div class="progress"><span style="width:${progressPct}%"></span></div>` : ''}
               <div class="stage-list">
                 ${stages.map(stage => {
                   const stageClass = stage.status === 'complete'
@@ -1039,6 +1041,7 @@
         const progressPct = slot.progress === null || slot.progress === undefined
           ? null
           : Math.max(0, Math.min(slot.progress * 100, 100));
+        const showProgressBar = progressPct !== null && progressPct > 0 && progressPct < 100;
         return `
           <article class="slot-card ${busy ? 'busy' : 'idle'}">
             <div class="slot-head">
@@ -1060,7 +1063,7 @@
             ${Number.isInteger(slot.taskId) ? `<div><div class="meta-label">Task ID</div><div class="meta-value mono">${slot.taskId}</div></div>` : ''}
             ${slot.phase ? `<div><div class="meta-label">Phase</div><div class="meta-value mono">${slot.phase}</div></div>` : ''}
             ${slot.detail ? `<div><div class="meta-label">Detail</div><div class="meta-value mono">${slot.detail}</div></div>` : ''}
-            ${progressPct === null ? '' : `<div class="progress"><span style="width:${progressPct}%"></span></div>`}
+            ${showProgressBar ? `<div class="progress"><span style="width:${progressPct}%"></span></div>` : ''}
           </article>
         `;
       }).join('');
