@@ -15,3 +15,4 @@ config/config.json
 # IDE
 .vscode/
 .idea/
+package-lock.json
