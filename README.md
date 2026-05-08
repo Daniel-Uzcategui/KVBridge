@@ -18,6 +18,7 @@ When you run massive LLMs (like Qwen 35B or Llama-3 70B) across multiple legacy 
 
 **KVBridge takes a different approach:**
 Instead of slicing the model across multiple GPUs and suffering crippling PCIe latency penalties, KVBridge orchestrates independent, highly optimized `llama-server` nodes and routes requests based on **Cache Affinity**.
+<img width="1164" height="1196" alt="image" src="https://github.com/user-attachments/assets/1484dcdf-6be3-48ac-80cf-c6c7180dede4" />
 
 ## ✨ Key Features
 
