@@ -190,6 +190,7 @@ function createBackendState(config) {
     availableSlots: Array.from({ length: config.maxSlots }, (_, i) => i),
     activeSlots: new Map(),
     slotContextIndex: new Map(),
+    slotActivity: new Map(),
     processInfo: {
       status: 'stopped',
       pid: null,
@@ -206,6 +207,63 @@ function createBackendState(config) {
 let backends = null;
 let backendsById = new Map();
 let roundRobinCounter = 0;
+
+function createIdleActivitySnapshot(overrides = {}) {
+  return {
+    phase: 'idle',
+    summary: 'Idle',
+    detail: 'No recent backend activity.',
+    updatedAt: 0,
+    startedAt: null,
+    requestId: null,
+    taskId: null,
+    cacheHash: null,
+    restoredCacheHash: null,
+    cacheStatus: null,
+    partialScore: null,
+    cacheReason: null,
+    progress: null,
+    tokens: null,
+    ...overrides,
+  };
+}
+
+function updateSlotActivity(backend, slotId, patch = {}) {
+  if (!Number.isInteger(slotId) || slotId < 0 || slotId >= backend.maxSlots) {
+    return createIdleActivitySnapshot();
+  }
+
+  const previous = backend.slotActivity.get(slotId) || createIdleActivitySnapshot();
+  const next = {
+    ...previous,
+    ...patch,
+    updatedAt: Date.now(),
+  };
+  backend.slotActivity.set(slotId, next);
+  return next;
+}
+
+function getSlotActivitySnapshot(backend, slotId) {
+  return {
+    ...(backend.slotActivity.get(slotId) || createIdleActivitySnapshot()),
+  };
+}
+
+function getBackendActivitySnapshot(backend) {
+  const activities = [...backend.slotActivity.values()];
+  if (activities.length === 0) {
+    return createIdleActivitySnapshot();
+  }
+
+  const activeActivities = activities.filter(activity => activity.phase && activity.phase !== 'idle');
+  const source = (activeActivities.length > 0 ? activeActivities : activities)
+    .sort((left, right) => (right.updatedAt || 0) - (left.updatedAt || 0))[0];
+
+  return {
+    ...createIdleActivitySnapshot(),
+    ...source,
+  };
+}
 
 // ─── Affinity Index — bounded LRU to prevent unbounded memory growth ──
 
@@ -233,6 +291,7 @@ function resetBackendRuntimeState(backend) {
   backend.availableSlots = Array.from({ length: backend.maxSlots }, (_, i) => i);
   backend.activeSlots.clear();
   backend.slotContextIndex.clear();
+  backend.slotActivity.clear();
 }
 
 function getBackendProcessSnapshot(backend) {
@@ -1047,7 +1106,18 @@ async function proxyStreamWithHeaders(llamaRes, reply, extraHeaders, signal, onC
         // Handle backpressure: if write() returns false, wait for drain
         const canContinue = reply.raw.write(value);
         if (!canContinue) {
-          await new Promise(resolve => reply.raw.once('drain', resolve));
+          await new Promise(resolve => {
+            const finishWaiting = () => {
+              reply.raw.off('drain', finishWaiting);
+              reply.raw.off('close', finishWaiting);
+              reply.raw.off('error', finishWaiting);
+              resolve();
+            };
+
+            reply.raw.once('drain', finishWaiting);
+            reply.raw.once('close', finishWaiting);
+            reply.raw.once('error', finishWaiting);
+          });
         }
       }
     } catch (err) {
@@ -1292,12 +1362,21 @@ server.get('/api/stats', async (request, reply) => {
       }
 
       const slotContext = backend.slotContextIndex.get(slotId);
+      const slotActivity = getSlotActivitySnapshot(backend, slotId);
       slotsInfo.push({
         id: `${backend.id}:${slotId}`,
         backendId: backend.id,
         backendLabel: `${backend.host}:${backend.port}`,
         hash: slotContext?.exactHash || null,
         activeReq,
+        taskId: slotActivity.taskId,
+        phase: slotActivity.phase,
+        detail: slotActivity.detail,
+        progress: slotActivity.progress,
+        restoredCacheHash: slotActivity.restoredCacheHash,
+        cacheStatus: slotActivity.cacheStatus,
+        partialScore: slotActivity.partialScore,
+        cacheReason: slotActivity.cacheReason,
       });
     }
   }
@@ -1313,6 +1392,7 @@ server.get('/api/stats', async (request, reply) => {
       url: backend.baseUrl,
       gpuGroup: backend.gpuGroup,
       healthy: backend.healthy,
+      activity: getBackendActivitySnapshot(backend),
       queueLength: backend.slotQueue.length,
       activeRequests: backend.activeSlots.size,
       availableSlots: backend.availableSlots.length,
@@ -1432,6 +1512,24 @@ server.post('/v1/chat/completions', async (request, reply) => {
   let observedSlotId = null;
   let resolveInFlight = null;
   let cacheMarkedActive = false;
+  const requestStartedAt = Date.now();
+  let cacheStatus = 'BYPASS';
+  let shouldSaveCache = false;
+  let streamedChunkCount = 0;
+
+  const updateActivity = patch => {
+    if (!selectedBackend || assignedSlotId === null) {
+      return;
+    }
+
+    const slotId = normalizeSlotId(observedSlotId, assignedSlotId, selectedBackend);
+    updateSlotActivity(selectedBackend, slotId, {
+      requestId: reqId,
+      startedAt: requestStartedAt,
+      cacheHash: requestContext.exactHash,
+      ...patch,
+    });
+  };
 
   const safeReleaseSlot = () => {
     if (!slotReleased && selectedBackend && assignedSlotId !== null) {
@@ -1453,11 +1551,29 @@ server.post('/v1/chat/completions', async (request, reply) => {
     }
   };
 
-  request.raw.on('aborted', () => {
-    if (!reply.raw.writableEnded) {
+  const handleClientDisconnect = () => {
+    if (!signal.aborted) {
       log('DISCONNECT', `Client dropped  ${reqId}`);
       abortController.abort();
-      safeReleaseSlot();
+    }
+    safeReleaseSlot();
+  };
+
+  request.raw.on('aborted', () => {
+    if (!reply.raw.writableEnded) {
+      handleClientDisconnect();
+    }
+  });
+
+  reply.raw.on('close', () => {
+    if (!reply.raw.writableEnded && !signal.aborted) {
+      handleClientDisconnect();
+    }
+  });
+
+  reply.raw.on('error', () => {
+    if (!signal.aborted) {
+      handleClientDisconnect();
     }
   });
 
@@ -1500,10 +1616,15 @@ server.post('/v1/chat/completions', async (request, reply) => {
   try {
     assignedSlotId = await acquireSlotOnBackend(selectedBackend, reqId, signal, routing.preferredSlotId);
     observedSlotId = assignedSlotId;
+    updateActivity({
+      phase: 'prefill',
+      summary: 'Prefilling prompt',
+      detail: 'Submitting prompt to backend.',
+      progress: 0,
+      cacheStatus,
+    });
 
     let proxyBody = { ...body, id_slot: assignedSlotId };
-    let cacheStatus = 'BYPASS';
-    let shouldSaveCache = false;
     const trackedSlot = selectedBackend.slotContextIndex.get(assignedSlotId);
 
     if (requestContext.canUseCache && (l1Exists || l2Exists)) {
@@ -1512,6 +1633,17 @@ server.post('/v1/chat/completions', async (request, reply) => {
 
       if (!cacheReady) {
         try {
+          cacheStatus = l1Exists ? 'HIT' : 'COLD_HIT';
+          updateActivity({
+            phase: 'restoring',
+            summary: l1Exists ? 'Restoring cache' : 'Restoring cold cache',
+            detail: l1Exists
+              ? 'Loading cached prefix from L1.'
+              : 'Copying cached prefix from L2 and restoring it.',
+            restoredCacheHash: requestContext.exactHash,
+            cacheStatus,
+            progress: null,
+          });
           if (!l1Exists && l2Exists) {
             logColdHit(requestContext.exactHash);
             await copyFileL2ToL1(requestContext.exactHash);
@@ -1522,13 +1654,29 @@ server.post('/v1/chat/completions', async (request, reply) => {
           await restoreKVCache(requestContext.exactHash, requestContext.model, selectedBackend, assignedSlotId);
           cacheReady = true;
         } catch (err) {
+          cacheStatus = 'BYPASS';
+          updateActivity({
+            phase: 'prefill',
+            summary: 'Prefilling prompt',
+            detail: 'Cache restore failed, continuing without cache.',
+            restoredCacheHash: null,
+            cacheStatus,
+            progress: 0,
+          });
           log('WARN', `Restore failed (${err.message}) — falling back to full request`);
         }
       }
 
       if (cacheReady) {
         proxyBody = { ...body, messages: requestContext.userMessages, id_slot: assignedSlotId };
-        cacheStatus = 'HIT';
+        updateActivity({
+          phase: 'prefill',
+          summary: 'Prefilling prompt',
+          detail: 'Cached prefix restored. Replaying request delta.',
+          restoredCacheHash: requestContext.exactHash,
+          cacheStatus,
+          progress: 1,
+        });
       }
     } else if (requestContext.canUseCache && !l1Exists && !l2Exists) {
       markCacheBusy();
@@ -1541,11 +1689,30 @@ server.post('/v1/chat/completions', async (request, reply) => {
       };
       cacheStatus = 'MISS';
       shouldSaveCache = true;
+      updateActivity({
+        phase: 'prefill',
+        summary: 'Prefilling prompt',
+        detail: 'Cache miss. Evaluating full prompt.',
+        cacheStatus,
+        progress: 0,
+      });
     }
 
     const observeSlot = createSlotTracker(slotId => {
       observedSlotId = slotId;
     });
+    const observeStreamChunk = chunk => {
+      observeSlot(chunk);
+      streamedChunkCount += 1;
+      updateActivity({
+        phase: 'streaming',
+        summary: 'Generating response',
+        detail: 'Streaming tokens to client.',
+        cacheStatus,
+        progress: 1,
+        tokens: streamedChunkCount,
+      });
+    };
 
     const llamaRes = await fetchChatCompletion(selectedBackend, request.headers, proxyBody, signal);
     if (!llamaRes.ok) {
@@ -1553,6 +1720,14 @@ server.post('/v1/chat/completions', async (request, reply) => {
       logErr(`llama.cpp ${selectedBackend.id} returned ${llamaRes.status}: ${errText.slice(0, 500)}`);
       throw new Error(`llama.cpp ${selectedBackend.id} returned ${llamaRes.status}: ${errText.slice(0, 300)}`);
     }
+    updateActivity({
+      phase: 'awaiting-output',
+      summary: 'Waiting for first token',
+      detail: 'Backend accepted request.',
+      cacheStatus,
+      progress: 1,
+      tokens: streamedChunkCount,
+    });
 
     const responseHeaders = buildProxyResponseHeaders(llamaRes.headers, {
       'X-Accel-Buffering': 'no',
@@ -1563,7 +1738,7 @@ server.post('/v1/chat/completions', async (request, reply) => {
       responseHeaders['X-Cache-Status'] = cacheStatus;
     }
 
-    await proxyStreamWithHeaders(llamaRes, reply, responseHeaders, signal, observeSlot);
+    await proxyStreamWithHeaders(llamaRes, reply, responseHeaders, signal, observeStreamChunk);
 
     const effectiveSlotId = normalizeSlotId(observedSlotId, assignedSlotId, selectedBackend);
     if (requestContext.hasAffinity) {
@@ -1572,6 +1747,14 @@ server.post('/v1/chat/completions', async (request, reply) => {
 
     if (shouldSaveCache && !signal.aborted) {
       try {
+        updateActivity({
+          phase: 'saving-cache',
+          summary: 'Saving cache',
+          detail: 'Persisting fresh KV cache for reuse.',
+          cacheStatus,
+          progress: null,
+          tokens: streamedChunkCount,
+        });
         const saveResult = await saveKVCache(requestContext.exactHash, requestContext.model, selectedBackend, assignedSlotId);
         if (saveResult) {
           rememberSlotContext(selectedBackend, effectiveSlotId, requestContext, 'save');
@@ -1592,6 +1775,31 @@ server.post('/v1/chat/completions', async (request, reply) => {
       }
     }
   } finally {
+    if (selectedBackend && assignedSlotId !== null) {
+      const slotId = normalizeSlotId(observedSlotId, assignedSlotId, selectedBackend);
+      updateSlotActivity(selectedBackend, slotId, signal.aborted
+        ? {
+            phase: 'canceled',
+            summary: 'Canceled',
+            detail: 'Client disconnected before completion.',
+            startedAt: null,
+            cacheStatus,
+            progress: null,
+            tokens: streamedChunkCount || null,
+          }
+        : {
+            phase: 'idle',
+            summary: 'Idle',
+            detail: streamedChunkCount > 0 ? 'Last request completed.' : 'No recent backend activity.',
+            startedAt: null,
+            restoredCacheHash: cacheStatus === 'HIT' || cacheStatus === 'COLD_HIT'
+              ? requestContext.exactHash
+              : null,
+            cacheStatus: cacheStatus === 'BYPASS' ? null : cacheStatus,
+            progress: null,
+            tokens: streamedChunkCount || null,
+          });
+    }
     if (cacheMarkedActive && requestContext.exactHash) {
       markCacheInactive(requestContext.exactHash);
     }
