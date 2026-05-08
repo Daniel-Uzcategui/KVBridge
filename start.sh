@@ -9,5 +9,5 @@ if [ -z "$LOGGED_BY_NOHUP" ]; then
 fi
 
 # --- Tu comando real aquí ---
-cd ~/qwencode
+cd "$(dirname "$0")"
 npm start

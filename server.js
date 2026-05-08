@@ -4,8 +4,8 @@
  * ============================================================
  * Storage Orchestrator — never holds binary data in V8 heap.
  *
- * L1_DIR (RAMDisk, tmpfs):  ~/Models/ramdisk_cache  — volatile, fast
- * L2_DIR (SSD, persistent): ~/Models/slot_cache     — unlimited, slow
+ * L1_DIR (RAMDisk, tmpfs):  $HOME/Models/ramdisk_cache  — volatile, fast
+ * L2_DIR (SSD, persistent): $HOME/Models/slot_cache     — unlimited, slow
  *
  * Usage:
  *   node server.js

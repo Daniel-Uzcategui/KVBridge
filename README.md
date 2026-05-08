@@ -8,22 +8,24 @@ Named after the Greek titaness of memory, Mnemosyne speeds up repeated prompts w
 
 ```
 OpenClaw ──→ Mnemosyne (:8080) ──→ llama.cpp (:11434)
-                   │
-        ┌──────────┴──────────┐
-        ▼                     ▼
+                   │                      │
+        ┌──────────┴──────────┐     GPU 0,1 ── <gpu>
+        ▼                     ▼     GPU 2,3 ── <gpu>
   L1: RAMDisk (tmpfs)    L2: SSD (persistent)
-  ~/Models/   ~/Models/
+  $HOME/Models/          $HOME/Models/
   ramdisk_cache/         slot_cache/
     *.bin files            *.bin files
 ```
 
 Mnemosyne sits between your application (OpenClaw) and llama.cpp as a middleware proxy. It intercepts chat completion requests, hashes the system prompt (and optionally large RAG payloads), and either serves from the fast L1 RAMDisk cache or falls back through L2 SSD storage.
 
+A web dashboard at `http://localhost:8080/dashboard` provides real-time visibility into GPU telemetry, backend health, cache hits, and active slots.
+
 ## Features
 
 ### Tiered Storage (L1 + L2)
 
-- **L1 (RAMDisk / tmpfs)** — Volatile, ultra-fast storage (~3 GB capacity). Hot cache entries live here for instant KV cache restoration.
+- **L1 (RAMDisk / tmpfs)** — Volatile, ultra-fast storage with configurable capacity. Hot cache entries live here for instant KV cache restoration.
 - **L2 (SSD / persistent)** — Unlimited, persistent storage. Cache entries survive restarts and are copied to L1 on demand (cold hits).
 
 ### Cache Hit Types
@@ -58,6 +60,33 @@ On startup, the N most recently modified `.bin` files from L2 are copied to L1, 
 
 All incoming requests (with system prompts and first user messages) are logged to `ghost_detector.txt` for debugging and analysis.
 
+### GPU Telemetry
+
+Mnemosyne collects live GPU metrics using `nvidia-smi` and exposes them via the `/api/stats` endpoint. The dashboard UI renders each GPU with:
+
+- Temperature (°C) with color-coded badges (green < 65, yellow 65-75, red > 75)
+- Fan speed (%)
+- GPU utilization (%)
+- Power draw (W)
+- Memory usage (used / total MiB) with progress bar
+- P-State
+
+A summary card shows average temperature, total power across all GPUs, and peak utilization.
+
+### Multi-Backend Support
+
+Mnemosyne can manage multiple llama.cpp backends, each assigned to specific GPU groups. Backends are configured in `settings.js` and `config/config.json`. The dashboard shows backend health, process status (starting/running/stopped/error), and allows manual start/stop/restart.
+
+### Dashboard
+
+A web-based dashboard at `/dashboard` provides real-time visibility into:
+
+- **GPU Telemetry** — Live `nvidia-smi` metrics for all installed GPUs
+- **Backend Processes** — Health, status, and process details per backend
+- **Active Hardware Slots** — Slot allocation across all backends
+- **Top Cache Entries** — Ranked cache entries with hit counts
+- **Backend Logs** — Selectable logs per backend for debugging
+
 ## How it works
 
 1. **Hash** — The system prompt (and optionally the first user message if it exceeds the RAG threshold) is SHA-256 hashed to produce a unique cache key.
@@ -73,8 +102,18 @@ All incoming requests (with system prompts and first user messages) are logged t
 ### Prerequisites
 
 - Node.js ≥ 18 (for native `fetch`)
-- llama.cpp running on `http://127.0.0.1:11434`
-- A tmpfs/RAMDisk mounted at `~/Models/ramdisk_cache` (L1)
+- [llama.cpp](https://github.com/ggerganov/llama.cpp) built and available on `PATH`
+- A tmpfs/RAMDisk mounted at `$HOME/Models/ramdisk_cache` (L1) — or any fast storage location
+
+### Backend Scripts
+
+Copy the example scripts and customize them for your GPU setup:
+
+```bash
+cp config/start_server.example.sh ~/Models/start_server.sh
+cp config/start_server2.example.sh ~/Models/start_server2.sh
+# Edit the MODEL, GPU_LAYERS, and PORT variables in each script
+```
 
 ### Installation
 
@@ -119,6 +158,54 @@ POST /v1/chat/completions
 
 Send standard OpenAI-format chat completion requests. The proxy handles everything transparently — cache lookup, KV state management, and SSE streaming.
 
+### GET /api/stats
+
+Returns a JSON snapshot of system state:
+
+```json
+{
+  "queueLength": 0,
+  "l1UsageBytes": 3221225472,
+  "gpu": {
+    "devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA <gpu>",
+        "temperatureC": 85,
+        "fanSpeedPercent": 59,
+        "utilizationGpu": 100,
+        "powerDrawWatts": 200.71,
+        "memoryUsedMiB": 10233,
+        "memoryTotalMiB": 11264,
+        "pstate": "P2"
+      }
+    ],
+    "summary": {
+      "averageTempC": 80,
+      "totalPowerWatts": 425,
+      "busiestUtilization": 100
+    }
+  },
+  "slots": [...],
+  "llamaMetrics": {},
+  "backends": [...]
+}
+```
+
+The `gpu` field is populated by running `nvidia-smi --query-gpu=index,name,temperature.gpu,fan.speed,utilization.gpu,power.draw,memory.used,memory.total,pstate --format=csv,noheader,nounits`.
+
+### GET /api/settings / POST /api/settings
+
+Get and update runtime settings (persisted to `config/config.json`).
+
+### POST /api/restart
+
+Restarts the server process.
+
+### GET /dashboard
+
+Serves the monitoring dashboard UI.
+
 ## Response headers
 
 Mnemosyne adds a `X-Cache-Status` header to SSE responses:
@@ -147,9 +234,14 @@ All operations are logged to the terminal with color-coded tags:
 
 ```
 server.js              # Single-file Fastify server with all logic
+dashboard.html         # Real-time monitoring dashboard
 ghost_detector.txt     # Request logging for debugging
 slot_cache/            # L2 SSD — KV cache .bin files (persistent)
 ramdisk_cache/         # L1 RAMDisk — KV cache .bin files (volatile)
+config/                # Persistent settings
+  config.json          # Current settings
+  config.json.bak      # Backup
+settings.js            # Settings loader
 package.json           # Dependencies
 ```
 

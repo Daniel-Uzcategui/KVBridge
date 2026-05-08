@@ -1,1 +1,17 @@
-.qwen/
+# Dependencies
+node_modules/
+
+# Runtime files
+app.log
+ghost_detector.txt
+*.log
+
+# Config backups
+config/config.json.bak*
+
+# Runtime config (contains personal paths)
+config/config.json
+
+# IDE
+.vscode/
+.idea/

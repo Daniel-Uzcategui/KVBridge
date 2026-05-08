@@ -5,6 +5,8 @@ const { readFile, writeFile, mkdir, rename } = require('fs/promises');
 const { existsSync } = require('fs');
 const { join, dirname } = require('path');
 const { createHash } = require('crypto');
+const os = require('os');
+const { homedir } = os;
 
 // ─── Schema defaults ─────────────────────────────────────────────────
 
@@ -15,9 +17,9 @@ function defaultSettings() {
       host: '0.0.0.0',
     },
     storage: {
-      modelsDir: join('~', 'Models'),
-      l1Dir: join('~', 'Models', 'ramdisk_cache'),
-      l2Dir: join('~', 'Models', 'slot_cache'),
+      modelsDir: join(homedir(), 'Models'),
+      l1Dir: join(homedir(), 'Models', 'ramdisk_cache'),
+      l2Dir: join(homedir(), 'Models', 'slot_cache'),
       backendLogDir: join(__dirname, 'runtime-logs'),
     },
     backends: [
@@ -27,7 +29,7 @@ function defaultSettings() {
         port: 11434,
         gpuGroup: '2,3',
         maxSlots: 1,
-        scriptPath: join('~', 'Models', 'start_server.sh'),
+        scriptPath: join(__dirname, 'config', 'start_server.example.sh'),
         modelName: 'qwen',
       },
       {
@@ -36,7 +38,7 @@ function defaultSettings() {
         port: 11435,
         gpuGroup: '0,1',
         maxSlots: 1,
-        scriptPath: join('~', 'Models', 'start_server2.sh'),
+        scriptPath: join(__dirname, 'config', 'start_server2.example.sh'),
         modelName: 'qwen',
       },
     ],
