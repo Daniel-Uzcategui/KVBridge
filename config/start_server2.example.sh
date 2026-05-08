@@ -13,7 +13,7 @@ set -euo pipefail
 # ─── Configuration ───────────────────────────────────────────
 # These should differ from the first backend's settings.
 
-MODEL="${MODEL_PATH:-./models/qwen2.5-7b-instruct-q4_k_m.gguf}"
+MODEL="${MODEL_PATH:-./models/qwen3.6-35b-q4_k_m.gguf}"
 HOST="${LLAMA_HOST:-127.0.0.1}"
 PORT="${LLAMA_PORT:-11435}"
 THREADS="${LLAMA_THREADS:-8}"

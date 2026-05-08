@@ -12,7 +12,7 @@ set -euo pipefail
 # ─── Configuration ───────────────────────────────────────────
 # Adjust these to match your GPU setup and model.
 
-MODEL="${MODEL_PATH:-./models/qwen2.5-7b-instruct-q4_k_m.gguf}"
+MODEL="${MODEL_PATH:-./models/qwen3.6-35b-q4_k_m.gguf}"
 HOST="${LLAMA_HOST:-127.0.0.1}"
 PORT="${LLAMA_PORT:-11434}"
 THREADS="${LLAMA_THREADS:-8}"
