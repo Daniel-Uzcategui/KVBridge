@@ -191,6 +191,11 @@ function createBackendState(config) {
     activeSlots: new Map(),
     slotContextIndex: new Map(),
     slotActivity: new Map(),
+    discoveredModels: new Map(),
+    modelsDiscoveryAt: 0,
+    modelsDiscoveryError: null,
+    lastMetrics: {},
+    lastMetricsAt: 0,
     processInfo: {
       status: 'stopped',
       pid: null,
@@ -207,6 +212,336 @@ function createBackendState(config) {
 let backends = null;
 let backendsById = new Map();
 let roundRobinCounter = 0;
+const MODEL_OPERATION_TIMEOUT_MS = 90_000;
+const MODEL_OPERATION_POLL_INTERVAL_MS = 1_000;
+const backendModelOperationLocks = new Map();
+
+function normalizeModelId(model) {
+  if (typeof model !== 'string') return null;
+  const value = model.trim();
+  return value.length > 0 ? value : null;
+}
+
+function createDiscoveredModelEntry(modelId, patch = {}) {
+  return {
+    id: modelId,
+    object: 'model',
+    created: patch.created || Math.floor(Date.now() / 1000),
+    owned_by: patch.owned_by || 'llamacpp',
+    meta: patch.meta || null,
+    backendStatus: patch.backendStatus || null,
+    raw: patch.raw || null,
+  };
+}
+
+function setBackendDiscoveredModels(backend, models = [], error = null) {
+  const next = new Map();
+  for (const model of models) {
+    const modelId = normalizeModelId(model?.id || model?.name || model?.model);
+    if (!modelId) continue;
+    next.set(modelId, createDiscoveredModelEntry(modelId, {
+      created: model?.created,
+      owned_by: model?.owned_by,
+      meta: model?.meta || null,
+      backendStatus: model?.status || null,
+      raw: model,
+    }));
+  }
+
+  backend.discoveredModels = next;
+  backend.modelsDiscoveryAt = Date.now();
+  backend.modelsDiscoveryError = error;
+}
+
+function getBackendDiscoveredModels(backend) {
+  return [...backend.discoveredModels.values()];
+}
+
+function getBackendsForModel(modelId) {
+  const normalizedModelId = normalizeModelId(modelId);
+  if (!normalizedModelId) return [];
+  return backends.filter(backend => backend.discoveredModels.has(normalizedModelId));
+}
+
+function getHealthyBackendsForModel(modelId) {
+  return getBackendsForModel(modelId).filter(backend => backend.healthy);
+}
+
+function buildAggregatedModelRegistry() {
+  const registry = new Map();
+
+  for (const backend of backends) {
+    for (const model of backend.discoveredModels.values()) {
+      const existing = registry.get(model.id) || {
+        id: model.id,
+        object: 'model',
+        created: model.created,
+        owned_by: model.owned_by || 'llamacpp',
+        meta: model.meta || null,
+        backends: [],
+      };
+
+      if (!existing.meta && model.meta) {
+        existing.meta = model.meta;
+      }
+
+      existing.backends.push({
+        id: backend.id,
+        url: backend.baseUrl,
+        healthy: backend.healthy,
+        discoveredAt: backend.modelsDiscoveryAt,
+        discoveryError: backend.modelsDiscoveryError,
+        status: model.backendStatus,
+      });
+      registry.set(model.id, existing);
+    }
+  }
+
+  for (const entry of registry.values()) {
+    entry.healthyBackends = entry.backends.filter(backend => backend.healthy);
+    entry.loadedBackends = entry.backends.filter(backend => {
+      const value = backend.status?.value;
+      return value === 'loaded' || value === 'loading' || value === 'sleeping';
+    });
+    entry.available = entry.healthyBackends.length > 0;
+  }
+
+  return registry;
+}
+
+function getAggregatedModelEntry(modelId) {
+  const normalizedModelId = normalizeModelId(modelId);
+  if (!normalizedModelId) return null;
+  return buildAggregatedModelRegistry().get(normalizedModelId) || null;
+}
+
+function toOpenAiModel(entry) {
+  return {
+    id: entry.id,
+    object: 'model',
+    created: entry.created || Math.floor(Date.now() / 1000),
+    owned_by: entry.owned_by || 'llamacpp',
+    meta: entry.meta || null,
+    healthy_backends: entry.healthyBackends.length,
+    loaded_backends: entry.loadedBackends.length,
+    backends: entry.backends,
+  };
+}
+
+async function fetchBackendModels(backend) {
+  const res = await timedFetch(`${backend.baseUrl}/models`, BACKEND_HEALTHCHECK_TIMEOUT_MS);
+  if (!res.ok) {
+    const body = await res.text().catch(() => '(no body)');
+    throw new Error(`models endpoint failed ${res.status}: ${body.slice(0, 200)}`);
+  }
+
+  const payload = await res.json();
+  if (Array.isArray(payload)) return payload;
+  if (Array.isArray(payload?.data)) return payload.data;
+  return [];
+}
+
+async function fetchBackendOpenAiModels(backend) {
+  try {
+    const res = await timedFetch(`${backend.baseUrl}/v1/models`, BACKEND_HEALTHCHECK_TIMEOUT_MS);
+    if (!res.ok) {
+      return [];
+    }
+
+    const payload = await res.json();
+    if (Array.isArray(payload?.data)) return payload.data;
+    return [];
+  } catch {
+    return [];
+  }
+}
+
+async function refreshBackendModels(backend) {
+  try {
+    const [models, openAiModels] = await Promise.all([
+      fetchBackendModels(backend),
+      fetchBackendOpenAiModels(backend),
+    ]);
+
+    const openAiById = new Map(openAiModels
+      .map(model => [normalizeModelId(model?.id), model])
+      .filter(([modelId]) => Boolean(modelId)));
+
+    const enrichedModels = models.map(model => {
+      const modelId = normalizeModelId(model?.id || model?.name || model?.model);
+      const openAiModel = modelId ? openAiById.get(modelId) : null;
+      if (!openAiModel) {
+        return model;
+      }
+
+      return {
+        ...model,
+        created: model?.created || openAiModel.created,
+        owned_by: model?.owned_by || openAiModel.owned_by,
+        meta: model?.meta || openAiModel.meta || null,
+      };
+    });
+
+    setBackendDiscoveredModels(backend, enrichedModels, null);
+    return getBackendDiscoveredModels(backend);
+  } catch (err) {
+    setBackendDiscoveredModels(backend, [], err.message);
+    throw err;
+  }
+}
+
+function getBackendModelStatus(backend, modelId) {
+  const normalizedModelId = normalizeModelId(modelId);
+  if (!normalizedModelId) return null;
+  return backend.discoveredModels.get(normalizedModelId)?.backendStatus || null;
+}
+
+function isBackendModelActive(status) {
+  const value = status?.value;
+  return value === 'loaded' || value === 'loading' || value === 'sleeping';
+}
+
+function isBackendModelReady(status) {
+  const value = status?.value;
+  return value === 'loaded' || value === 'sleeping';
+}
+
+function getBackendActiveModelIds(backend, excludeModelId = null) {
+  const excludedModelId = normalizeModelId(excludeModelId);
+  const activeModelIds = [];
+
+  for (const model of backend.discoveredModels.values()) {
+    if (excludedModelId && model.id === excludedModelId) continue;
+    if (isBackendModelActive(model.backendStatus)) {
+      activeModelIds.push(model.id);
+    }
+  }
+
+  return activeModelIds;
+}
+
+async function waitForBackendModelCondition(backend, modelId, predicate, actionLabel, timeoutMs = MODEL_OPERATION_TIMEOUT_MS) {
+  const normalizedModelId = normalizeModelId(modelId);
+  const deadline = Date.now() + timeoutMs;
+  let lastState = getBackendModelStatus(backend, normalizedModelId)?.value || 'unknown';
+  let lastError = null;
+
+  while (Date.now() < deadline) {
+    try {
+      await refreshBackendModels(backend);
+      lastError = null;
+    } catch (err) {
+      lastError = err;
+    }
+
+    const status = getBackendModelStatus(backend, normalizedModelId);
+    lastState = status?.value || 'unknown';
+    if (predicate(status)) {
+      return status;
+    }
+
+    await wait(MODEL_OPERATION_POLL_INTERVAL_MS);
+  }
+
+  const detail = lastError ? `, last refresh error: ${lastError.message}` : '';
+  throw new Error(`Timed out waiting for model ${normalizedModelId} on ${backend.id} to ${actionLabel} (last state=${lastState}${detail})`);
+}
+
+function withBackendModelOperationLock(backend, operation) {
+  const previous = backendModelOperationLocks.get(backend.id) || Promise.resolve();
+  const current = previous.catch(() => {}).then(operation);
+  const settled = current.finally(() => {
+    if (backendModelOperationLocks.get(backend.id) === settled) {
+      backendModelOperationLocks.delete(backend.id);
+    }
+  });
+
+  backendModelOperationLocks.set(backend.id, settled);
+  return current;
+}
+
+async function unloadModelOnBackend(backend, modelId) {
+  const normalizedModelId = normalizeModelId(modelId);
+  if (!normalizedModelId) {
+    throw new Error('model is required');
+  }
+
+  await refreshBackendModels(backend).catch(() => {});
+  const status = getBackendModelStatus(backend, normalizedModelId);
+  if (!isBackendModelActive(status)) {
+    return { model: normalizedModelId, status: status?.value || 'inactive' };
+  }
+
+  log('MODEL', `Unloading model=${normalizedModelId} backend=${backend.id}`);
+  await llamaPost(backend, '/models/unload', { model: normalizedModelId });
+  await waitForBackendModelCondition(
+    backend,
+    normalizedModelId,
+    currentStatus => !isBackendModelActive(currentStatus),
+    'unload'
+  );
+
+  return { model: normalizedModelId, status: 'unloaded' };
+}
+
+async function switchModelOnBackend(backend, modelId) {
+  const normalizedModelId = normalizeModelId(modelId);
+  if (!normalizedModelId) {
+    throw new Error('model is required');
+  }
+
+  await refreshBackendModels(backend).catch(() => {});
+
+  const currentStatus = getBackendModelStatus(backend, normalizedModelId);
+  if (isBackendModelReady(currentStatus)) {
+    return {
+      model: normalizedModelId,
+      status: currentStatus.value,
+      unloadedModels: [],
+      alreadyLoaded: true,
+    };
+  }
+
+  if (!currentStatus) {
+    throw new Error(`Model ${normalizedModelId} is not advertised by backend ${backend.id}`);
+  }
+
+  const unloadedModels = [];
+  const activeModels = getBackendActiveModelIds(backend, normalizedModelId);
+  for (const activeModelId of activeModels) {
+    const result = await unloadModelOnBackend(backend, activeModelId);
+    unloadedModels.push(result.model);
+  }
+
+  const refreshedStatus = getBackendModelStatus(backend, normalizedModelId);
+  if (isBackendModelReady(refreshedStatus)) {
+    return {
+      model: normalizedModelId,
+      status: refreshedStatus.value,
+      unloadedModels,
+      alreadyLoaded: true,
+    };
+  }
+
+  if (!isBackendModelActive(refreshedStatus)) {
+    log('MODEL', `Loading model=${normalizedModelId} backend=${backend.id}`);
+    await llamaPost(backend, '/models/load', { model: normalizedModelId });
+  }
+
+  const readyStatus = await waitForBackendModelCondition(
+    backend,
+    normalizedModelId,
+    status => isBackendModelReady(status),
+    'load'
+  );
+
+  return {
+    model: normalizedModelId,
+    status: readyStatus?.value || 'loaded',
+    unloadedModels,
+    alreadyLoaded: false,
+  };
+}
 
 function createIdleActivitySnapshot(overrides = {}) {
   return {
@@ -567,6 +902,11 @@ async function checkBackendHealth(backend) {
         if (backend.processInfo.status === 'starting' || backend.processInfo.status === 'stopped' || backend.processInfo.status === 'error') {
           backend.processInfo.status = 'running';
         }
+        try {
+          await refreshBackendModels(backend);
+        } catch (err) {
+          logWarn(`Model discovery failed for ${backend.id}: ${err.message}`);
+        }
         backend.lastError = null;
         backend.lastCheckAt = Date.now();
         if (!wasHealthy) {
@@ -583,6 +923,7 @@ async function checkBackendHealth(backend) {
   backend.healthy = false;
   backend.lastError = lastError;
   backend.lastCheckAt = Date.now();
+  setBackendDiscoveredModels(backend, [], lastError);
   if (wasHealthy) {
     logWarn(`Backend down: ${backend.id} (${backend.baseUrl}) - ${lastError}`);
   }
@@ -675,7 +1016,9 @@ function pickQueueBackend(healthyBackends, preferredBackend = null) {
 }
 
 function findAffinityPreference(requestContext) {
-  const healthyBackends = getHealthyBackends();
+  const healthyBackends = requestContext.model
+    ? getHealthyBackendsForModel(requestContext.model)
+    : getHealthyBackends();
   const isHealthy = backendId => healthyBackends.some(backend => backend.id === backendId);
 
   if (requestContext.exactHash) {
@@ -728,9 +1071,27 @@ function findAffinityPreference(requestContext) {
 }
 
 function chooseBackendForRequest(requestContext) {
-  const healthyBackends = getHealthyBackends();
+  const healthyBackends = requestContext.model
+    ? getHealthyBackendsForModel(requestContext.model)
+    : getHealthyBackends();
+
+  if (requestContext.model) {
+    const knownBackends = getBackendsForModel(requestContext.model);
+    if (knownBackends.length === 0) {
+      const err = new Error(`Unknown model: ${requestContext.model}`);
+      err.statusCode = 400;
+      err.errorType = 'invalid_request_error';
+      throw err;
+    }
+  }
+
   if (healthyBackends.length === 0) {
-    throw new Error('No healthy llama backends available');
+    const err = new Error(requestContext.model
+      ? `No healthy backends available for model: ${requestContext.model}`
+      : 'No healthy llama backends available');
+    err.statusCode = 503;
+    err.errorType = 'unavailable_error';
+    throw err;
   }
 
   const preference = findAffinityPreference(requestContext);
@@ -1051,7 +1412,7 @@ async function restoreKVCache(hash, model, backend, slotId) {
 function createSlotTracker(onSlot) {
   let buffer = '';
 
-  return chunk => {
+  return (chunk, onEvent) => {
     buffer += Buffer.from(chunk).toString('utf8');
     if (buffer.length > 65536) {
       buffer = buffer.slice(-32768);
@@ -1074,6 +1435,9 @@ function createSlotTracker(onSlot) {
           const slotId = parsed.slot_id ?? parsed.id_slot;
           if (Number.isInteger(slotId)) {
             onSlot(slotId);
+          }
+          if (onEvent) {
+            onEvent(parsed);
           }
         } catch {
           // Ignore partial or non-JSON SSE frames.
@@ -1132,6 +1496,66 @@ async function proxyStreamWithHeaders(llamaRes, reply, extraHeaders, signal, onC
     }
   } else {
     reply.raw.end();
+  }
+}
+
+const observedLlamaMetrics = {
+  'llamacpp:n_tokens_max': 0,
+  'llamacpp:prompt_tokens_total': 0,
+  'llamacpp:prompt_seconds_total': 0,
+  'llamacpp:tokens_predicted_total': 0,
+  'llamacpp:tokens_predicted_seconds_total': 0,
+  'llamacpp:prompt_tokens_seconds': 0,
+  'llamacpp:predicted_tokens_seconds': 0,
+};
+
+function normalizePositiveNumber(value) {
+  const numericValue = Number(value);
+  return Number.isFinite(numericValue) && numericValue >= 0 ? numericValue : null;
+}
+
+function recordObservedChatMetrics(payload) {
+  const usage = payload?.usage || null;
+  const timings = payload?.timings || null;
+
+  const promptTokens = normalizePositiveNumber(usage?.prompt_tokens ?? timings?.prompt_n);
+  const completionTokens = normalizePositiveNumber(usage?.completion_tokens ?? timings?.predicted_n);
+  const totalTokens = normalizePositiveNumber(usage?.total_tokens)
+    ?? ((promptTokens !== null || completionTokens !== null)
+      ? ((promptTokens || 0) + (completionTokens || 0))
+      : null);
+  const promptSeconds = normalizePositiveNumber(timings?.prompt_ms) !== null
+    ? normalizePositiveNumber(timings?.prompt_ms) / 1000
+    : null;
+  const predictedSeconds = normalizePositiveNumber(timings?.predicted_ms) !== null
+    ? normalizePositiveNumber(timings?.predicted_ms) / 1000
+    : null;
+  const promptRate = normalizePositiveNumber(timings?.prompt_per_second);
+  const predictedRate = normalizePositiveNumber(timings?.predicted_per_second);
+
+  if (totalTokens !== null) {
+    observedLlamaMetrics['llamacpp:n_tokens_max'] = Math.max(
+      observedLlamaMetrics['llamacpp:n_tokens_max'],
+      totalTokens
+    );
+  }
+  if (promptTokens !== null) {
+    observedLlamaMetrics['llamacpp:prompt_tokens_total'] += promptTokens;
+  }
+  if (promptSeconds !== null) {
+    observedLlamaMetrics['llamacpp:prompt_seconds_total'] += promptSeconds;
+  }
+  if (completionTokens !== null) {
+    observedLlamaMetrics['llamacpp:tokens_predicted_total'] += completionTokens;
+  }
+  if (predictedSeconds !== null) {
+    observedLlamaMetrics['llamacpp:tokens_predicted_seconds_total'] += predictedSeconds;
+  }
+  if (promptRate !== null) {
+    observedLlamaMetrics['llamacpp:prompt_tokens_seconds'] = promptRate;
+  }
+  if (predictedRate !== null) {
+    observedLlamaMetrics['llamacpp:predicted_tokens_seconds'] = predictedRate;
   }
 }
 
@@ -1259,13 +1683,103 @@ function parsePrometheusMetrics(text) {
   return metrics;
 }
 
-async function fetchBackendMetrics(backend) {
+function getStatusArgValue(status, flagName) {
+  const args = Array.isArray(status?.args) ? status.args : [];
+  for (let index = 0; index < args.length - 1; index++) {
+    if (args[index] === flagName) {
+      return args[index + 1];
+    }
+  }
+  return null;
+}
+
+function getBackendMetricsTargets(backend) {
+  const targets = new Map();
+
+  for (const model of backend.discoveredModels.values()) {
+    const status = model.backendStatus;
+    const state = status?.value;
+    if (state !== 'loaded' && state !== 'loading' && state !== 'sleeping') {
+      continue;
+    }
+
+    const rawPort = getStatusArgValue(status, '--port') || status?.port;
+    const port = Number.parseInt(rawPort, 10);
+    if (!Number.isInteger(port) || port <= 0) {
+      continue;
+    }
+
+    const url = `http://${backend.host}:${port}`;
+    if (!targets.has(url)) {
+      targets.set(url, { url, port, source: 'worker' });
+    }
+  }
+
+  if (targets.size === 0) {
+    targets.set(backend.baseUrl, {
+      url: backend.baseUrl,
+      port: backend.port,
+      source: 'control',
+    });
+  }
+
+  return [...targets.values()];
+}
+
+function mergeMetrics(target, source) {
+  for (const [key, value] of Object.entries(source)) {
+    target[key] = (target[key] || 0) + value;
+  }
+  return target;
+}
+
+function rememberBackendMetrics(backend, metrics) {
+  if (!metrics || Object.keys(metrics).length === 0) {
+    return;
+  }
+
+  backend.lastMetrics = { ...metrics };
+  backend.lastMetricsAt = Date.now();
+}
+
+async function fetchMetricsFromTarget(baseUrl) {
   try {
-    const response = await timedFetch(`${backend.baseUrl}/metrics`, BACKEND_HEALTHCHECK_TIMEOUT_MS);
+    const response = await timedFetch(`${baseUrl}/metrics`, BACKEND_HEALTHCHECK_TIMEOUT_MS);
     if (!response.ok) return {};
     return parsePrometheusMetrics(await response.text());
   } catch {
     return {};
+  }
+}
+
+async function fetchBackendMetrics(backend, options = {}) {
+  const { allowCached = true } = options;
+  const metricsTargets = getBackendMetricsTargets(backend);
+  const metricsSets = await Promise.all(metricsTargets.map(target => fetchMetricsFromTarget(target.url)));
+
+  const aggregatedMetrics = {};
+  for (const metrics of metricsSets) {
+    mergeMetrics(aggregatedMetrics, metrics);
+  }
+
+  if (Object.keys(aggregatedMetrics).length > 0) {
+    rememberBackendMetrics(backend, aggregatedMetrics);
+    return aggregatedMetrics;
+  }
+
+  if (allowCached && backend.lastMetricsAt > 0) {
+    return backend.lastMetrics;
+  }
+
+  return aggregatedMetrics;
+}
+
+async function captureLiveBackendMetrics(backend) {
+  try {
+    await refreshBackendModels(backend);
+    await fetchBackendMetrics(backend, { allowCached: false });
+  } catch (err) {
+    logWarn(`Live metrics capture failed for ${backend.id}: ${err.message}`);
   }
 }
 
@@ -1349,6 +1863,11 @@ server.get('/api/stats', async (request, reply) => {
       llamaMetrics[key] = (llamaMetrics[key] || 0) + value;
     }
   }
+  for (const [key, value] of Object.entries(observedLlamaMetrics)) {
+    if (!(key in llamaMetrics) || llamaMetrics[key] === 0) {
+      llamaMetrics[key] = value;
+    }
+  }
 
   const slotsInfo = [];
   for (const backend of backends) {
@@ -1385,6 +1904,14 @@ server.get('/api/stats', async (request, reply) => {
     queueLength: getTotalQueueLength(),
     l1UsageBytes,
     gpu: gpuMetrics,
+    models: [...buildAggregatedModelRegistry().values()].map(entry => ({
+      id: entry.id,
+      available: entry.available,
+      meta: entry.meta,
+      loadedBackends: entry.loadedBackends.length,
+      healthyBackends: entry.healthyBackends.length,
+      backends: entry.backends,
+    })),
     slots: slotsInfo,
     llamaMetrics,
     backends: backendSnapshots.map(({ backend, metrics }) => ({
@@ -1398,10 +1925,166 @@ server.get('/api/stats', async (request, reply) => {
       availableSlots: backend.availableSlots.length,
       lastCheckAt: backend.lastCheckAt,
       lastError: backend.lastError,
+      modelsDiscoveryAt: backend.modelsDiscoveryAt,
+      modelsDiscoveryError: backend.modelsDiscoveryError,
+      models: getBackendDiscoveredModels(backend),
       process: getBackendProcessSnapshot(backend),
       metrics,
     })),
   });
+});
+
+server.get('/models', async (request, reply) => {
+  const registry = buildAggregatedModelRegistry();
+  reply.send({
+    data: [...registry.values()].map(entry => ({
+      id: entry.id,
+      object: 'model',
+      meta: entry.meta || null,
+      status: {
+        value: entry.loadedBackends.length > 0
+          ? 'loaded'
+          : (entry.available ? 'unloaded' : 'unavailable'),
+      },
+      backends: entry.backends,
+    })),
+  });
+});
+
+server.post('/models/load', async (request, reply) => {
+  const modelId = normalizeModelId(request.body?.model);
+  if (!modelId) {
+    reply.status(400).send({
+      error: {
+        code: 400,
+        message: 'model is required',
+        type: 'invalid_request_error',
+      },
+    });
+    return;
+  }
+
+  const candidateBackends = getBackendsForModel(modelId);
+  if (candidateBackends.length === 0) {
+    reply.status(404).send({
+      error: {
+        code: 404,
+        message: `Unknown model: ${modelId}`,
+        type: 'not_found_error',
+      },
+    });
+    return;
+  }
+
+  const results = await Promise.allSettled(candidateBackends.map(backend => (
+    withBackendModelOperationLock(backend, () => switchModelOnBackend(backend, modelId))
+      .then(result => ({ backendId: backend.id, ...result }))
+  )));
+
+  const failed = results
+    .filter(result => result.status === 'rejected')
+    .map((result, index) => ({
+      backendId: candidateBackends[index].id,
+      message: result.reason?.message || String(result.reason),
+    }));
+
+  if (failed.length > 0) {
+    reply.status(502).send({
+      error: {
+        code: 502,
+        message: `Failed to load model ${modelId} on ${failed.map(item => `${item.backendId}: ${item.message}`).join('; ')}`,
+        type: 'backend_model_load_error',
+      },
+      failures: failed,
+    });
+    return;
+  }
+
+  reply.send({
+    success: true,
+    model: modelId,
+    backends: results.map(result => result.value),
+  });
+});
+
+server.post('/models/unload', async (request, reply) => {
+  const modelId = normalizeModelId(request.body?.model);
+  if (!modelId) {
+    reply.status(400).send({
+      error: {
+        code: 400,
+        message: 'model is required',
+        type: 'invalid_request_error',
+      },
+    });
+    return;
+  }
+
+  const candidateBackends = getBackendsForModel(modelId);
+  if (candidateBackends.length === 0) {
+    reply.status(404).send({
+      error: {
+        code: 404,
+        message: `Unknown model: ${modelId}`,
+        type: 'not_found_error',
+      },
+    });
+    return;
+  }
+
+  const results = await Promise.allSettled(candidateBackends.map(backend => (
+    withBackendModelOperationLock(backend, () => unloadModelOnBackend(backend, modelId))
+      .then(result => ({ backendId: backend.id, ...result }))
+  )));
+
+  const failed = results
+    .filter(result => result.status === 'rejected')
+    .map((result, index) => ({
+      backendId: candidateBackends[index].id,
+      message: result.reason?.message || String(result.reason),
+    }));
+
+  if (failed.length > 0) {
+    reply.status(502).send({
+      error: {
+        code: 502,
+        message: `Failed to unload model ${modelId} on ${failed.map(item => `${item.backendId}: ${item.message}`).join('; ')}`,
+        type: 'backend_model_unload_error',
+      },
+      failures: failed,
+    });
+    return;
+  }
+
+  reply.send({
+    success: true,
+    model: modelId,
+    backends: results.map(result => result.value),
+  });
+});
+
+server.get('/v1/models', async (request, reply) => {
+  const registry = buildAggregatedModelRegistry();
+  reply.send({
+    object: 'list',
+    data: [...registry.values()].map(toOpenAiModel),
+  });
+});
+
+server.get('/v1/models/:modelId', async (request, reply) => {
+  const entry = getAggregatedModelEntry(request.params.modelId);
+  if (!entry) {
+    reply.status(404).send({
+      error: {
+        code: 404,
+        message: `Unknown model: ${request.params.modelId}`,
+        type: 'not_found_error',
+      },
+    });
+    return;
+  }
+
+  reply.send(toOpenAiModel(entry));
 });
 
 // ─── Settings API ────────────────────────────────────────────────────
@@ -1516,6 +2199,7 @@ server.post('/v1/chat/completions', async (request, reply) => {
   let cacheStatus = 'BYPASS';
   let shouldSaveCache = false;
   let streamedChunkCount = 0;
+  let metricsCaptureStarted = false;
 
   const updateActivity = patch => {
     if (!selectedBackend || assignedSlotId === null) {
@@ -1702,7 +2386,15 @@ server.post('/v1/chat/completions', async (request, reply) => {
       observedSlotId = slotId;
     });
     const observeStreamChunk = chunk => {
-      observeSlot(chunk);
+      observeSlot(chunk, parsed => {
+        recordObservedChatMetrics(parsed);
+      });
+      if (!metricsCaptureStarted && selectedBackend) {
+        metricsCaptureStarted = true;
+        captureLiveBackendMetrics(selectedBackend).catch(err => {
+          logWarn(`Deferred metrics capture failed for ${selectedBackend.id}: ${err.message}`);
+        });
+      }
       streamedChunkCount += 1;
       updateActivity({
         phase: 'streaming',
@@ -1738,7 +2430,24 @@ server.post('/v1/chat/completions', async (request, reply) => {
       responseHeaders['X-Cache-Status'] = cacheStatus;
     }
 
-    await proxyStreamWithHeaders(llamaRes, reply, responseHeaders, signal, observeStreamChunk);
+    const responseContentType = llamaRes.headers.get('content-type') || '';
+    if (responseContentType.includes('application/json')) {
+      const responseText = await llamaRes.text();
+      try {
+        const parsed = JSON.parse(responseText);
+        recordObservedChatMetrics(parsed);
+        const slotId = parsed?.slot_id ?? parsed?.id_slot;
+        if (Number.isInteger(slotId)) {
+          observedSlotId = slotId;
+        }
+      } catch {
+        // Ignore invalid JSON payloads and pass them through unchanged.
+      }
+
+      reply.headers(responseHeaders).status(llamaRes.status).send(responseText);
+    } else {
+      await proxyStreamWithHeaders(llamaRes, reply, responseHeaders, signal, observeStreamChunk);
+    }
 
     const effectiveSlotId = normalizeSlotId(observedSlotId, assignedSlotId, selectedBackend);
     if (requestContext.hasAffinity) {
@@ -1819,10 +2528,12 @@ server.setErrorHandler((error, request, reply) => {
 
   logErr(`${error.message}  [${request.id || 'no-id'}]`);
   if (!reply.sent) {
-    reply.status(500).send({
+    const statusCode = Number.isInteger(error.statusCode) ? error.statusCode : 500;
+    reply.status(statusCode).send({
       error: {
+        code: statusCode,
         message: error.message,
-        type: 'internal_error',
+        type: error.errorType || 'internal_error',
       },
     });
   }

@@ -43,6 +43,28 @@ KVBridge runs as a lightning-fast Node.js/Fastify proxy in front of your `llama-
 
 *(Include your setup instructions, npm install, RAMDisk mount commands, and .env configuration here)*
 
+## OpenWebUI Compatibility
+
+KVBridge now aggregates model discovery across all configured `llama-server` backends and exposes OpenAI-compatible discovery surfaces.
+
+- `GET /v1/models` returns the union of models discovered across all configured backends.
+- `GET /v1/models/:modelId` returns one aggregated model entry.
+- `GET /models` returns a llama.cpp-style aggregated inventory.
+
+If two backends advertise different models, KVBridge responds with the union of all discovered model ids. If two backends advertise the same model, KVBridge exposes that as one logical model with a multi-backend pool.
+
+## Model-Aware Routing
+
+Routing is now model-aware.
+
+- `POST /v1/chat/completions` reads the request `model` field.
+- KVBridge filters the candidate pool to only backends that currently advertise that model.
+- Existing slot affinity, cache affinity, queueing, and round-robin logic run only inside that model-qualified pool.
+- If the model is unknown, KVBridge returns a `400 invalid_request_error`.
+- If the model exists but no healthy backend currently serves it, KVBridge returns a `503 unavailable_error`.
+
+This lets OpenWebUI discover one consolidated model list from KVBridge and then send requests with a specific model id without spilling onto a backend that does not advertise that model.
+
 ## 📈 Roadmap
 
 - [x] L1/L2 Tiered Storage routing.

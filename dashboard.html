@@ -239,6 +239,12 @@
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     }
 
+    .model-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
     .panel {
       background: var(--panel);
       border: 1px solid var(--border);
@@ -254,6 +260,31 @@
       text-transform: uppercase;
       font-size: 0.75rem;
       letter-spacing: 0.08em;
+    }
+
+    .model-card {
+      background: rgba(6, 14, 28, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 18px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      font-size: 0.78rem;
     }
 
     .metric-value {
@@ -591,9 +622,9 @@
         <div class="subcopy" id="gpu-temp-sub">Power -- W · Peak utilization --%</div>
       </div>
       <div class="panel">
-        <div class="metric-label">Cache Index</div>
+        <div class="metric-label">Models Discovered</div>
         <div class="metric-value" id="cache-index-val">0</div>
-        <div class="subcopy" id="cache-index-sub">No ranked cache metadata yet.</div>
+        <div class="subcopy" id="cache-index-sub">No models discovered yet.</div>
       </div>
     </section>
 
@@ -610,6 +641,11 @@
     <section class="panel" style="margin-bottom:16px;">
       <div class="section-title">Backend Processes</div>
       <div class="backend-grid" id="backend-grid"></div>
+    </section>
+
+    <section class="panel" style="margin-bottom:16px;">
+      <div class="section-title">Discovered Models</div>
+      <div class="model-grid" id="models-grid"></div>
     </section>
 
     <section class="panel" style="margin-bottom:16px;">
@@ -867,6 +903,30 @@
       }
     }
 
+    async function runModelAction(modelToken, action) {
+      const modelId = decodeURIComponent(modelToken);
+      const key = `model:${modelId}:${action}`;
+      if (actionInFlight.has(key)) return;
+      actionInFlight.add(key);
+
+      try {
+        const res = await fetch(`/models/${action}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ model: modelId }),
+        });
+        if (!res.ok) {
+          const payload = await res.json().catch(() => null);
+          throw new Error(payload?.error?.message || payload?.error || `Failed to ${action} ${modelId}`);
+        }
+        await updateDashboard();
+      } catch (error) {
+        console.error(`Failed to ${action} model`, error);
+      } finally {
+        actionInFlight.delete(key);
+      }
+    }
+
     async function loadLogs(backendId) {
       if (!backendId) return;
       selectedBackendId = backendId;
@@ -1070,6 +1130,57 @@
       document.getElementById('slots-container').innerHTML = html;
     }
 
+    function renderModels(models) {
+      const html = models.map(model => {
+        const modelToken = encodeURIComponent(model.id);
+        const backendPills = (model.backends || []).map(backend => {
+          const tone = backend.healthy ? '' : 'danger';
+          const statusText = backend.status?.value || 'unknown';
+          return `<span class="pill ${tone}">${backend.id} · ${backend.healthy ? 'healthy' : 'down'} · ${statusText}</span>`;
+        }).join('');
+
+        return `
+          <article class="model-card">
+            <div class="backend-head">
+              <div>
+                <div class="backend-name" style="font-size:1rem;">${model.id}</div>
+                <div class="mono">${model.available ? 'routable via healthy backend pool' : 'discovered but unavailable'}</div>
+              </div>
+              <div>${badge((model.available ? 'READY' : 'NO HEALTHY BACKEND'), model.available ? '' : 'danger')}</div>
+            </div>
+            <div>
+              <div class="meta-label">Backend Pool</div>
+              <div class="pill-row">${backendPills || '<span class="pill">No backends</span>'}</div>
+            </div>
+            <div class="backend-meta">
+              <div>
+                <div class="meta-label">Loaded Backends</div>
+                <div class="meta-value">${model.loadedBackends || 0}</div>
+              </div>
+              <div>
+                <div class="meta-label">Healthy Backends</div>
+                <div class="meta-value">${model.healthyBackends || 0}</div>
+              </div>
+              <div>
+                <div class="meta-label">Context Train</div>
+                <div class="meta-value mono">${model.meta?.n_ctx_train || '--'}</div>
+              </div>
+              <div>
+                <div class="meta-label">Parameters</div>
+                <div class="meta-value mono">${model.meta?.n_params || '--'}</div>
+              </div>
+            </div>
+            <div class="action-row">
+              <button onclick="runModelAction('${modelToken}', 'load')" ${actionInFlight.has(`model:${model.id}:load`) ? 'disabled' : ''}>Load</button>
+              <button class="danger" onclick="runModelAction('${modelToken}', 'unload')" ${actionInFlight.has(`model:${model.id}:unload`) ? 'disabled' : ''}>Unload</button>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      document.getElementById('models-grid').innerHTML = html || '<div class="subcopy">No models discovered yet.</div>';
+    }
+
     function formatMs(value) {
       if (!Number.isFinite(value)) return '--';
       if (value < 1000) return `${Math.round(value)} ms`;
@@ -1146,14 +1257,15 @@
         document.getElementById('tokens-pred').innerText = predictedTotal;
         document.getElementById('tokens-eval').innerText = generationRate.toFixed(1);
         document.getElementById('reqs-proc').innerText = promptRate.toFixed(1);
-        document.getElementById('cache-index-val').innerText = data.cache?.totalEntries || 0;
-        const topCache = (data.cache?.topEntries || [])[0];
-        document.getElementById('cache-index-sub').innerText = topCache
-          ? `Top ${topCache.hash.slice(0, 8)} · reuse ${topCache.reuseScore.toFixed(2)} · ${topCache.lastHitType || 'no-hit'}`
-          : 'No ranked cache metadata yet.';
+        document.getElementById('cache-index-val').innerText = data.models?.length || 0;
+        const topModel = (data.models || [])[0];
+        document.getElementById('cache-index-sub').innerText = topModel
+          ? `${topModel.id} · ${topModel.healthyBackends || 0} healthy · ${topModel.loadedBackends || 0} loaded`
+          : 'No models discovered yet.';
 
         renderGpus(data.gpu);
         renderBackends(data.backends || []);
+        renderModels(data.models || []);
         renderSlots(data.slots || []);
         renderCacheEntries(data.cache?.topEntries || []);
 
@@ -1270,7 +1382,7 @@
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label>Model Name</label>
+                <label>Default Model To Load</label>
                 <input class="backend-model" data-idx="${i}" value="${b.modelName}" />
               </div>
             </div>
