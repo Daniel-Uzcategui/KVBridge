@@ -1,76 +1,161 @@
-# KVBridge 🌉 
-**The Software-NVLink for PCIe-bound and Legacy GPUs (NVIDIA/AMD)**
+# KVBridge
+**Stateful multi-backend router for `llama.cpp` with tiered KV cache reuse**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
-Modern AI orchestration tools (like vLLM or TGI) are designed for enterprise data centers. They assume you have Ampere/Ada/Hopper architectures, hardware-accelerated FlashAttention, and **NVLink** to share massive KV caches across GPUs with zero latency. 
+KVBridge sits in front of one or more `llama-server` instances and routes requests toward the backend that can answer them with the least waste. Instead of treating each backend as an isolated endpoint, KVBridge tracks slot activity, reuses serialized KV snapshots, aggregates model discovery, and exposes a control plane for managing the fleet.
 
-If you are running budget-friendly or legacy hardware (like GTX 1080 Tis, RTX 2000/3000 series, or AMD ROCm setups) over standard PCIe Gen 3/4 lanes, modern Tensor Parallelism will choke your system. 
+It is designed for rigs where PCIe is the bottleneck and where large prompts make prefill cost dominate throughput. The router keeps hot cache state in RAM, persists cold snapshots to SSD, and tries to restore the best matching state before forwarding inference.
 
-**KVBridge** (formerly *KVBridge*) was engineered from the ground up to shatter the hardware bottleneck. It acts as a Stateful Load Balancer and Context Router for `llama.cpp`, giving you enterprise-grade context management on a homelab budget.
+## What It Does
 
----
+- Tiered KV cache storage with an L1 RAM disk and L2 persistent cache directory.
+- Partial cache reuse using prompt-prefix similarity scoring instead of exact-hit-only routing.
+- Model-aware routing for OpenAI-compatible chat requests.
+- Aggregated model discovery across multiple `llama-server` backends.
+- Dashboard and settings APIs for live inspection and operational control.
+- Managed backend lifecycle hooks with per-backend start, stop, restart, and log access.
+- Rolling request logging for prompt inspection in `ghost_detector.txt`.
 
-## 🚀 Why KVBridge? (The Problem)
+## Runtime Layout
 
-When you run massive LLMs (like Qwen 35B or Llama-3 70B) across multiple legacy GPUs without NVLink, slicing the model forces the system to pass data through the PCIe bus constantly. This destroys your Tokens/Second and limits your Context Window.
+- `server.js`: Fastify router, cache orchestration, backend management, OpenAI-compatible endpoints.
+- `settings.js`: settings defaults, config loading, persistence, and live settings helpers.
+- `dashboard.html`: control deck UI served by the router.
+- `config/config.example.json`: example runtime config.
+- `config/start_server.example.sh`: example managed backend launcher for the first worker.
+- `config/start_server2.example.sh`: example managed backend launcher for the second worker.
+- `runtime-logs/`: backend stdout/stderr logs.
+- `ghost_detector.txt`: serialized request logging.
 
-**KVBridge takes a different approach:**
-Instead of slicing the model across multiple GPUs and suffering crippling PCIe latency penalties, KVBridge orchestrates independent, highly optimized `llama-server` nodes and routes requests based on **Cache Affinity**.
-<img width="1164" height="1196" alt="image" src="https://github.com/user-attachments/assets/1484dcdf-6be3-48ac-80cf-c6c7180dede4" />
+## Requirements
 
-## ✨ Key Features
+- Node.js 18 or newer.
+- One or more `llama-server` backends reachable over HTTP.
+- A writable RAM-backed cache directory for hot KV snapshots.
+- A writable persistent cache directory for cold KV snapshots.
+- Backend launch scripts if you want KVBridge to auto-start workers.
 
-* ⛓️ **Zero NVLink Dependency:** Designed specifically for rigs with mixed GPUs, older Pascal/Turing architectures, or AMD cards isolated by standard PCIe lanes.
-* 🗄️ **Tiered KV Caching (L1/L2 Storage):** Legacy GPUs lack the VRAM to hold massive 200k+ token contexts. KVBridge aggressively offloads serialized KV Cache `.bin` files to a RAMDisk (L1) or NVMe SSD (L2), seamlessly injecting the exact required state back into the GPU right before inference.
-* 🧩 **Partial-Similarity Cache Reuse (Prefix Sketching):** Processing a 100k+ token prefix on older architectures can take minutes. KVBridge uses chunked prefix-sketching and an adaptive candidate scorer to find the "best partial match." Your GPU will only calculate the delta of what has actually changed, bypassing full prefills.
-* ⚖️ **Smart Load Balancing:** Automatically detects which `llama-server` node has the "hottest" cache for an incoming prompt, directing traffic to minimize compute waste.
+## Quick Start
 
----
+1. Install dependencies.
 
-## 🧠 Architecture Overview
+	```bash
+	npm install
+	```
 
-KVBridge runs as a lightning-fast Node.js/Fastify proxy in front of your `llama-server` instances.
+2. Copy the example config and adjust paths, ports, models, and backend launch scripts.
 
-1. **Incoming Request:** A user/agent sends a massive prompt (e.g., 150k tokens).
-2. **Fingerprinting:** KVBridge non-blockingly creates progressive hashes (Prefix Sketches) of the prompt.
-3. **Candidate Scoring:** It checks the persistent in-RAM metadata index to find a matching `.bin` cache file in your Tiered Storage.
-4. **State Injection:** If a high-score partial match is found, KVBridge moves the cache from L2 (NVMe) to L1 (RAMDisk) and instructs `llama-server` to load it.
-5. **Delta Computation:** The GPU only evaluates the new tokens, saving monumental amounts of time and energy.
+	```bash
+	cp config/config.example.json config/config.json
+	```
 
-## 🛠️ Quick Start
+3. Review the storage paths in `config/config.json`.
 
-*(Include your setup instructions, npm install, RAMDisk mount commands, and .env configuration here)*
+	Recommended defaults:
 
-## OpenWebUI Compatibility
+	- `storage.l1Dir`: RAM disk or tmpfs path, for example `$HOME/Models/ramdisk_cache`
+	- `storage.l2Dir`: persistent SSD/NVMe path, for example `$HOME/Models/slot_cache`
+	- `storage.backendLogDir`: directory where managed backend logs are written
 
-KVBridge now aggregates model discovery across all configured `llama-server` backends and exposes OpenAI-compatible discovery surfaces.
+4. Point each backend entry at a real launch script.
 
-- `GET /v1/models` returns the union of models discovered across all configured backends.
-- `GET /v1/models/:modelId` returns one aggregated model entry.
-- `GET /models` returns a llama.cpp-style aggregated inventory.
+	The example scripts in `config/` show the expected shape:
 
-If two backends advertise different models, KVBridge responds with the union of all discovered model ids. If two backends advertise the same model, KVBridge exposes that as one logical model with a multi-backend pool.
+	- bind an HTTP port
+	- enable `--metrics`
+	- set `--slot-save-path`
+	- optionally preload a model using `/models/load`
 
-## Model-Aware Routing
+5. Start KVBridge.
 
-Routing is now model-aware.
+	Foreground:
 
-- `POST /v1/chat/completions` reads the request `model` field.
-- KVBridge filters the candidate pool to only backends that currently advertise that model.
-- Existing slot affinity, cache affinity, queueing, and round-robin logic run only inside that model-qualified pool.
-- If the model is unknown, KVBridge returns a `400 invalid_request_error`.
-- If the model exists but no healthy backend currently serves it, KVBridge returns a `503 unavailable_error`.
+	```bash
+	npm start
+	```
 
-This lets OpenWebUI discover one consolidated model list from KVBridge and then send requests with a specific model id without spilling onto a backend that does not advertise that model.
+	Background helper:
 
-## 📈 Roadmap
+	```bash
+	./start.sh
+	```
 
-- [x] L1/L2 Tiered Storage routing.
-- [x] Partial-hit prefix sketching.
-- [ ] Adaptive cache eviction (LRU based on hit/miss telemetry).
-- [ ] SQLite integration for massive metadata indexes.
+6. Open the control deck at `http://127.0.0.1:8080/dashboard`.
 
-## 🤝 Contributing
-Running a Frankenstein GPU rig? We want you! Pull requests, issue reports, and hardware benchmark shares are highly welcome.
+## Configuration
+
+The router reads `config/config.json` at startup. If the file is missing, built-in defaults from `settings.js` are used.
+
+Main sections:
+
+- `server`: HTTP bind host and port for KVBridge.
+- `storage`: `modelsDir`, `l1Dir`, `l2Dir`, and `backendLogDir`.
+- `backends`: managed worker definitions, including `id`, `host`, `port`, `gpuGroup`, `maxSlots`, `scriptPath`, and `modelName`.
+- `cache`: L1 eviction thresholds and partial-cache scoring knobs.
+- `health`: backend probe timings, startup grace period, and auto-start behavior.
+- `gc`: periodic cleanup interval and max age for cache artifacts.
+- `misc`: warmup, hashing, and large-input cooperative processing thresholds.
+
+The example config defines two backends on ports `11434` and `11435` and is the best starting point for a multi-GPU setup.
+
+## HTTP Surface
+
+### User and Dashboard Endpoints
+
+- `GET /dashboard`: serves the control deck UI.
+- `GET /api/stats`: queue length, L1 usage, slot state, aggregated model state, backend health, and collected metrics.
+- `GET /api/settings`: returns the active settings object.
+- `POST /api/settings`: persists a new settings object.
+- `POST /api/settings/reload`: reloads settings from disk.
+- `POST /api/restart`: exits the KVBridge process so a supervisor can respawn it.
+- `GET /api/backends/:backendId/logs?lines=120`: tails a managed backend log.
+- `POST /api/backends/:backendId/start|stop|restart`: controls a managed backend.
+
+### Model Discovery and Control
+
+- `GET /models`: aggregated llama.cpp-style model inventory.
+- `POST /models/load`: loads a model across eligible backends.
+- `POST /models/unload`: unloads a model across eligible backends.
+- `GET /v1/models`: OpenAI-compatible aggregated model list.
+- `GET /v1/models/:modelId`: OpenAI-compatible single-model view.
+
+### Inference
+
+- `POST /v1/chat/completions`: OpenAI-compatible chat endpoint.
+
+Routing behavior for chat completions:
+
+- the request `model` field is respected
+- only backends currently advertising that model are considered
+- cache affinity, queueing, and slot assignment run inside that model-qualified pool
+- unknown models return `400 invalid_request_error`
+- known-but-unavailable models return `503 unavailable_error`
+
+## Operations Notes
+
+- Managed backend logs are written under `runtime-logs/` unless `storage.backendLogDir` points elsewhere.
+- Request summaries are serialized into `ghost_detector.txt` to avoid interleaved writes under load.
+- `start.sh` relaunches KVBridge under `nohup` and writes the main process output to `app.log`.
+- The dashboard expects `/api/stats` and will reflect aggregated llama metrics when worker backends expose `/metrics`.
+
+## Example Flow
+
+1. A client sends `POST /v1/chat/completions` with a model id.
+2. KVBridge selects the subset of healthy backends advertising that model.
+3. The router checks for an exact or partial cache match for the prompt context.
+4. If needed, it restores the best candidate from L2 to L1 and injects state before inference.
+5. The request runs on the chosen slot and updated cache state is persisted for reuse.
+
+## Development
+
+```bash
+npm run dev
+```
+
+The dev script runs `node --watch server.js`.
+
+## License
+
+MIT
